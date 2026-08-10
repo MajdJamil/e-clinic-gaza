@@ -39,7 +39,7 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
-    <!-- شريط الطوارئ السريع العضوي -->
+    <!-- شريط الطوارئ السريع -->
     <div class="bg-red-600 text-white text-xs py-2 px-4 text-center font-bold fixed top-0 w-full z-50 flex items-center justify-center gap-3 shadow-md overflow-x-auto whitespace-nowrap">
         <span><i class="fa-solid fa-triangle-exclamation"></i> طوارئ غزة:</span>
         <span>الإسعاف والطوارئ: 101</span>
@@ -67,15 +67,15 @@
                 </div>
 
                 <!-- Desktop Menu -->
-                <div class="hidden xl:flex items-center space-x-5 space-x-reverse text-sm font-bold text-slate-600">
+                <div class="hidden xl:flex items-center space-x-4 space-x-reverse text-sm font-bold text-slate-600">
                     <button onclick="switchTab('home')" class="nav-link hover:text-primary-600 transition-colors">الرئيسية</button>
                     <button onclick="switchTab('hospitals')" class="nav-link hover:text-primary-600 transition-colors">المستشفيات</button>
-                    <button onclick="switchTab('map')" class="nav-link hover:text-primary-600 transition-colors">الخريطة الطبية</button>
+                    <button onclick="switchTab('map')" class="nav-link hover:text-primary-600 transition-colors">الخريطة</button>
                     <button onclick="switchTab('medicines')" class="nav-link hover:text-primary-600 transition-colors">الأدوية</button>
                     <button onclick="switchTab('doctors')" class="nav-link hover:text-primary-600 transition-colors">الأطباء</button>
                     <button onclick="switchTab('request')" class="nav-link hover:text-primary-600 transition-colors">رعاية منزلية</button>
                     <button onclick="switchTab('emergency')" class="nav-link text-red-600 hover:text-red-700 transition-colors">الطوارئ</button>
-                    <button onclick="switchTab('articles')" class="nav-link hover:text-primary-600 transition-colors">المقالات والأبحاث</button>
+                    <button onclick="switchTab('articles')" class="nav-link hover:text-primary-600 transition-colors">المقالات</button>
                     <button onclick="switchTab('awareness')" class="nav-link hover:text-primary-600 transition-colors">التوعية</button>
                     <button onclick="switchTab('admin')" class="nav-link text-primary-700 bg-primary-50 px-3 py-1.5 rounded-lg">لوحة المدير</button>
                 </div>
@@ -83,7 +83,7 @@
                 <!-- Mobile menu button -->
                 <div class="xl:hidden flex items-center gap-2">
                     <button onclick="switchTab('admin')" class="text-xs bg-primary-100 text-primary-700 font-bold px-2.5 py-1.5 rounded-lg">الإدارة</button>
-                    <button id="mobile-menu-btn" class="text-slate-700 hover:text-primary-600 focus:outline-none p-2 text-2xl">
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="text-slate-700 hover:text-primary-600 focus:outline-none p-2 text-2xl">
                         <i class="fa-solid fa-bars"></i>
                     </button>
                 </div>
@@ -111,7 +111,6 @@
 
         <!-- 1. صفحة الرئيسية -->
         <div id="view-home" class="tab-content active">
-            <!-- Hero Section -->
             <section class="py-12 lg:py-20 bg-gradient-to-b from-primary-50/50 to-slate-50">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="text-center max-w-3xl mx-auto space-y-6">
@@ -127,7 +126,7 @@
                         </p>
 
                         <!-- Unified Search Bar -->
-                        <div class="bg-white p-3 rounded-2xl shadow-xl border border-slate-200 max-w-2xl mx-auto flex items-center gap-2">
+                        <div class="bg-white p-3 rounded-2xl shadow-xl border border-slate-200 max-w-2xl mx-auto flex items-center gap-2 relative">
                             <i class="fa-solid fa-magnifying-glass text-slate-400 mr-2 text-xl"></i>
                             <input type="text" id="global-search-input" oninput="handleGlobalSearch(this.value)" placeholder="ابحث عن مستشفى، دواء، خدمة طبية، أو حالة طوارئ..." class="w-full py-2 px-2 focus:outline-none text-slate-700 font-medium">
                             <button onclick="executeSearch()" class="bg-primary-700 hover:bg-primary-800 text-white px-6 py-3 rounded-xl font-bold transition-all">بحث</button>
@@ -154,7 +153,7 @@
                             </button>
                             <button onclick="switchTab('articles')" class="p-4 bg-white rounded-xl shadow-sm border border-slate-200 hover:border-primary-500 card-hover flex flex-col items-center text-center gap-2">
                                 <i class="fa-solid fa-book-medical text-2xl text-purple-600"></i>
-                                <span class="text-xs font-bold">المقالات والأبحاث</span>
+                                <span class="text-xs font-bold">المقالات</span>
                             </button>
                             <button onclick="switchTab('emergency')" class="p-4 bg-white rounded-xl shadow-sm border border-slate-200 hover:border-primary-500 card-hover flex flex-col items-center text-center gap-2">
                                 <i class="fa-solid fa-truck-medical text-2xl text-red-600"></i>
@@ -227,10 +226,7 @@
                     </select>
                 </div>
             </div>
-
-            <div id="hospitals-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- JavaScript will populate hospitals dynamically with demo data -->
-            </div>
+            <div id="hospitals-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </div>
 
         <!-- 3. الخريطة الطبية التفاعلية -->
@@ -239,28 +235,23 @@
                 <h2 class="text-3xl font-black text-slate-900">الخريطة الطبية التفاعلية لقطاع غزة</h2>
                 <p class="text-slate-600 text-sm mt-1">تحديد مواقع المستشفيات، المراكز الصحية، نقاط الإسعاف، الصيدليات، والمختبرات.</p>
             </div>
-            
             <div class="flex flex-wrap gap-2 mb-6">
-                <button onclick="filterMap('all')" class="px-4 py-2 bg-primary-700 text-white rounded-xl text-xs font-bold">الكل</button>
-                <button onclick="filterMap('hospital')" class="px-4 py-2 bg-white border rounded-xl text-xs font-bold hover:bg-slate-100">المستشفيات</button>
-                <button onclick="filterMap('pharmacy')" class="px-4 py-2 bg-white border rounded-xl text-xs font-bold hover:bg-slate-100">الصيدليات</button>
-                <button onclick="filterMap('emergency')" class="px-4 py-2 bg-white border rounded-xl text-xs font-bold hover:bg-slate-100">نقاط الإسعاف</button>
-                <button onclick="filterMap('lab')" class="px-4 py-2 bg-white border rounded-xl text-xs font-bold hover:bg-slate-100">المختبرات</button>
+                <button onclick="filterMap('all')" class="px-4 py-2 bg-primary-700 text-white rounded-xl text-xs font-bold map-filter-btn">الكل</button>
+                <button onclick="filterMap('hospital')" class="px-4 py-2 bg-white border rounded-xl text-xs font-bold hover:bg-slate-100 map-filter-btn">المستشفيات</button>
+                <button onclick="filterMap('pharmacy')" class="px-4 py-2 bg-white border rounded-xl text-xs font-bold hover:bg-slate-100 map-filter-btn">الصيدليات</button>
+                <button onclick="filterMap('emergency')" class="px-4 py-2 bg-white border rounded-xl text-xs font-bold hover:bg-slate-100 map-filter-btn">نقاط الإسعاف</button>
+                <button onclick="filterMap('lab')" class="px-4 py-2 bg-white border rounded-xl text-xs font-bold hover:bg-slate-100 map-filter-btn">المختبرات</button>
             </div>
-
             <div class="bg-white rounded-3xl p-6 border shadow-lg grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="lg:col-span-2 bg-slate-900 rounded-2xl h-[450px] relative flex items-center justify-center text-white overflow-hidden">
-                    <!-- Simulated Interactive Map UI -->
                     <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#0ea5e9_1px,transparent_1px)] [background-size:16px_16px]"></div>
                     <div class="text-center p-6 relative z-10 space-y-4">
                         <i class="fa-solid fa-map-location-dot text-6xl text-primary-400 animate-bounce"></i>
-                        <h3 class="text-xl font-bold">خريطة غزة التفاعلية الجغرافية</h3>
-                        <p class="text-sm text-slate-300 max-w-md mx-auto">اضغط على أي منشأة من القائمة الجانبية لعرض إحداثياتها الجغرافية، الاتجاهات، وحالة التشغيل الفورية.</p>
+                        <h3 class="text-xl font-bold" id="map-selected-title">خريطة غزة التفاعلية الجغرافية</h3>
+                        <p class="text-sm text-slate-300 max-w-md mx-auto" id="map-selected-desc">اضغط على أي منشأة من القائمة الجانبية لعرض إحداثياتها الجغرافية، الاتجاهات، وحالة التشغيل الفورية.</p>
                     </div>
                 </div>
-                <div class="space-y-4 max-h-[450px] overflow-y-auto pr-2" id="map-locations-list">
-                    <!-- List populated via JS -->
-                </div>
+                <div class="space-y-4 max-h-[450px] overflow-y-auto pr-2" id="map-locations-list"></div>
             </div>
         </div>
 
@@ -275,8 +266,6 @@
                     <input type="text" id="medicine-search" oninput="filterMedicines()" placeholder="ابحث باسم الدواء أو المادة الفعالة..." class="px-4 py-2 border rounded-xl w-full md:w-72 focus:outline-none focus:ring-2 focus:ring-primary-500">
                 </div>
             </div>
-
-            <!-- Warning Notice -->
             <div class="bg-amber-50 border border-amber-200 text-amber-800 p-4 rounded-2xl mb-8 text-sm flex items-start gap-3">
                 <i class="fa-solid fa-triangle-exclamation text-amber-600 text-lg mt-0.5"></i>
                 <div>
@@ -284,10 +273,7 @@
                     هذه المعلومات للتثقيف الصحي فقط ولا تغني عن الطبيب أو الصيدلي. الجرعات تختلف حسب العمر والحالة والوزن ووصفة الطبيب الشخصية.
                 </div>
             </div>
-
-            <div id="medicines-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Populated via JS -->
-            </div>
+            <div id="medicines-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </div>
 
         <!-- 5. صفحة الأطباء والكوادر الطبية -->
@@ -301,10 +287,7 @@
                     + انضم كطبيّ/كادر طبي
                 </button>
             </div>
-
-            <div id="doctors-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Populated via JS -->
-            </div>
+            <div id="doctors-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </div>
 
         <!-- 6. طلب رعاية منزلية -->
@@ -314,7 +297,6 @@
                     <h2 class="text-2xl md:text-3xl font-black text-slate-900 mb-2">نموذج طلب رعاية منزلية</h2>
                     <p class="text-slate-600 text-sm">أدخل تفاصيل الحالة ليتم توجيه أقرب كادر تمريضي أو طبي متوفر في منطقتك بقطاع غزة.</p>
                 </div>
-
                 <form id="home-care-form" onsubmit="submitHomeCareRequest(event)" class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
@@ -326,7 +308,6 @@
                             <input type="tel" id="req-phone" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary-500 focus:outline-none" placeholder="+970 ...">
                         </div>
                     </div>
-
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-bold text-slate-700 mb-2">المنطقة في قطاع غزة *</label>
@@ -349,7 +330,6 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-bold text-slate-700 mb-2">درجة الاستعجال</label>
@@ -368,22 +348,18 @@
                             </select>
                         </div>
                     </div>
-
                     <div>
                         <label class="block text-sm font-bold text-slate-700 mb-2">وصف مختصر للحالة الصحية</label>
                         <textarea id="req-notes" rows="3" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary-500 focus:outline-none" placeholder="اكتب تفاصيل الأعراض أو الإصابة باختصار..."></textarea>
                     </div>
-
                     <div class="bg-slate-50 p-4 rounded-xl border text-xs text-slate-500 flex items-start gap-2">
                         <i class="fa-solid fa-shield-halved text-primary-600 mt-0.5"></i>
                         <span>تنبيه الخصوصية: لا ترفع معلومات حساسة غير ضرورية. سيتم التعامل مع بياناتك بسرية تامة لغرض تقديم الخدمة فقط.</span>
                     </div>
-
                     <button type="submit" class="w-full py-4 bg-primary-700 hover:bg-primary-800 text-white font-bold rounded-xl shadow-lg transition-all text-lg">
                         إرسال الطلب للمتخصصين الميدانيين
                     </button>
                 </form>
-
                 <!-- Request Tracking Box -->
                 <div id="tracking-result" class="mt-8 hidden p-6 bg-emerald-50 border border-emerald-200 rounded-2xl text-center space-y-3">
                     <i class="fa-solid fa-circle-check text-4xl text-emerald-600"></i>
@@ -404,7 +380,6 @@
                 <h2 class="text-3xl font-black text-slate-900">أرقام الطوارئ الرسمية الموثوقة في غزة</h2>
                 <p class="text-slate-600 text-sm max-w-xl mx-auto">في حالات الخطر الشديد والحوادث الطارئة، يرجى التواصل المباشر مع الجهات الرسمية المختصة فوراً.</p>
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="bg-white p-6 rounded-2xl border-2 border-red-100 shadow-sm flex items-center justify-between">
                     <div>
@@ -416,7 +391,6 @@
                         <i class="fa-solid fa-phone"></i> 101
                     </a>
                 </div>
-
                 <div class="bg-white p-6 rounded-2xl border-2 border-red-100 shadow-sm flex items-center justify-between">
                     <div>
                         <span class="text-xs font-bold text-red-600 bg-red-50 px-2.5 py-1 rounded-md">إنقاذ وإطفاء</span>
@@ -428,118 +402,72 @@
                     </a>
                 </div>
             </div>
-
-            <!-- Blood Donation Emergency Info -->
             <div class="bg-white p-8 rounded-3xl border shadow-sm space-y-4">
                 <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
                     <i class="fa-solid fa-droplet text-red-600"></i> معلومات التبرع بالدم الطارئ
                 </h3>
                 <p class="text-sm text-slate-600 leading-relaxed">
-                    يتم تنسيق حملات التبرع بالدم عبر بنوك الدم المركزية في المستشفيات العاملة (ناصر، الأقصى، الشفاء) وبالتنسيق مع جمعية الهلال الأحمر الفلسطيني. في حال رغبتك بالتبرع، يرجى التوجه لأقرب نقطة طبية معتمدة.
+                    يتم التنسيق المركزي لبنوك الدم عبر بنك الدم المركزي في المستشفيات الرئيسية. في حال رغبتك بالتبرع أو توفير وحدات دم لحالة طارئة، يرجى التوجه لأقرب نقطة طبية معتمدة أو التواصل مع فرق بنك الدم في مستشفيات المحافظات الوسطى وخانيونس.
                 </p>
             </div>
         </div>
 
         <!-- 8. المقالات والأبحاث العلمية -->
-        <div id="view-articles" class="tab-content py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <h2 class="text-3xl font-black text-slate-900">المقالات والأبحاث الطبية</h2>
-                    <p class="text-slate-600 text-sm mt-1">محتوى علمي معتمد ومقالات توعوية وبحثية خاصة بالواقع الصحي في غزة.</p>
-                </div>
-                <button onclick="openModal('article-modal')" class="bg-primary-700 hover:bg-primary-800 text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-md transition-all">
-                    + أرسل مقالاً أو بحثاً علمياً
-                </button>
+        <div id="view-articles" class="tab-content py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="mb-8">
+                <h2 class="text-3xl font-black text-slate-900">المقالات والأبحاث الصحية</h2>
+                <p class="text-slate-600 text-sm mt-1">مقالات طبية معتمدة، أبحاث ميدانية، وإرشادات وقائية لفريق E-Clinic Gaza.</p>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="articles-list">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="articles-list">
                 <!-- Populated via JS -->
             </div>
         </div>
 
-        <!-- 9. التوعية الصحية والإسعافات الأولية -->
-        <div id="view-awareness" class="tab-content py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
-            <div>
-                <h2 class="text-3xl font-black text-slate-900">التوعية الصحية ودليل الإسعافات الأولية</h2>
-                <p class="text-slate-600 text-sm mt-1">إرشادات مبسطة للتعامل مع الحالات الطارئة والشائعة في الظروف الميدانية.</p>
+        <!-- 9. التوعية والإسعافات الأولية -->
+        <div id="view-awareness" class="tab-content py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="mb-8">
+                <h2 class="text-3xl font-black text-slate-900">التوعية والإسعافات الأولية</h2>
+                <p class="text-slate-600 text-sm mt-1">دليل مصور وسريع للتعامل مع الإصابات الطارئة في الظروف الصعبة.</p>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded-2xl border shadow-sm space-y-3">
-                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-xl">
-                        <i class="fa-solid fa-bandage"></i>
-                    </div>
-                    <h3 class="font-bold text-lg text-slate-900">التعامل مع نزيف الجروح</h3>
-                    <div class="space-y-2 text-xs text-slate-600">
-                        <p><strong class="text-emerald-700">ماذا تفعل:</strong> اضغط بقوة مباشرة على الجرح بقطعة قماش نظيفة أو معقمة لعدة دقائق.</p>
-                        <p><strong class="text-red-700">ماذا لا تفعل:</strong> لا ترفع الضغط بشكل متكرر لمعاينة الجرح قبل توقف النزيف.</p>
-                    </div>
-                </div>
-
-                <div class="bg-white p-6 rounded-2xl border shadow-sm space-y-3">
-                    <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center text-xl">
-                        <i class="fa-solid fa-glass-water"></i>
-                    </div>
-                    <h3 class="font-bold text-lg text-slate-900">الوقاية من الجفاف المعوي</h3>
-                    <div class="space-y-2 text-xs text-slate-600">
-                        <p><strong class="text-emerald-700">ماذا تفعل:</strong> استخدم محاليل الإرواء الفموي (ORS) أو غلي مياه الشرب وتبريدها جيداً.</p>
-                        <p><strong class="text-red-700">ماذا لا تفعل:</strong> لا تشرب مياه غير معلومة المصدر أو مكشوفة للشمس والغبار.</p>
-                    </div>
-                </div>
-
-                <div class="bg-white p-6 rounded-2xl border shadow-sm space-y-3">
-                    <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center text-xl">
-                        <i class="fa-solid fa-brain"></i>
-                    </div>
-                    <h3 class="font-bold text-lg text-slate-900">الإسعاف النفسي الأولي</h3>
-                    <div class="space-y-2 text-xs text-slate-600">
-                        <p><strong class="text-emerald-700">ماذا تفعل:</strong> امنح الشخص مساحة للتعبير عن مشاعره، وطمئنه بتواجد الدعم حوله.</p>
-                        <p><strong class="text-red-700">ماذا لا تفعل:</strong> لا تفرض نصائح قاسية أو تقلل من حجم الصدمة التي يمر بها.</p>
-                    </div>
-                </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="awareness-list">
+                <!-- Populated via JS -->
             </div>
         </div>
 
-        <!-- 10. لوحة تحكم المدير ومراجعة المحتوى (Admin Dashboard) -->
-        <div id="view-admin" class="tab-content py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-slate-900 text-white p-6 rounded-3xl shadow-lg">
+        <!-- 10. لوحة تحكم المدير (Admin) -->
+        <div id="view-admin" class="tab-content py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-6">
+            <div class="flex justify-between items-center bg-white p-6 rounded-2xl border shadow-sm">
                 <div>
-                    <span class="text-xs bg-primary-600 text-white px-3 py-1 rounded-full font-bold">لوحة إدارة النظام</span>
-                    <h2 class="text-3xl font-black mt-2">إدارة ومراجعة محتوى E-Clinic Gaza</h2>
-                    <p class="text-slate-400 text-sm mt-1">مراجعة المستشفيات، طلبات الأطباء، المقالات المعلقة، وطلبات الرعاية المنزلية.</p>
+                    <h2 class="text-2xl font-black text-slate-900">لوحة تحكم المشرفين</h2>
+                    <p class="text-xs text-slate-500 mt-1">إدارة الطلبات الواردة، تحديث حالات المستشفيات والأدوية الميدانية.</p>
                 </div>
-                <div class="flex gap-3">
-                    <div class="bg-slate-800 p-3 rounded-xl text-center">
-                        <span class="block text-2xl font-black text-primary-400" id="stat-reqs">3</span>
-                        <span class="text-xs text-slate-400">طلبات جديدة</span>
-                    </div>
-                    <div class="bg-slate-800 p-3 rounded-xl text-center">
-                        <span class="block text-2xl font-black text-amber-400" id="stat-articles">2</span>
-                        <span class="text-xs text-slate-400">مقالات معلقة</span>
-                    </div>
+                <button onclick="alert('تم مزامنة البيانات بنجاح مع الخادم الميداني.')" class="bg-primary-600 text-white text-xs font-bold px-4 py-2 rounded-xl">مزامنة البيانات</button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-2xl border shadow-sm">
+                    <span class="text-xs font-bold text-slate-400">إجمالي طلبات الرعاية</span>
+                    <h3 class="text-3xl font-black text-primary-700 mt-2" id="admin-req-count">14</h3>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border shadow-sm">
+                    <span class="text-xs font-bold text-slate-400">الكوادر الطبية المسجلة</span>
+                    <h3 class="text-3xl font-black text-emerald-600 mt-2" id="admin-doc-count">8</h3>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border shadow-sm">
+                    <span class="text-xs font-bold text-slate-400">حالة النظام الميداني</span>
+                    <h3 class="text-xl font-bold text-secondary-600 mt-2">نشط ومستقر 🟢</h3>
                 </div>
             </div>
-
-            <!-- Admin Tabs Navigation -->
-            <div class="flex gap-2 border-b pb-4 overflow-x-auto">
-                <button onclick="switchAdminTab('admin-reqs')" class="admin-tab-btn px-4 py-2 bg-primary-700 text-white rounded-xl text-xs font-bold whitespace-nowrap">طلبات الرعاية المنزلية</button>
-                <button onclick="switchAdminTab('admin-articles')" class="admin-tab-btn px-4 py-2 bg-white border text-slate-700 rounded-xl text-xs font-bold whitespace-nowrap">مراجعة المقالات</button>
-                <button onclick="switchAdminTab('admin-hospitals')" class="admin-tab-btn px-4 py-2 bg-white border text-slate-700 rounded-xl text-xs font-bold whitespace-nowrap">إدارة المنشآت الطبية</button>
-            </div>
-
-            <!-- Admin Tab 1: Requests -->
-            <div id="admin-tab-admin-reqs" class="admin-content space-y-4">
-                <h3 class="font-bold text-lg text-slate-900">طلبات الرعاية المنزلية الواردة</h3>
-                <div class="bg-white rounded-2xl border shadow-sm overflow-hidden">
+            <div class="bg-white p-6 rounded-2xl border shadow-sm">
+                <h3 class="font-bold text-lg text-slate-900 mb-4">طلبات الرعاية المنزلية الواردة</h3>
+                <div class="overflow-x-auto">
                     <table class="w-full text-right text-sm">
-                        <thead class="bg-slate-100 text-slate-700 font-bold border-b">
+                        <thead class="bg-slate-50 text-slate-600 border-b">
                             <tr>
-                                <th class="p-4">رقم المتابعة</th>
-                                <th class="p-4">المريض</th>
-                                <th class="p-4">المنطقة</th>
-                                <th class="p-4">الخدمة</th>
-                                <th class="p-4">الحالة</th>
-                                <th class="p-4">إجراءات</th>
+                                <th class="p-3">رقم الطلب</th>
+                                <th class="p-3">المريض</th>
+                                <th class="p-3">المنطقة</th>
+                                <th class="p-3">الخدمة المطلوبة</th>
+                                <th class="p-3">الحالة</th>
                             </tr>
                         </thead>
                         <tbody id="admin-requests-table">
@@ -548,214 +476,154 @@
                     </table>
                 </div>
             </div>
-
-            <!-- Admin Tab 2: Articles -->
-            <div id="admin-tab-admin-articles" class="admin-content space-y-4 hidden">
-                <h3 class="font-bold text-lg text-slate-900">المقالات والأبحاث بانتظار المراجعة (Pending Review)</h3>
-                <div id="admin-articles-list" class="space-y-4">
-                    <!-- Populated via JS -->
-                </div>
-            </div>
-
-            <!-- Admin Tab 3: Hospitals -->
-            <div id="admin-tab-admin-hospitals" class="admin-content space-y-4 hidden">
-                <div class="flex justify-between items-center">
-                    <h3 class="font-bold text-lg text-slate-900">حالة المستشفيات والمنشآت</h3>
-                    <button onclick="alert('تم حفظ التحديثات وإرسالها للتدقيق')" class="bg-secondary-600 text-white px-4 py-2 rounded-xl text-xs font-bold">+ إضافة مستشفى جديد</button>
-                </div>
-                <div id="admin-hospitals-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Populated via JS -->
-                </div>
-            </div>
         </div>
 
     </main>
 
-    <!-- Modals (Doctor Submission & Article Submission) -->
-    <div id="doctor-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-lg w-full p-6 space-y-4">
+    <!-- نافذة منبثقة لانضمام الأطباء (Modal) -->
+    <div id="doctor-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative space-y-4">
             <div class="flex justify-between items-center">
-                <h3 class="font-bold text-xl text-slate-900">طلب إضافة ملف مهني طبي</h3>
-                <button onclick="closeModal('doctor-modal')" class="text-slate-400 hover:text-slate-700 text-xl"><i class="fa-solid fa-xmark"></i></button>
+                <h3 class="text-xl font-black text-slate-900">انضمام كادر طبي أو صيدلي</h3>
+                <button onclick="closeModal('doctor-modal')" class="text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
             </div>
-            <form onsubmit="submitDoctorForm(event)" class="space-y-4 text-sm">
+            <form id="doctor-join-form" onsubmit="submitDoctorForm(event)" class="space-y-4">
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">الاسم الثلاثي واللقب المهني *</label>
-                    <input type="text" required class="w-full px-3 py-2 border rounded-xl" placeholder="د. محمد أحمد (استشاري جراحة)">
+                    <label class="block text-xs font-bold text-slate-700 mb-1">الاسم الكامل والتخصص *</label>
+                    <input type="text" id="doc-name" required class="w-full px-3 py-2 border rounded-xl text-sm" placeholder="د. أحمد محمد - جراحة عامة">
                 </div>
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">التخصص *</label>
-                        <input type="text" required class="w-full px-3 py-2 border rounded-xl" placeholder="باطنة، جراحة عامة...">
-                    </div>
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">سنوات الخبرة</label>
-                        <input type="number" class="w-full px-3 py-2 border rounded-xl" placeholder="5">
-                    </div>
-                </div>
-                <div>
-                    <label class="block font-bold text-slate-700 mb-1">جهة العمل الحالية / المستشفى</label>
-                    <input type="text" class="w-full px-3 py-2 border rounded-xl" placeholder="مستشفى شهداء الأقصى">
-                </div>
-                <div>
-                    <label class="block font-bold text-slate-700 mb-1">رقم التواصل المهني / واتساب</label>
-                    <input type="tel" required class="w-full px-3 py-2 border rounded-xl" placeholder="+970 ...">
-                </div>
-                <div class="bg-slate-50 p-3 rounded-xl text-xs text-slate-500">
-                    ملاحظة: سيتم التحقق من بياناتك المهنية وإضافة شارة "تم التحقق" بعد المراجعة.
-                </div>
-                <button type="submit" class="w-full py-3 bg-primary-700 text-white font-bold rounded-xl shadow-md">إرسال الطلب للمراجعة</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Article Submission Modal -->
-    <div id="article-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-xl w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto">
-            <div class="flex justify-between items-center">
-                <h3 class="font-bold text-xl text-slate-900">إرسال مقال أو بحث علمي</h3>
-                <button onclick="closeModal('article-modal')" class="text-slate-400 hover:text-slate-700 text-xl"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <form onsubmit="submitArticleForm(event)" class="space-y-4 text-sm">
-                <div>
-                    <label class="block font-bold text-slate-700 mb-1">اسم الكاتب / الباحث *</label>
-                    <input type="text" id="art-author" required class="w-full px-3 py-2 border rounded-xl" placeholder="الاسم الكامل والتخصص">
-                </div>
-                <div>
-                    <label class="block font-bold text-slate-700 mb-1">عنوان المقال أو البحث *</label>
-                    <input type="text" id="art-title" required class="w-full px-3 py-2 border rounded-xl" placeholder="عنوان رئيسي واضح">
-                </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block font-bold text-slate-700 mb-1">التصنيف</label>
-                        <select id="art-category" class="w-full px-3 py-2 border rounded-xl">
-                            <option>الصحة العامة</option>
-                            <option>أبحاث متعلقة بغزة</option>
-                            <option>الإسعاف والطوارئ</option>
-                            <option>الأمراض المزمنة</option>
-                            <option>الصحة النفسية</option>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">المحافظة *</label>
+                        <select id="doc-region" class="w-full px-3 py-2 border rounded-xl text-sm">
+                            <option>شمال غزة</option>
+                            <option>مدينة غزة</option>
+                            <option>دير البلح والوسطى</option>
+                            <option>خانيونس</option>
+                            <option>رفح</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">رابط المصدر أو DOI (إن وجد)</label>
-                        <input type="url" id="art-doi" class="w-full px-3 py-2 border rounded-xl" placeholder="https://...">
+                        <label class="block text-xs font-bold text-slate-700 mb-1">رقم التواصل / واتساب *</label>
+                        <input type="tel" id="doc-phone" required class="w-full px-3 py-2 border rounded-xl text-sm" placeholder="+970...">
                     </div>
                 </div>
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">ملخص المقال / Abstract *</label>
-                    <textarea id="art-excerpt" rows="2" required class="w-full px-3 py-2 border rounded-xl" placeholder="ملخص قصير..."></textarea>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">نبذة أو جهة العمل الحالية</label>
+                    <input type="text" id="doc-notes" class="w-full px-3 py-2 border rounded-xl text-sm" placeholder="طبيب مقيم في مستشفى... / متطوع ميداني">
                 </div>
-                <div>
-                    <label class="block font-bold text-slate-700 mb-1">المحتوى الكامل *</label>
-                    <textarea id="art-content" rows="4" required class="w-full px-3 py-2 border rounded-xl" placeholder="محتوى المقال أو البحث..."></textarea>
-                </div>
-                <button type="submit" class="w-full py-3 bg-primary-700 text-white font-bold rounded-xl shadow-md">إرسال للمراجعة (Pending Review)</button>
+                <button type="submit" class="w-full py-3 bg-primary-700 text-white font-bold rounded-xl text-sm shadow-md">إرسال طلب الانضمام للدليل</button>
             </form>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 mt-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div class="space-y-3">
-                <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center text-white">
-                        <i class="fa-solid fa-notes-medical"></i>
-                    </div>
-                    <span class="font-bold text-xl text-white">E-<span class="text-primary-500">Clinic Gaza</span></span>
+    <footer class="bg-slate-900 text-slate-400 py-12 mt-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+            <div class="flex items-center justify-center gap-2">
+                <div class="w-8 h-8 rounded-lg bg-primary-600 flex items-center justify-center text-white font-bold">
+                    <i class="fa-solid fa-notes-medical"></i>
                 </div>
-                <p class="text-xs text-slate-400">بوابة صحية رقمية موثوقة لقطاع غزة (الإصدار 2.0). صُممت لتقديم الرعاية، المعلومات الطبية، وتخفيف المعاناة.</p>
-                <p class="text-xs text-slate-500">&copy; 2026 E-Clinic Gaza. جميع الحقوق محفوظة.</p>
+                <span class="font-extrabold text-white text-lg">E-Clinic Gaza 2.0</span>
             </div>
-            <div>
-                <h4 class="text-white font-bold mb-3 text-sm">روابط سريعة</h4>
-                <ul class="space-y-2 text-xs">
-                    <li><button onclick="switchTab('hospitals')" class="hover:text-white transition-colors">المستشفيات والمراكز</button></li>
-                    <li><button onclick="switchTab('medicines')" class="hover:text-white transition-colors">دليل الأدوية</button></li>
-                    <li><button onclick="switchTab('request')" class="hover:text-white transition-colors">طلب رعاية منزلية</button></li>
-                    <li><button onclick="switchTab('emergency')" class="hover:text-white transition-colors">طوارئ غزة</button></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-white font-bold mb-3 text-sm">المحتوى العلمي</h4>
-                <ul class="space-y-2 text-xs">
-                    <li><button onclick="switchTab('articles')" class="hover:text-white transition-colors">المقالات والأبحاث</button></li>
-                    <li><button onclick="switchTab('awareness')" class="hover:text-white transition-colors">التوعية والإسعافات</button></li>
-                    <li><button onclick="switchTab('doctors')" class="hover:text-white transition-colors">الكوادر الطبية الموثوقة</button></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-white font-bold mb-3 text-sm">مصادر وموثوقية</h4>
-                <p class="text-xs text-slate-400 mb-3">جميع البيانات تخضع للتدقيق والمراجعة وفق المعايير الطبية وبالتنسيق مع الجهات المختصة.</p>
-                <div class="text-xs text-primary-400 font-bold">حالة النظام: يعمل بدون إنترنت (PWA Ready)</div>
-            </div>
+            <p class="text-xs text-slate-400 max-w-md mx-auto">منصة رقمية مجتمعية تطوعية تهدف لتسهيل الوصول للخدمات الصحية والدوائية الطارئة في قطاع غزة.</p>
+            <p class="text-xs text-slate-600 pt-4 border-t border-slate-800">جميع الحقوق محفوظة © 2026 | E-Clinic Gaza</p>
         </div>
     </footer>
 
-    <!-- JavaScript Application Logic & Demo Data Seed -->
+    <!-- JavaScript البرمجي الشامل -->
     <script>
-        // Demo Data Seed (DEMO DATA)
-        let state = {
-            hospitals: [
-                { id: 1, name: "مجمع الشفاء الطبي", gov: "غزة", type: "حكومي", status: "🟡 تعمل جزئيًا", updated: "10/08/2026", source: "وزارة الصحة", phone: "+970828233", services: "طوارئ، غسيل كلى، جراحة عامة" },
-                { id: 2, name: "مستشفى شهداء الأقصى", gov: "دير البلح", type: "حكومي", status: "🟢 تعمل", updated: "10/08/2026", source: "WHO", phone: "+970825312", services: "طوارئ، ولادة، أطفال، عيادات خارجية" },
-                { id: 3, name: "مستشفى ناصر الطبي", gov: "خانيونس", type: "حكومي", status: "🟡 تعمل جزئيًا", updated: "09/08/2026", source: "وزارة الصحة", phone: "+970820541", services: "جراحة، عظام، عناية مركزة، طوارئ" },
-            ],
-            medicines: [
-                { id: 1, name: "أنسولين مكس (Insulin Mix)", active: "Human Insulin", form: "حقن 100 وحدة/مل", category: "أدوية السكري", usage: "تنظيم مستوى السكر في الدم لمرضى السكري.", warning: "يحفظ في الثلاجة (2-8 درجات مئوية). لا يستخدم بعد انتهاء الصلاحية." },
-                { id: 2, name: "باراسيتامول (Paracetamol)", active: "Acetaminophen", form: "أقراص 500mg", category: "مسكنات", usage: "خافض للحرارة ومسكن للآلام الخفيفة والمتوسطة.", warning: "لا تتجاوز الجرعة القصوى (4 غرام يومياً للبالغين)." },
-                { id: 3, name: "أموكسيسيلين (Amoxicillin)", active: "Amoxicillin Trihydrate", form: "كبسولات 500mg", category: "مضادات حيوية", usage: "علاج الالتهابات البكتيرية حسب وصفة الطبيب.", warning: "يجب إكمال كامل كورس العلاج ولا يُصرف إلا بوصفة طبية." }
-            ],
-            doctors: [
-                { id: 1, name: "د. رائد أبو حطب", profession: "استشاري الجراحة العامة", exp: "14 سنة", gov: "خانيونس", work: "مستشفى ناصر الطبي", verified: true },
-                { id: 2, name: "د. سمر المصري", profession: "أخصائية طب الأطفال", exp: "8 سنوات", gov: "دير البلح", work: "مستشفى شهداء الأقصى", verified: true },
-            ],
-            articles: [
-                { id: 1, title: "التعامل مع الإصابات الميدانية في ظل نقص المعقمات", author: "د. رائد أبو حطب", category: "الإسعاف والطوارئ", date: "08/08/2026", status: "APPROVED", excerpt: "دليل عملي للمسعفين الميدانيين حول تعقيم الجروح البسيطة والمتوسطة والوقاية من التلوث البكتيري." },
-                { id: 2, title: "إدارة الأمراض المزمنة عند انقطاع الأدوية الأساسية", author: "صيدلي. أحمد عبد الهادي", category: "الأمراض المزمنة", date: "09/08/2026", status: "APPROVED", excerpt: "بدائل علاجية وإرشادات غذائية لمرضى السكري والضغط عند شح الأدوية في الصيدليات." }
-            ],
-            requests: [
-                { id: "REQ-948210", name: "محمود حسن", region: "خانيونس", service: "عناية بالجروح وتعقيم", status: "قيد المراجعة", phone: "+970591234567" },
-                { id: "REQ-849201", name: "فاطمة النجار", region: "دير البلح", service: "متابعة أدوية وضغط وسكري", status: "تم التواصل", phone: "+970569876543" }
-            ]
-        };
+        // قواعد البيانات الوهمية (Demo Data)
+        const hospitalsData = [
+            { id: 1, name: 'مجمع الشفاء الطبي', gov: 'غزة', status: 'يعمل جزئياً', desc: 'قسم الطوارئ والجراحة وغسيل الكلى تعمل بقدر استيعابية محدودة.', phone: '+97082823122' },
+            { id: 2, name: 'مستشفى شهداء الأقصى', gov: 'دير البلح', status: 'يعمل', desc: 'المستشفى الرئيسي في الوسطى، يخدم آلاف النازحين والمرضى.', phone: '+97082535041' },
+            { id: 3, name: 'مستشفى ناصر الطبي', gov: 'خانيونس', status: 'يعمل جزئياً', desc: 'أقسام الجراحة والأطفال والعظام تستقبل الإصابات والحالات المرضية.', phone: '+97082055011' },
+            { id: 4, name: 'مستشفى العيش التخصصي / الإندونيسي', gov: 'شمال غزة', status: 'خدمات محدودة', desc: 'إصلاحات جزئية وتقديم الإسعافات الأولية وعيادات خارجية.', phone: '+97082361005' },
+            { id: 5, name: 'مستشفى الهلال الإماراتي', gov: 'رفح', status: 'يعمل', desc: 'تخصص نساء وتوليد وأطفال، ويقدم خدمات الرعاية الصحية الأساسية.', phone: '+97082132001' }
+        ];
 
-        // Navigation Switcher
+        const medicinesData = [
+            { id: 1, name: 'أنسولين بشري (Insulin)', active: 'Insulin Human', use: 'خفض وتعديل سكر الدم لمرضى السكري.', status: 'متوفر بكميات محدودة في صيدليات الوسط وخان يونس المركزية.' },
+            { id: 2, name: 'باراسيتامول (Paracetamol)', active: 'Paracetamol', use: 'خافض حرارة ومسكن آلام خفيف.', status: 'متوفر بكثرة في أغلب الصيدليات والمراكز.' },
+            { id: 3, name: 'مضاد حيوي أوجمنتين (Augmentin)', active: 'Amoxicillin / Clavulanate', use: 'علاج التهابات البكتيريا والجروح.', status: 'متوفر بنسب متفاوتة، يحتاج وصفة طبية.' },
+            { id: 4, name: 'مضادات ضغط الدم (Captopril / Concor)', active: 'Beta Blockers & ACE inhibitors', use: 'انتظام ضغط الدم وأمراض القلب.', status: 'متوفر في الصيدليات المركزية الكبرى.' },
+            { id: 5, name: 'مراهم تعقيم جروح ومضادات موضعية', active: 'Antiseptic Ointments', use: 'الوقاية من تلوث الجروح وتقرحات الفراش.', status: 'متوفر عبر فرق الرعاية المنزلية وبنوك الأدوية.' }
+        ];
+
+        let doctorsData = [
+            { id: 1, name: 'د. رائد أبو شعبان', region: 'مدينة غزة', spec: 'استشاري جراحة عامة', phone: '+970599123456', notes: 'مستشفى الشفاء / متطوع ميداني' },
+            { id: 2, name: 'د. سمر المصري', region: 'خانيونس', spec: 'أخصائية أطفال وصحة مجتمع', phone: '+970598765432', notes: 'مستشفى ناصر الطبي' },
+            { id: 3, name: 'الممرض طارق العبدالله', region: 'دير البلح والوسطى', spec: 'تمريض العناية المركزة والجروح', phone: '+970597112233', notes: 'متاح للرعاية المنزلية وتعقيم الجروح' }
+        ];
+
+        const mapLocationsData = [
+            { id: 1, name: 'مجمع الشفاء الطبي', type: 'hospital', gov: 'غزة', coords: '31.520, 34.447', status: 'يعمل جزئياً' },
+            { id: 2, name: 'صيدلية النور المركزية', type: 'pharmacy', gov: 'خانيونس', coords: '31.346, 34.306', status: 'متوفر أدوية مزمنة' },
+            { id: 3, name: 'نقطة الهلال الأحمر الإسعافية', type: 'emergency', gov: 'دير البلح', coords: '31.416, 34.352', status: 'جاهز للطوارئ 24/7' },
+            { id: 4, name: 'مختبرات المركز الطبي الأول', type: 'lab', gov: 'رفح', coords: '31.297, 34.250', status: 'تحاليل دم أساسية' }
+        ];
+
+        const articlesData = [
+            { id: 1, title: 'التعامل مع الجروح والوقاية من التلوث في خيام النزوح', cat: 'إرشادات ميدانية', date: 'أغسطس 2026', text: 'كيفية تعقيم الجروح البسيطة باستخدام المحاليل المتاحة وتجنب تفاقم الالتهابات البكتيرية.' },
+            { id: 2, title: 'إدارة أدوية الأمراض المزمنة عند انقطاع الإمدادات الدائمة', cat: 'صحة عامة', date: 'يوليو 2026', text: 'طرق ترشيد الجرعات والبدائل الدوائية المتاحة تحت إشراف الصيادلة المحليين.' },
+            { id: 3, title: 'الإسعافات الأولية لحالات التجفاف الناتجة عن مياه الشرب غير المأمونة', cat: 'توقية صحية', date: 'أغسطس 2026', text: 'الخطوات السريعة لتعويض السوائل والأملاح وإعطاء محاليل الإرواء الفموي.' }
+        ];
+
+        const awarenessData = [
+            { title: 'إيقاف النزيف الحاد', steps: ['الضغط المباشر على مكان النزيف بقطعة قماش نظيفة ومعقمة.', 'رفع العضو المصاب أعلى من مستوى القلب إن أمكن.', 'عدم إزالة الضمادة المشبعة بل إضافة ضمادات فوقها والاتصال بـ 101.'] },
+            { title: 'التعامل مع الحروق البسيطة', steps: ['بريد مكان الحرق بماء فاتر جاري لمدة 10-15 دقيقة.', 'عدم وضع زيوت أو معجون أسنان أو ثلج نهائياً.', 'تغطية الحرق بقطعة قماش نظيفة غير جائحة وراجع الطبيب.'] }
+        ];
+
+        let requestsList = [
+            { id: 'REQ-849201', name: 'سليم أحمد أبو هداف', region: 'خانيونس', service: 'عناية بالجروح وتعقيم / تفادي بتر', status: 'قيد المتابعة' },
+            { id: 'REQ-918234', name: 'فاطمة محمود عابد', region: 'مدينة غزة', service: 'متابعة أدوية وضغط وسكري', status: 'تم التوجيه للكادر' }
+        ];
+
+        // دوال التنقل (SPA Router)
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.getElementById('view-' + tabId).classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            if(tabId === 'hospitals') renderHospitals();
-            if(tabId === 'medicines') renderMedicines();
-            if(tabId === 'doctors') renderDoctors();
-            if(tabId === 'articles') renderArticles();
-            if(tabId === 'admin') renderAdminDashboard();
-            if(tabId === 'map') renderMapLocations();
+            const target = document.getElementById('view-' + tabId);
+            if (target) {
+                target.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            // إغلاق القائمة الموبايل إن كانت مفتوحة
+            document.getElementById('mobile-menu').classList.add('hidden');
         }
 
         function toggleMobileMenu() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
         }
 
-        document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
+        // تهيئة البيانات عند التحميل
+        document.addEventListener('DOMContentLoaded', () => {
+            renderHospitals(hospitalsData);
+            renderMedicines(medicinesData);
+            renderDoctors(doctorsData);
+            renderMapLocations(mapLocationsData);
+            renderArticles(articlesData);
+            renderAwareness(awarenessData);
+            renderAdminRequests();
+        });
 
-        // Render Hospitals
-        function renderHospitals(filteredList = null) {
-            const list = filteredList || state.hospitals;
+        // 1. عرض وتصفية المستشفيات
+        function renderHospitals(data) {
             const container = document.getElementById('hospitals-list');
-            container.innerHTML = list.map(h => `
-                <div class="bg-white p-6 rounded-2xl border shadow-sm space-y-4 card-hover">
-                    <div class="flex justify-between items-start">
-                        <span class="text-xs font-bold px-2.5 py-1 rounded-md ${h.status.includes('🟢') ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}">${h.status}</span>
-                        <span class="text-xs text-slate-400">${h.gov} | ${h.type}</span>
+            if (!container) return;
+            container.innerHTML = data.map(h => `
+                <div class="bg-white p-6 rounded-2xl border shadow-sm card-hover flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-md ${h.status.includes('جزئياً') ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-700'}">${h.status}</span>
+                            <span class="text-xs font-bold text-slate-400 bg-slate-100 px-2.5 py-1 rounded-md">${h.gov}</span>
+                        </div>
+                        <h3 class="font-black text-xl text-slate-900 mb-2">${h.name}</h3>
+                        <p class="text-sm text-slate-600 mb-4">${h.desc}</p>
                     </div>
-                    <h3 class="font-bold text-xl text-slate-900">${h.name}</h3>
-                    <p class="text-xs text-slate-600"><strong>الخدمات:</strong> ${h.services}</p>
-                    <div class="pt-2 border-t flex justify-between items-center text-xs text-slate-500">
-                        <span>المصدر: ${h.source} (${h.updated})</span>
-                        <a href="tel:${h.phone}" class="bg-primary-50 text-primary-700 font-bold px-3 py-1.5 rounded-lg hover:bg-primary-100">
-                            <i class="fa-solid fa-phone"></i> اتصال
-                        </a>
+                    <div class="pt-4 border-t flex justify-between items-center text-xs font-bold">
+                        <span class="text-slate-500"><i class="fa-solid fa-phone"></i> ${h.phone}</span>
+                        <a href="tel:${h.phone}" class="bg-primary-50 text-primary-700 px-3 py-1.5 rounded-lg hover:bg-primary-100">اتصال</a>
                     </div>
                 </div>
             `).join('');
@@ -764,25 +632,25 @@
         function filterHospitals() {
             const query = document.getElementById('hospital-search').value.toLowerCase();
             const gov = document.getElementById('hospital-filter-governorate').value;
-            const filtered = state.hospitals.filter(h => 
-                (h.name.toLowerCase().includes(query) || h.services.toLowerCase().includes(query)) &&
-                (gov === "" || h.gov === gov)
-            );
+            const filtered = hospitalsData.filter(h => {
+                const matchQuery = h.name.toLowerCase().includes(query) || h.desc.toLowerCase().includes(query);
+                const matchGov = gov === "" || h.gov === gov;
+                return matchQuery && matchGov;
+            });
             renderHospitals(filtered);
         }
 
-        // Render Medicines
-        function renderMedicines(filteredList = null) {
-            const list = filteredList || state.medicines;
+        // 2. عرض وتصفية الأدوية
+        function renderMedicines(data) {
             const container = document.getElementById('medicines-list');
-            container.innerHTML = list.map(m => `
-                <div class="bg-white p-6 rounded-2xl border shadow-sm space-y-3 card-hover">
-                    <span class="text-xs font-bold bg-primary-50 text-primary-700 px-2.5 py-1 rounded-md">${m.category}</span>
-                    <h3 class="font-bold text-xl text-slate-950">${m.name}</h3>
-                    <p class="text-xs text-slate-500"><strong>المادة الفعالة:</strong> ${m.active} | <strong>الشكل:</strong> ${m.form}</p>
-                    <p class="text-xs text-slate-700 leading-relaxed"><strong>الاستخدام:</strong> ${m.usage}</p>
-                    <div class="bg-amber-50 text-amber-800 p-3 rounded-xl text-[11px] border border-amber-200">
-                        <strong>تحذير وتخزين:</strong> ${m.warning}
+            if (!container) return;
+            container.innerHTML = data.map(m => `
+                <div class="bg-white p-6 rounded-2xl border shadow-sm card-hover">
+                    <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md">${m.active}</span>
+                    <h3 class="font-black text-xl text-slate-900 mt-3 mb-1">${m.name}</h3>
+                    <p class="text-sm text-slate-600 mb-3"><strong>الاستخدام:</strong> ${m.use}</p>
+                    <div class="bg-slate-50 p-3 rounded-xl text-xs font-semibold text-slate-700 border">
+                        <i class="fa-solid fa-circle-info text-primary-600"></i> ${m.status}
                     </div>
                 </div>
             `).join('');
@@ -790,165 +658,189 @@
 
         function filterMedicines() {
             const query = document.getElementById('medicine-search').value.toLowerCase();
-            const filtered = state.medicines.filter(m => m.name.toLowerCase().includes(query) || m.active.toLowerCase().includes(query));
+            const filtered = medicinesData.filter(m => m.name.toLowerCase().includes(query) || m.active.toLowerCase().includes(query) || m.use.toLowerCase().includes(query));
             renderMedicines(filtered);
         }
 
-        // Render Doctors
-        function renderDoctors() {
+        // 3. عرض الأطباء والكوادر وتفعيل النافذة المنبثقة
+        function renderDoctors(data) {
             const container = document.getElementById('doctors-list');
-            container.innerHTML = state.doctors.map(d => `
-                <div class="bg-white p-6 rounded-2xl border shadow-sm space-y-3 card-hover flex flex-col justify-between">
-                    <div class="space-y-2">
-                        <div class="flex justify-between items-center">
-                            <span class="text-xs bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded">✓ تم التحقق</span>
-                            <span class="text-xs text-slate-400">${d.gov}</span>
+            if (!container) return;
+            container.innerHTML = data.map(d => `
+                <div class="bg-white p-6 rounded-2xl border shadow-sm card-hover flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-xs font-bold text-primary-700 bg-primary-50 px-2.5 py-1 rounded-md">${d.region}</span>
+                            <span class="text-xs text-slate-500 font-bold">${d.spec}</span>
                         </div>
-                        <h3 class="font-bold text-xl text-slate-900">${d.name}</h3>
-                        <p class="text-xs font-bold text-primary-700">${d.profession}</p>
-                        <p class="text-xs text-slate-600"><strong>الخبرة:</strong> ${d.exp} | <strong>العمل:</strong> ${d.work}</p>
+                        <h3 class="font-black text-xl text-slate-900 mb-1">${d.name}</h3>
+                        <p class="text-sm text-slate-600 mb-4">${d.notes}</p>
                     </div>
-                    <button onclick="alert('تم نسخ رقم التواصل المهني أو إرسال استفسار.')" class="w-full mt-4 py-2 bg-slate-100 hover:bg-primary-50 hover:text-primary-700 font-bold rounded-xl text-xs transition-all">
-                        تواصل مهني
-                    </button>
-                </div>
-            `).join('');
-        }
-
-        // Render Articles
-        function renderArticles() {
-            const container = document.getElementById('articles-list');
-            container.innerHTML = state.articles.map(a => `
-                <div class="bg-white p-6 rounded-2xl border shadow-sm space-y-3 card-hover flex flex-col justify-between">
-                    <div class="space-y-2">
-                        <span class="text-xs bg-purple-50 text-purple-700 font-bold px-2.5 py-1 rounded-md">${a.category}</span>
-                        <h3 class="font-bold text-lg text-slate-900">${a.title}</h3>
-                        <p class="text-xs text-slate-500">بقلم: ${a.author} | ${a.date}</p>
-                        <p class="text-xs text-slate-600 leading-relaxed">${a.excerpt}</p>
+                    <div class="pt-4 border-t flex justify-between items-center text-xs font-bold">
+                        <span class="text-slate-500"><i class="fa-solid fa-phone"></i> ${d.phone}</span>
+                        <a href="tel:${d.phone}" class="bg-primary-600 text-white px-3 py-1.5 rounded-lg hover:bg-primary-700">تواصل فوري</a>
                     </div>
-                    <button onclick="alert('عرض المقال كاملاً... (قيد التطوير لعرض النص الكامل والمراجع)')" class="mt-4 text-primary-600 font-bold text-xs text-right hover:underline">
-                        قراءة المقال الكامل ←
-                    </button>
                 </div>
             `).join('');
         }
 
-        // Map Locations list
-        function renderMapLocations() {
-            const container = document.getElementById('map-locations-list');
-            container.innerHTML = state.hospitals.map(h => `
-                <div class="p-4 bg-slate-50 rounded-xl border text-xs space-y-1 hover:border-primary-500 cursor-pointer">
-                    <div class="font-bold text-slate-900 text-sm">${h.name}</div>
-                    <div class="text-slate-500">${h.gov} - ${h.type}</div>
-                    <div class="text-emerald-600 font-bold">${h.status}</div>
-                </div>
-            `).join('');
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
         }
 
-        function filterMap(type) {
-            alert('تمت تصفية الخريطة حسب الفئة: ' + type);
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
         }
-
-        // Home Care Request Submission
-        function submitHomeCareRequest(e) {
-            e.preventDefault();
-            const name = document.getElementById('req-name').value;
-            const region = document.getElementById('req-region').value;
-            const service = document.getElementById('req-service').value;
-            const phone = document.getElementById('req-phone').value;
-            
-            const reqId = 'REQ-' + Math.floor(100000 + Math.random() * 900000);
-            
-            state.requests.unshift({ id: reqId, name, region, service, status: "قيد المراجعة", phone });
-            
-            document.getElementById('home-care-form').reset();
-            document.getElementById('tracking-code-display').innerText = reqId;
-            document.getElementById('tracking-result').classList.remove('hidden');
-        }
-
-        // Modals
-        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
-        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
 
         function submitDoctorForm(e) {
             e.preventDefault();
-            alert('تم إرسال طلب انضمامك بنجاح! سيتم مراجعة بياناتك وإضافة حسابك قريباً.');
+            const newDoc = {
+                id: doctorsData.length + 1,
+                name: document.getElementById('doc-name').value,
+                region: document.getElementById('doc-region').value,
+                spec: 'كادر طبي ميداني متطوع',
+                phone: document.getElementById('doc-phone').value,
+                notes: document.getElementById('doc-notes').value || 'منضم حديثاً عبر المنصة'
+            };
+            doctorsData.unshift(newDoc);
+            renderDoctors(doctorsData);
             closeModal('doctor-modal');
+            alert('تم إضافتك بنجاح إلى دليل الكوادر الطبية!');
+            document.getElementById('doctor-join-form').reset();
+            document.getElementById('admin-doc-count').innerText = doctorsData.length;
         }
 
-        function submitArticleForm(e) {
-            e.preventDefault();
-            const title = document.getElementById('art-title').value;
-            const author = document.getElementById('art-author').value;
-            const category = document.getElementById('art-category').value;
-            const excerpt = document.getElementById('art-excerpt').value;
-            
-            state.articles.push({ id: Date.now(), title, author, category, date: "10/08/2026", status: "PENDING", excerpt });
-            alert('تم إرسال المقال بنجاح وهو الآن بانتظار مراجعة الإدارة (Pending Review).');
-            closeModal('article-modal');
-            document.getElementById('article-modal').querySelector('form').reset();
-        }
-
-        // Admin Dashboard Switcher
-        function switchAdminTab(tabName) {
-            document.querySelectorAll('.admin-content').forEach(el => el.classList.add('hidden'));
-            document.getElementById('admin-tab-' + tabName).classList.remove('hidden');
-        }
-
-        function renderAdminDashboard() {
-            // Render requests table
-            const reqTable = document.getElementById('admin-requests-table');
-            reqTable.innerHTML = state.requests.map(r => `
-                <tr class="border-b hover:bg-slate-50">
-                    <td class="p-4 font-bold text-primary-700">${r.id}</td>
-                    <td class="p-4">${r.name}</td>
-                    <td class="p-4">${r.region}</td>
-                    <td class="p-4">${r.service}</td>
-                    <td class="p-4"><span class="bg-amber-100 text-amber-800 px-2.5 py-1 rounded text-xs font-bold">${r.status}</span></td>
-                    <td class="p-4 space-x-2 space-x-reverse">
-                        <button onclick="alert('تم تعيين كادر ميداني للطلب ${r.id}')" class="bg-primary-600 text-white px-3 py-1 rounded text-xs font-bold">تعيين</button>
-                        <button onclick="alert('تم إغلاق الطلب')" class="bg-slate-200 text-slate-700 px-3 py-1 rounded text-xs font-bold">إغلاق</button>
-                    </td>
-                </tr>
-            `).join('');
-
-            // Render admin articles list
-            const adminArt = document.getElementById('admin-articles-list');
-            adminArt.innerHTML = state.articles.map(a => `
-                <div class="bg-white p-4 rounded-2xl border flex justify-between items-center">
-                    <div>
-                        <span class="text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">${a.status}</span>
-                        <h4 class="font-bold text-slate-900 mt-1">${a.title}</h4>
-                        <p class="text-xs text-slate-500">بقلم: ${a.author} | ${a.category}</p>
+        // 4. الخريطة التفاعلية
+        function renderMapLocations(data) {
+            const container = document.getElementById('map-locations-list');
+            if (!container) return;
+            container.innerHTML = data.map(l => `
+                <div onclick="selectMapLocation('${l.name}', '${l.coords}', '${l.status}')" class="p-4 bg-slate-50 hover:bg-primary-50 border rounded-xl cursor-pointer transition-all">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="font-bold text-sm text-slate-900">${l.name}</span>
+                        <span class="text-[10px] bg-slate-200 px-2 py-0.5 rounded">${l.gov}</span>
                     </div>
-                    <div class="space-x-2 space-x-reverse">
-                        <button onclick="alert('تمت الموافقة ونشر المقال!')" class="bg-secondary-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold">موافقة ونشر</button>
-                        <button onclick="alert('تم رفض المقال')" class="bg-red-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold">رفض</button>
-                    </div>
+                    <p class="text-xs text-slate-500">الإحداثيات: ${l.coords}</p>
+                    <span class="text-[11px] font-bold text-emerald-600 block mt-1">${l.status}</span>
                 </div>
             `).join('');
-
-            document.getElementById('stat-reqs').innerText = state.requests.length;
-            document.getElementById('stat-articles').innerText = state.articles.filter(a => a.status === 'PENDING').length;
         }
 
-        // Global Search Simulation
+        function selectMapLocation(name, coords, status) {
+            document.getElementById('map-selected-title').innerText = name;
+            document.getElementById('map-selected-desc').innerText = `الإحداثيات الجغرافية: ${coords} | الحالة التشغيلية: ${status}`;
+        }
+
+        function filterMap(type) {
+            const filtered = type === 'all' ? mapLocationsData : mapLocationsData.filter(l => l.type === type);
+            renderMapLocations(filtered);
+        }
+
+        // 5. نموذج طلب رعاية منزلية وتوليد رقم التتبع
+        function submitHomeCareRequest(e) {
+            e.preventDefault();
+            const name = document.getElementById('req-name').value;
+            const phone = document.getElementById('req-phone').value;
+            const region = document.getElementById('req-region').value;
+            const service = document.getElementById('req-service').value;
+            
+            const randomCode = 'REQ-' + Math.floor(100000 + Math.random() * 900000);
+            
+            // إضافة الطلب لقائمة المدير
+            requestsList.unshift({
+                id: randomCode,
+                name: name,
+                region: region,
+                service: service,
+                status: 'قيد المتابعة والتحويل'
+            });
+
+            document.getElementById('tracking-code-display').innerText = randomCode;
+            document.getElementById('tracking-result').classList.remove('hidden');
+            document.getElementById('home-care-form').reset();
+            document.getElementById('admin-req-count').innerText = requestsList.length;
+            renderAdminRequests();
+        }
+
+        // 6. المقالات والتوعية
+        function renderArticles(data) {
+            const container = document.getElementById('articles-list');
+            if (!container) return;
+            container.innerHTML = data.map(a => `
+                <div class="bg-white p-6 rounded-2xl border shadow-sm">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-xs bg-purple-50 text-purple-700 font-bold px-2.5 py-1 rounded">${a.cat}</span>
+                        <span class="text-xs text-slate-400">${a.date}</span>
+                    </div>
+                    <h3 class="font-bold text-lg text-slate-900 mb-2">${a.title}</h3>
+                    <p class="text-sm text-slate-600">${a.text}</p>
+                </div>
+            `).join('');
+        }
+
+        function renderAwareness(data) {
+            const container = document.getElementById('awareness-list');
+            if (!container) return;
+            container.innerHTML = data.map(aw => `
+                <div class="bg-white p-6 rounded-2xl border shadow-sm space-y-3">
+                    <h3 class="font-bold text-lg text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-shield-heart text-primary-600"></i> ${aw.title}
+                    </h3>
+                    <ul class="list-disc list-inside text-sm text-slate-600 space-y-1.5">
+                        ${aw.steps.map(step => `<li>${step}</li>`).join('')}
+                    </ul>
+                </div>
+            `).join('');
+        }
+
+        // 7. لوحة التحكم (Admin Table)
+        function renderAdminRequests() {
+            const tbody = document.getElementById('admin-requests-table');
+            if (!tbody) return;
+            tbody.innerHTML = requestsList.map(req => `
+                <tr class="border-b hover:bg-slate-50">
+                    <td class="p-3 font-bold text-primary-700">${req.id}</td>
+                    <td class="p-3 font-bold text-slate-900">${req.name}</td>
+                    <td class="p-3 text-slate-600">${req.region}</td>
+                    <td class="p-3 text-slate-600">${req.service}</td>
+                    <td class="p-3"><span class="bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded font-bold">${req.status}</span></td>
+                </tr>
+            `).join('');
+        }
+
+        // 8. البحث الشامل
         function handleGlobalSearch(val) {
-            const sug = document.getElementById('search-suggestions');
-            if(!val.trim()) { sug.classList.add('hidden'); return; }
-            sug.classList.remove('hidden');
-            sug.innerHTML = `
-                <div onclick="switchTab('hospitals')" class="p-2 hover:bg-slate-50 cursor-pointer text-xs font-bold">🏥 نتائج مطابقة في المستشفيات والمراكز لـ "${val}"</div>
-                <div onclick="switchTab('medicines')" class="p-2 hover:bg-slate-50 cursor-pointer text-xs font-bold">💊 نتائج مطابقة في دليل الأدوية لـ "${val}"</div>
-                <div onclick="switchTab('articles')" class="p-2 hover:bg-slate-50 cursor-pointer text-xs font-bold">📚 مقالات وأبحاث متعلقة بـ "${val}"</div>
-            `;
+            const box = document.getElementById('search-suggestions');
+            if (!val.trim()) {
+                box.classList.add('hidden');
+                return;
+            }
+            const query = val.toLowerCase();
+            const matchedHospitals = hospitalsData.filter(h => h.name.toLowerCase().includes(query));
+            const matchedMedicines = medicinesData.filter(m => m.name.toLowerCase().includes(query));
+
+            let resultsHTML = '';
+            matchedHospitals.forEach(h => {
+                resultsHTML += `<div onclick="switchTab('hospitals')" class="cursor-pointer hover:bg-slate-50 p-2 rounded text-xs text-right font-bold text-primary-700">مستشفى: ${h.name} (${h.gov})</div>`;
+            });
+            matchedMedicines.forEach(m => {
+                resultsHTML += `<div onclick="switchTab('medicines')" class="cursor-pointer hover:bg-slate-50 p-2 rounded text-xs text-right font-bold text-emerald-700">دواء: ${m.name}</div>`;
+            });
+
+            if (resultsHTML === '') {
+                resultsHTML = '<div class="p-2 text-xs text-slate-400 text-right">لا توجد نتائج مطابقة، جرب كلمة أخرى.</div>';
+            }
+
+            box.innerHTML = resultsHTML;
+            box.classList.remove('hidden');
         }
 
         function executeSearch() {
-            const val = document.getElementById('global-search-input').value;
-            if(val.includes('دواء') || val.includes('أنسولين')) switchTab('medicines');
-            else if(val.includes('مستشفى') || val.includes('شفاء')) switchTab('hospitals');
+            const val = document.getElementById('global-search-input').value.toLowerCase();
+            if (val.includes('مستشفى')) switchTab('hospitals');
+            else if (val.includes('دواء') || val.includes('أنسولين')) switchTab('medicines');
             else switchTab('hospitals');
+            document.getElementById('search-suggestions').classList.add('hidden');
         }
     </script>
 </body>
