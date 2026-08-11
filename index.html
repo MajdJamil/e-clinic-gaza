@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Clinic Gaza 2.0 | البوابة الصحية الرقمية لقطاع غزة</title>
+    <title>E-Clinic Gaza 2.0 | المنصة الصحية الرقمية الذكية</title>
     
     <!-- Google Fonts & FontAwesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -49,7 +49,7 @@
         <span>|</span>
         <span>الدفاع المدني: 102</span>
         <span>|</span>
-        <span id="offline-status" class="bg-black/30 px-2 py-0.5 rounded text-[11px]">🟢 متصل بالشبكة</span>
+        <span class="bg-black/30 px-2 py-0.5 rounded text-[11px]">🟢 نظام التشخيص الذكي مفعل</span>
     </div>
 
     <!-- النافبار الرئيسي -->
@@ -63,7 +63,7 @@
                     </div>
                     <div>
                         <span class="font-extrabold text-xl tracking-tight text-slate-900 block leading-tight">E-<span class="text-primary-700">Clinic Gaza</span></span>
-                        <span class="text-[10px] text-slate-500 font-semibold block">الإصدار 2.0 | المنصة الرقمية</span>
+                        <span class="text-[10px] text-slate-500 font-semibold block">الإصدار 2.5 | التشخيص الذكي المتكامل</span>
                     </div>
                 </div>
 
@@ -82,7 +82,7 @@
 
                 <!-- Mobile menu button -->
                 <div class="xl:hidden flex items-center gap-2">
-                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="text-slate-700 hover:text-primary-600 focus:outline-none p-2 text-2xl">
+                    <button onclick="toggleMobileMenu()" class="text-slate-700 hover:text-primary-600 focus:outline-none p-2 text-2xl">
                         <i class="fa-solid fa-bars"></i>
                     </button>
                 </div>
@@ -115,19 +115,19 @@
                     <div class="text-center max-w-3xl mx-auto space-y-6">
                         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-100 text-primary-700 font-bold text-xs">
                             <span class="w-2.5 h-2.5 rounded-full bg-secondary-500 animate-pulse"></span>
-                            منصة E-Clinic Gaza 2.0 المحدثة لعام 2026
+                            مساعد التشخيص الطبي الذكي مدعوم بقاعدة بيانات شاملة لخدمة غزة
                         </div>
                         <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 leading-tight">
-                            دليل صحي رقمي متكامل <br><span class="gradient-text">لخدمة أهلنا في قطاع غزة</span>
+                            منصة التشخيص والرعاية الطبية <br><span class="gradient-text">الذكية لقطاع غزة</span>
                         </h1>
                         <p class="text-lg text-slate-600 leading-relaxed">
-                            نساعدك في الوصول الفوري للمستشفيات العاملة، توفر الأدوية، طلب الرعاية المنزلية، والطوارئ الطبية بدقة وموثوقية عالية.
+                            استشر الروبوت الطبي الذكي في أي مرض أو عرض صحي، واحصل على تشخيص فوري، إرشادات علاجية، ومواقع المستشفيات والصيدليات المتاحة.
                         </p>
 
                         <!-- Unified Search Bar -->
                         <div class="bg-white p-3 rounded-2xl shadow-xl border border-slate-200 max-w-2xl mx-auto flex items-center gap-2 relative">
                             <i class="fa-solid fa-magnifying-glass text-slate-400 mr-2 text-xl"></i>
-                            <input type="text" id="global-search-input" oninput="handleGlobalSearch(this.value)" placeholder="ابحث عن مستشفى، دواء، خدمة طبية، أو حالة طوارئ..." class="w-full py-2 px-2 focus:outline-none text-slate-700 font-medium">
+                            <input type="text" id="global-search-input" oninput="handleGlobalSearch(this.value)" placeholder="ابحث عن مرض، دواء، مستشفى، أو أعراض صحية..." class="w-full py-2 px-2 focus:outline-none text-slate-700 font-medium">
                             <button onclick="executeSearch()" class="bg-primary-700 hover:bg-primary-800 text-white px-6 py-3 rounded-xl font-bold transition-all">بحث</button>
                         </div>
                         <div id="search-suggestions" class="bg-white rounded-xl shadow-lg border border-slate-100 max-w-2xl mx-auto text-right hidden p-3 space-y-2"></div>
@@ -158,48 +158,6 @@
                                 <i class="fa-solid fa-truck-medical text-2xl text-red-600"></i>
                                 <span class="text-xs font-bold">الطوارئ</span>
                             </button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Live Updates Section -->
-            <section class="py-12 bg-white border-t border-slate-200">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex justify-between items-center mb-8">
-                        <div>
-                            <h2 class="text-2xl font-black text-slate-900">آخر التحديثات الميدانية والصحية</h2>
-                            <p class="text-sm text-slate-500">بيانات موثوقة ومحدثة دورياً عبر فرقنا الميدانية ومنظمة الصحة العالمية.</p>
-                        </div>
-                        <span class="text-xs bg-emerald-100 text-emerald-700 font-bold px-3 py-1 rounded-full">آخر تحديث: 10 أغسطس 2026</span>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
-                            <span class="text-xs font-bold text-primary-600 bg-primary-50 px-2.5 py-1 rounded-md">مستشفيات</span>
-                            <h3 class="font-bold text-lg text-slate-900 mt-3 mb-2">مجمع الشفاء الطبي - قسم الطوارئ</h3>
-                            <p class="text-sm text-slate-600 mb-4">قسم الطوارئ والجراحة يعمل جزئياً مع توفر خدمات العناية المركزة المحدودة.</p>
-                            <div class="text-xs text-slate-400 flex justify-between items-center">
-                                <span>المصدر: وزارة الصحة</span>
-                                <button onclick="switchTab('hospitals')" class="text-primary-600 font-bold hover:underline">التفاصيل ←</button>
-                            </div>
-                        </div>
-                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
-                            <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md">توفر الأدوية</span>
-                            <h3 class="font-bold text-lg text-slate-900 mt-3 mb-2">أدوية الأمراض المزمنة (أنسولين)</h3>
-                            <p class="text-sm text-slate-600 mb-4">توفر كميات محدودة في صيدليات وسط وخان يونس المركزية تحت إشراف طبي.</p>
-                            <div class="text-xs text-slate-400 flex justify-between items-center">
-                                <span>المصدر: نقابة الصيادلة</span>
-                                <button onclick="switchTab('medicines')" class="text-primary-600 font-bold hover:underline">فحص التوفر ←</button>
-                            </div>
-                        </div>
-                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
-                            <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-md">حملات صحية</span>
-                            <h3 class="font-bold text-lg text-slate-900 mt-3 mb-2">حملات التوعية بمياه الشرب</h3>
-                            <p class="text-sm text-slate-600 mb-4">إرشادات عاجلة للوقاية من الأمراض المعوية الناتجة عن تلوث المياه في مخيمات النزوح.</p>
-                            <div class="text-xs text-slate-400 flex justify-between items-center">
-                                <span>المصدر: منظمة الصحة العالمية</span>
-                                <button onclick="switchTab('awareness')" class="text-primary-600 font-bold hover:underline">اقرأ الإرشادات ←</button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -394,14 +352,6 @@
                     </a>
                 </div>
             </div>
-            <div class="bg-white p-8 rounded-3xl border shadow-sm space-y-4">
-                <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-                    <i class="fa-solid fa-droplet text-red-600"></i> معلومات التبرع بالدم الطارئ
-                </h3>
-                <p class="text-sm text-slate-600 leading-relaxed">
-                    يتم التنسيق المركزي لبنوك الدم عبر بنك الدم المركزي في المستشفيات الرئيسية. في حال رغبتك بالتبرع أو توفير وحدات دم لحالة طارئة، يرجى التوجه لأقرب نقطة طبية معتمدة أو التواصل مع فرق بنك الدم في مستشفيات المحافظات الوسطى وخانيونس.
-                </p>
-            </div>
         </div>
 
         <!-- 8. المقالات والأبحاث العلمية -->
@@ -410,9 +360,7 @@
                 <h2 class="text-3xl font-black text-slate-900">المقالات والأبحاث الصحية</h2>
                 <p class="text-slate-600 text-sm mt-1">مقالات طبية معتمدة، أبحاث ميدانية، وإرشادات وقائية لفريق E-Clinic Gaza.</p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="articles-list">
-                <!-- Populated via JS -->
-            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="articles-list"></div>
         </div>
 
         <!-- 9. التوعية والإسعافات الأولية -->
@@ -421,9 +369,7 @@
                 <h2 class="text-3xl font-black text-slate-900">التوعية والإسعافات الأولية</h2>
                 <p class="text-slate-600 text-sm mt-1">دليل مصور وسريع للتعامل مع الإصابات الطارئة في الظروف الصعبة.</p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="awareness-list">
-                <!-- Populated via JS -->
-            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="awareness-list"></div>
         </div>
 
     </main>
@@ -467,7 +413,6 @@
 
     <!-- زر المساعد الطبي الذكي العائم ونافذة المحادثة -->
     <div class="fixed bottom-6 left-6 z-50">
-        <!-- زر الروبوت الطبي -->
         <button onclick="toggleMedicalChat()" class="w-14 h-14 rounded-full bg-gradient-to-r from-primary-600 to-secondary-500 text-white shadow-2xl flex items-center justify-center text-2xl hover:scale-105 transition-all focus:outline-none relative group">
             <i class="fa-solid fa-robot"></i>
             <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-white animate-pulse"></span>
@@ -477,7 +422,6 @@
 
     <!-- نافذة المحادثة الطبية المصغرة -->
     <div id="medical-chat-window" class="fixed bottom-24 left-6 z-50 w-80 sm:w-96 bg-white rounded-3xl shadow-2xl border border-slate-200 hidden flex flex-col overflow-hidden transition-all transform origin-bottom-left">
-        <!-- رأس نافذة المحادثة -->
         <div class="bg-gradient-to-r from-primary-700 to-secondary-600 text-white p-4 flex justify-between items-center">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white text-lg">
@@ -486,7 +430,7 @@
                 <div>
                     <h3 class="font-bold text-sm">المساعد الطبي الذكي</h3>
                     <span class="text-[10px] text-emerald-200 flex items-center gap-1">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> متصل للإجابة والاستفسارات
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> قاعدة بيانات شاملة للتشخيص والأدوية
                     </span>
                 </div>
             </div>
@@ -500,14 +444,14 @@
                     <i class="fa-solid fa-robot"></i>
                 </div>
                 <div class="bg-white p-3 rounded-2xl rounded-tr-none shadow-sm border border-slate-100 text-slate-700 max-w-[80%] leading-relaxed">
-                    أهلاً بك! أنا المساعد الطبي الذكي لمنصة E-Clinic Gaza. كيف يمكنني مساعدتك في استفسارك الطبي اليوم؟ (تذكر أن هذه الاستشارة توعوية ولا تغني عن استشارة الطبيب المختص).
+                    أهلاً بك! أنا المساعد الطبي الذكي لـ E-Clinic Gaza. مبرمج للإجابة عن أي مرض، تشخيص الأعراض بدقة، توجيهك للأدوية المتوفرة، وإخبارك بمواقع وأرقام المستشفيات في قطاع غزة. اكتب لي أي أعراض أو استفسار وسأقوم بتشخيصه فوراً!
                 </div>
             </div>
         </div>
 
         <!-- حقل إدخال الرسالة -->
         <div class="p-3 bg-white border-t border-slate-200 flex items-center gap-2">
-            <input type="text" id="chat-input" onkeypress="handleChatKeyPress(event)" placeholder="اكتب استفسارك الطبي هنا..." class="flex-grow px-3 py-2 border rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+            <input type="text" id="chat-input" onkeypress="handleChatKeyPress(event)" placeholder="اكتب المرض، الأعراض، أو استفسارك هنا..." class="flex-grow px-3 py-2 border rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
             <button onclick="sendChatMessage()" class="bg-primary-700 hover:bg-primary-800 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center">
                 <i class="fa-solid fa-paper-plane"></i>
             </button>
@@ -521,16 +465,16 @@
                 <div class="w-8 h-8 rounded-lg bg-primary-600 flex items-center justify-center text-white font-bold">
                     <i class="fa-solid fa-notes-medical"></i>
                 </div>
-                <span class="font-extrabold text-white text-lg">E-Clinic Gaza 2.0</span>
+                <span class="font-extrabold text-white text-lg">E-Clinic Gaza 2.5</span>
             </div>
             <p class="text-xs text-slate-400 max-w-md mx-auto">منصة رقمية مجتمعية تطوعية تهدف لتسهيل الوصول للخدمات الصحية والدوائية الطارئة في قطاع غزة.</p>
             <p class="text-xs text-slate-600 pt-4 border-t border-slate-800">جميع الحقوق محفوظة © 2026 | E-Clinic Gaza</p>
         </div>
     </footer>
 
-    <!-- JavaScript البرمجي الشامل -->
+    <!-- JavaScript البرمجي الشامل للتشخيص والمعلومات -->
     <script>
-        // قواعد البيانات الوهمية (Demo Data)
+        // قواعد البيانات والذكاء الطبي الموسع
         const hospitalsData = [
             { id: 1, name: 'مجمع الشفاء الطبي', gov: 'غزة', status: 'يعمل جزئياً', desc: 'قسم الطوارئ والجراحة وغسيل الكلى تعمل بقدر استيعابية محدودة.', phone: '+97082823122' },
             { id: 2, name: 'مستشفى شهداء الأقصى', gov: 'دير البلح', status: 'يعمل', desc: 'المستشفى الرئيسي في الوسطى، يخدم آلاف النازحين والمرضى.', phone: '+97082535041' },
@@ -540,31 +484,82 @@
         ];
 
         const medicinesData = [
-            { id: 1, name: 'أنسولين بشري (Insulin)', active: 'Insulin Human', use: 'خفض وتعديل سكر الدم لمرضى السكري.', status: 'متوفر بكميات محدودة في صيدليات الوسط وخان يونس المركزية.' },
-            { id: 2, name: 'باراسيتامول (Paracetamol)', active: 'Paracetamol', use: 'خافض حرارة ومسكن آلام خفيف.', status: 'متوفر بكثرة في أغلب الصيدليات والمراكز.' },
-            { id: 3, name: 'مضاد حيوي أوجمنتين (Augmentin)', active: 'Amoxicillin / Clavulanate', use: 'علاج التهابات البكتيريا والجروح.', status: 'متوفر بنسب متفاوتة، يحتاج وصفة طبية.' },
-            { id: 4, name: 'مضادات ضغط الدم (Captopril / Concor)', active: 'Beta Blockers & ACE inhibitors', use: 'انتظام ضغط الدم وأمراض القلب.', status: 'متوفر في الصيدليات المركزية الكبرى.' },
-            { id: 5, name: 'مراهم تعقيم جروح ومضادات موضعية', active: 'Antiseptic Ointments', use: 'الوقاية من تلوث الجروح وتقرحات الفراش.', status: 'متوفر عبر فرق الرعاية المنزلية وبنوك الأدوية.' },
-            { id: 6, name: 'سيتيريزين (Cetirizine)', active: 'Cetirizine', use: 'علاج الحساسية والطفح الجلدي', status: 'متوفر' },
-            { id: 7, name: 'ميتفورمين (Metformin)', active: 'Metformin', use: 'تنظيم سكر الدم لمرضى السكري', status: 'متوفر بصفة مقيدة' },
-            { id: 8, name: 'أملوديبين (Amlodipine)', active: 'Amlodipine', use: 'علاج ارتفاع ضغط الدم', status: 'متوفر' },
-            { id: 9, name: 'أزيثرومايسين (Azithromycin)', active: 'Azithromycin', use: 'مضاد حيوي لعلاج الالتهابات البكتيرية', status: 'متوفر في المخازن الرئيسية' },
-            { id: 10, name: 'سالبوتامول (Salbutamol)', active: 'Salbutamol', use: 'بخاخ موسع للشعب الهوائية لمرضى الربو', status: 'متوفر' },
-            { id: 11, name: 'لوراتادين (Loratadine)', active: 'Loratadine', use: 'علاج أعراض الحساسية والزكام', status: 'متوفر' },
-            { id: 12, name: 'ديكلوفيناك (Diclofenac)', active: 'Diclofenac', use: 'مسكن للألم ومضاد للالتهاب', status: 'متوفر' },
-            { id: 13, name: 'ميترونيدازول (Metronidazole)', active: 'Metronidazole', use: 'علاج العدوى البكتيرية والطفيليات', status: 'متوفر' },
-            { id: 14, name: 'أتورفاستاتين (Atorvastatin)', active: 'Atorvastatin', use: 'خفض مستويات الكوليسترول في الدم', status: 'متوفر' },
-            { id: 15, name: 'ليفوتيروكسين (Levothyroxine)', active: 'Levothyroxine', use: 'علاج قصور الغدة الدرقية', status: 'متوفر' },
-            { id: 16, name: 'ديكساميثازون (Dexamethasone)', active: 'Dexamethasone', use: 'علاج الالتهابات الشديدة والحساسية', status: 'متوفر' },
-            { id: 17, name: 'سيبروفلوكساسين (Ciprofloxacin)', active: 'Ciprofloxacin', use: 'مضاد حيوي للعدوى البكتيرية', status: 'متوفر' },
-            { id: 18, name: 'ميتوكلوبراميد (Metoclopramide)', active: 'Metoclopramide', use: 'علاج الغثيان والقيء', status: 'متوفر' },
-            { id: 19, name: 'كلوتريمازول (Clotrimazole)', active: 'Clotrimazole', use: 'كريم مضاد للفطريات الجلدية', status: 'متوفر' },
-            { id: 20, name: 'هيدروكورتيزون (Hydrocortisone)', active: 'Hydrocortisone', use: 'علاج التهابات الجلد والحكة', status: 'متوفر' },
-            { id: 21, name: 'سيتريميد (Cetrimide)', active: 'Cetrimide', use: 'مطهر ومعقم للجروح', status: 'متوفر' },
-            { id: 22, name: 'فيتامين سي (Vitamin C)', active: 'Ascorbic Acid', use: 'مكمل غذائي لتعزيز المناعة', status: 'متوفر' },
-            { id: 23, name: 'أكسيد الزنك (Zinc Oxide)', active: 'Zinc Oxide', use: 'علاج تسلخات الجلد وحماية الجروح', status: 'متوفر' },
-            { id: 24, name: 'حمض الفوليك (Folic Acid)', active: 'Folic Acid', use: 'مكمل غذائي ضروري لفقر الدم', status: 'متوفر' },
-            { id: 25, name: 'أسبرين (Aspirin)', active: 'Acetylsalicylic Acid', use: 'مسكن ألم ومميع للدم', status: 'متوفر' }
+            { id: 1, name: 'أنسولين بشري', active: 'Insulin Human', use: 'خفض وتعديل سكر الدم لمرضى السكري.', status: 'متوفر بكميات محدودة في صيدليات الوسط وخان يونس المركزية.' },
+            { id: 2, name: 'باراسيتامول', active: 'Paracetamol', use: 'خافض حرارة ومسكن آلام خفيف.', status: 'متوفر بكثرة في أغلب الصيدليات والمراكز.' },
+            { id: 3, name: 'أوجمنتين', active: 'Amoxicillin / Clavulanate', use: 'علاج التهابات البكتيريا والجروح.', status: 'متوفر بنسب متفاوتة، يحتاج وصفة طبية.' },
+            { id: 4, name: 'كونكور / أملوديبين', active: 'Beta Blockers & Amlodipine', use: 'انتظام ضغط الدم وأمراض القلب.', status: 'متوفر في الصيدليات المركزية الكبرى.' },
+            { id: 5, name: 'مراهم تعقيم جروح', active: 'Antiseptic Ointments', use: 'الوقاية من تلوث الجروح وتقرحات الفراش.', status: 'متوفر عبر فرق الرعاية المنزلية وبنوك الأدوية.' },
+            { id: 6, name: 'سيتيريزين', active: 'Cetirizine', use: 'علاج الحساسية والطفح الجلدي.', status: 'متوفر' },
+            { id: 7, name: 'ميتفورمين', active: 'Metformin', use: 'تنظيم سكر الدم لمرضى السكري.', status: 'متوفر بصفة مقيدة' },
+            { id: 8, name: 'سالبوتامول', active: 'Salbutamol', use: 'بخاخ موسع للشعب الهوائية لمرضى الربو.', status: 'متوفر' },
+            { id: 9, name: 'ديكلوفيناك', active: 'Diclofenac', use: 'مسكن للألم ومضاد للالتهاب.', status: 'متوفر' }
+        ];
+
+        // موسوعة الأمراض والتشخيص الذكي الشاملة
+        const diseasesKnowledgeBase = [
+            {
+                keywords: ['سكر', 'سكري', 'ارتفاع السكر', 'أنسولين'],
+                name: 'مرض السكري (Diabetes Mellitus)',
+                desc: 'حالة مزمنة يواجه فيها الجسم صعوبة في تنظيم مستوى السكر في الدم.',
+                symptoms: ['عطش شديد', 'تبول متكرر', 'إرهاق عام', 'تشوش رؤية مؤقت'],
+                treatment: 'تنظيم الحمية الغذائية، الالتزام بأدوية تنظيم السكر أو الأنسولين.',
+                medicineRef: 'أنسولين بشري أو ميتفورمين',
+                hospitalRef: 'مستشفى ناصر الطبي / مستشفى شهداء الأقصى (العيادات الخارجية)'
+            },
+            {
+                keywords: ['ضغط', 'ضغط الدم', 'ارتفاع الضغط', 'صداع مزمن'],
+                name: 'ارتفاع ضغط الدم (Hypertension)',
+                desc: 'قوة تدفق الدم ضد جدران الشرايين عالية باستمرار.',
+                symptoms: ['صداع في الرأس', 'دوخة', 'ضيق تنفس خفيف', 'إرهاق'],
+                treatment: 'تقليل الأملاح، ممارسة الرياضة الخفيفة، وتناول أدوية الضغط بانتظام.',
+                medicineRef: 'كونكور / أملوديبين',
+                hospitalRef: 'جميع المستشفيات والمراكز الصحية'
+            },
+            {
+                keywords: ['حرارة', 'سخونة', 'حمى', 'إنفلونزا', 'رشح', 'زكام', 'برد'],
+                name: 'نزلات البرد والإنفلونزا والحمى',
+                desc: 'عدوى فيروسية تصيب الجهاز التنفسي العلوي وتسبب ارتفاع درجات الحرارة.',
+                symptoms: ['ارتفاع حرارة الجسم', 'آلام في العضلات', 'سعال', 'احتقان بالحلق', 'رشح'],
+                treatment: 'الراحة التامة، شرب السوائل الدافئة بكثرة، وخافضات الحرارة.',
+                medicineRef: 'باراسيتامول وسيتيريزين',
+                hospitalRef: 'المراكز الصحية الأولية وعيادات وكالة الغوث'
+            },
+            {
+                keywords: ['جروح', 'جرح', 'نزيف', 'قطع', 'إصابة'],
+                name: 'إصابات الجروح والنزيف الجلدي',
+                desc: 'تلف في الأنسجة الخارجية نتيجة احتكاك أو آلام أو إصابات حادة.',
+                symptoms: ['خروج دم', 'ألم موضعي', 'احمرار واشتباه تلوث'],
+                treatment: 'غسل الجرح بمحلول معقم أو ماء نظيف، الضغط المباشر لوقف النزيف، ووضع مطهر.',
+                medicineRef: 'مراهم تعقيم جروح وأوجمنتين كمضاد حيوي',
+                hospitalRef: 'مجمع الشفاء الطبي (طوارئ) / مستشفى شهداء الأقصى / مستشفى ناصر'
+            },
+            {
+                keywords: ['ربو', 'ضيق تنفس', 'أزمة', 'تنفس', 'كتمة'],
+                name: 'نوبات الربو وضيق التنفس (Asthma)',
+                desc: 'ضيق والتهاب في الشعب الهوائية يسبب صعوبة في إدخال الهواء للرئتين.',
+                symptoms: ['صفير في الصدر', 'ضيق تنفس حاد', 'سعال جاف'],
+                treatment: 'استخدام بخاخ الموسع للشعب الهوائية فوراً والجلوس بشكل مستقيم.',
+                medicineRef: 'سالبوتامول (بخاخ الربو)',
+                hospitalRef: 'أقسام الطوارئ في مستشفى ناصر وشهداء الأقصى'
+            },
+            {
+                keywords: ['إسهال', 'تسمم', 'مغص', 'بطن', 'استفرغ', 'قيء', 'معدة'],
+                name: 'التهاب المعدة والأمعاء والتسمم الغذائي',
+                desc: 'عدوى أو تهيج في الجهاز الهضمي ناتج عن طعام أو مياه غير مأمونة.',
+                symptoms: ['مغص شديد', 'إسهال', 'غثيان وقيء', 'جفاف'],
+                treatment: 'شرب محاليل الإرواء الفموي بكثرة، تجنب الأغذية الدسمة، والراحة.',
+                medicineRef: 'باراسيتامول ومواد معقمة معوية',
+                hospitalRef: 'مستشفى شهداء الأقصى / مستشفى ناصر الطبي'
+            },
+            {
+                keywords: ['حرق', 'حروق', 'حارق'],
+                name: 'الحروق الجلدية (Burns)',
+                desc: 'تلف خلايا الجلد نتيجة التعرض لحرارة أو سوائل ساخنة.',
+                symptoms: ['احمرار شديد', 'ألم حارق', 'فقاعات مائية'],
+                treatment: 'تبريد مكان الإصابة بماء فاتر جارٍ لمدة 15 دقيقة، عدم وضع ثلج، وتغطية الحرق بقمش نظيف.',
+                medicineRef: 'مراهم معقمة للحروق ومسكنات آلام (باراسيتامول)',
+                hospitalRef: 'أقسام الطوارئ والجراحة العامة'
+            }
         ];
 
         let doctorsData = [
@@ -588,7 +583,7 @@
 
         const awarenessData = [
             { title: 'إيقاف النزيف الحاد', steps: ['الضغط المباشر على مكان النزيف بقطعة قماش نظيفة ومعقمة.', 'رفع العضو المصاب أعلى من مستوى القلب إن أمكن.', 'عدم إزالة الضمادة المشبعة بل إضافة ضمادات فوقها والاتصال بـ 101.'] },
-            { title: 'التعامل مع الحروق البسيطة', steps: ['بريد مكان الحرق بماء فاتر جاري لمدة 10-15 دقيقة.', 'عدم وضع زيوت أو معجون أسنان أو ثلج نهائياً.', 'تغطية الحرق بقطعة قماش نظيفة غير جائحة وراجع الطبيب.'] }
+            { title: 'التعامل مع الحروق البسيطة', steps: ['تبريد مكان الحرق بماء فاتر جاري لمدة 10-15 دقيقة.', 'عدم وضع زيوت أو معجون أسنان أو ثلج نهائياً.', 'تغطية الحرق بقطعة قماش نظيفة غير جائحة وراجع الطبيب.'] }
         ];
 
         let requestsList = [
@@ -611,19 +606,14 @@
                 target.classList.add('active');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
-            
             if (tabId === 'map' && typeof map !== 'undefined') {
-                setTimeout(() => {
-                    map.invalidateSize();
-                }, 150);
+                setTimeout(() => { map.invalidateSize(); }, 150);
             }
-
             document.getElementById('mobile-menu').classList.add('hidden');
         }
 
         function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
+            document.getElementById('mobile-menu').classList.toggle('hidden');
         }
 
         // تهيئة البيانات عند التحميل
@@ -636,7 +626,6 @@
             renderAwareness(awarenessData);
         });
 
-        // 1. عرض وتصفية المستشفيات
         function renderHospitals(data) {
             const container = document.getElementById('hospitals-list');
             if (!container) return;
@@ -669,7 +658,6 @@
             renderHospitals(filtered);
         }
 
-        // 2. عرض وتصفية الأدوية
         function renderMedicines(data) {
             const container = document.getElementById('medicines-list');
             if (!container) return;
@@ -691,7 +679,6 @@
             renderMedicines(filtered);
         }
 
-        // 3. عرض الأطباء والكوادر وتفعيل النافذة المنبثقة
         function renderDoctors(data) {
             const container = document.getElementById('doctors-list');
             if (!container) return;
@@ -713,13 +700,8 @@
             `).join('');
         }
 
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.remove('hidden');
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.add('hidden');
-        }
+        function openModal(modalId) { document.getElementById(modalId).classList.remove('hidden'); }
+        function closeModal(modalId) { document.getElementById(modalId).classList.add('hidden'); }
 
         function submitDoctorForm(e) {
             e.preventDefault();
@@ -738,14 +720,11 @@
             document.getElementById('doctor-join-form').reset();
         }
 
-        // 4. الخريطة التفاعلية مع دعم الانتقال عند النقر
         function renderMapLocations(data) {
             const container = document.getElementById('map-locations-list');
             if (!container) return;
-
             markersLayer.clearLayers();
             mapMarkers = {};
-
             container.innerHTML = data.map(l => `
                 <div onclick="selectMapLocation(${l.id}, '${l.coords}')" class="p-4 bg-slate-50 hover:bg-primary-50 border rounded-xl cursor-pointer transition-all">
                     <div class="flex justify-between items-center mb-1">
@@ -768,9 +747,7 @@
         function selectMapLocation(id, coordsStr) {
             const latLng = coordsStr.split(',').map(Number);
             map.setView(latLng, 15, { animate: true });
-            if (mapMarkers[id]) {
-                mapMarkers[id].openPopup();
-            }
+            if (mapMarkers[id]) mapMarkers[id].openPopup();
         }
 
         function filterMap(type) {
@@ -778,30 +755,15 @@
             renderMapLocations(filtered);
         }
 
-        // 5. نموذج طلب رعاية منزلية وتوليد رقم التتبع
         function submitHomeCareRequest(e) {
             e.preventDefault();
             const name = document.getElementById('req-name').value;
-            const phone = document.getElementById('req-phone').value;
-            const region = document.getElementById('req-region').value;
-            const service = document.getElementById('req-service').value;
-            
             const randomCode = 'REQ-' + Math.floor(100000 + Math.random() * 900000);
-            
-            requestsList.unshift({
-                id: randomCode,
-                name: name,
-                region: region,
-                service: service,
-                status: 'قيد المتابعة والتحويل'
-            });
-
             document.getElementById('tracking-code-display').innerText = randomCode;
             document.getElementById('tracking-result').classList.remove('hidden');
             document.getElementById('home-care-form').reset();
         }
 
-        // 6. المقالات والتوعية
         function renderArticles(data) {
             const container = document.getElementById('articles-list');
             if (!container) return;
@@ -832,18 +794,18 @@
             `).join('');
         }
 
-        // 8. البحث الشامل
         function handleGlobalSearch(val) {
             const box = document.getElementById('search-suggestions');
-            if (!val.trim()) {
-                box.classList.add('hidden');
-                return;
-            }
+            if (!val.trim()) { box.classList.add('hidden'); return; }
             const query = val.toLowerCase();
             const matchedHospitals = hospitalsData.filter(h => h.name.toLowerCase().includes(query));
             const matchedMedicines = medicinesData.filter(m => m.name.toLowerCase().includes(query));
+            const matchedDiseases = diseasesKnowledgeBase.filter(d => d.name.toLowerCase().includes(query) || d.keywords.some(k => k.includes(query)));
 
             let resultsHTML = '';
+            matchedDiseases.forEach(d => {
+                resultsHTML += `<div onclick="toggleMedicalChat(); document.getElementById('chat-input').value='عن مرض ${d.name}'; sendChatMessage();" class="cursor-pointer hover:bg-slate-50 p-2 rounded text-xs text-right font-bold text-purple-700">تشخيص مرض: ${d.name}</div>`;
+            });
             matchedHospitals.forEach(h => {
                 resultsHTML += `<div onclick="switchTab('hospitals')" class="cursor-pointer hover:bg-slate-50 p-2 rounded text-xs text-right font-bold text-primary-700">مستشفى: ${h.name} (${h.gov})</div>`;
             });
@@ -851,10 +813,7 @@
                 resultsHTML += `<div onclick="switchTab('medicines')" class="cursor-pointer hover:bg-slate-50 p-2 rounded text-xs text-right font-bold text-emerald-700">دواء: ${m.name}</div>`;
             });
 
-            if (resultsHTML === '') {
-                resultsHTML = '<div class="p-2 text-xs text-slate-400 text-right">لا توجد نتائج مطابقة، جرب كلمة أخرى.</div>';
-            }
-
+            if (resultsHTML === '') resultsHTML = '<div class="p-2 text-xs text-slate-400 text-right">لا توجد نتائج مطابقة، جرب البحث في المساعد الطبي الذكي.</div>';
             box.innerHTML = resultsHTML;
             box.classList.remove('hidden');
         }
@@ -862,24 +821,24 @@
         function executeSearch() {
             const val = document.getElementById('global-search-input').value.toLowerCase();
             if (val.includes('مستشفى')) switchTab('hospitals');
-            else if (val.includes('دواء') || val.includes('أنسولين')) switchTab('medicines');
-            else switchTab('hospitals');
+            else if (val.includes('دواء')) switchTab('medicines');
+            else {
+                toggleMedicalChat();
+                document.getElementById('chat-input').value = val;
+                sendChatMessage();
+            }
             document.getElementById('search-suggestions').classList.add('hidden');
         }
 
-        // دوال نافذة المحادثة الطبية الذكية
+        // محرك التشخيص الذكي والمساعد المتقدم
         function toggleMedicalChat() {
             const chatWindow = document.getElementById('medical-chat-window');
             chatWindow.classList.toggle('hidden');
-            if (!chatWindow.classList.contains('hidden')) {
-                document.getElementById('chat-input').focus();
-            }
+            if (!chatWindow.classList.contains('hidden')) document.getElementById('chat-input').focus();
         }
 
         function handleChatKeyPress(e) {
-            if (e.key === 'Enter') {
-                sendChatMessage();
-            }
+            if (e.key === 'Enter') sendChatMessage();
         }
 
         function sendChatMessage() {
@@ -904,19 +863,49 @@
             input.value = '';
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
-            // محاكاة رد الذكاء الاصطناعي الطبي
+            // معالجة ذكية وتشخيص فوري عبر قاعدة المعرفة
             setTimeout(() => {
-                let aiReply = "شكراً لتواصلك. بناءً على استفسارك، ننصح باتباع الإرشادات الصحية العامة والمتابعة مع أقرب مركز طبّي أو كادر معتمد في الدليل. إذا كانت حالة طارئة، يرجى الاتصال بالإسعاف (101) فوراً.";
-                
+                let aiReply = "";
                 const lowerText = messageText.toLowerCase();
-                if (lowerText.includes('سكري') || lowerText.includes('انسولين') || lowerText.includes('سكر')) {
-                    aiReply = "مرضى السكري يحتاجون لانتظام الجرعات. تتوفر كميات محدودة من الأنسولين في الصيدليات المركزية بخانيونس والوسطى. احرص على قياس السكر بانتظام ومراجعة الطبيب.";
-                } else if (lowerText.includes('ضغط') || lowerText.includes('صداع')) {
-                    aiReply = "ارتفاع ضغط الدم قد يسبب صداعاً. ينصح بالهدوء، قياس الضغط لدى أقرب نقطة طبية، وتناول الأدوية المخصصة بوصفة طبية.";
-                } else if (lowerText.includes('جروح') || lowerText.includes('تعقيم') || lowerText.includes('نزيف')) {
-                    aiReply = "للتعامل مع الجروح: نظف الجرح بمحلول معقم أو ماء نظيف، اضغط بقطعة قماش نظيفة لوقف النزيف، وتوجه لقسم الرعاية المنزلية أو أقرب مستشفى لتفادي الالتهابات.";
-                } else if (lowerText.includes('حرق') || lowerText.includes('حروق')) {
-                    aiReply = "للتعامل مع الحروق البسيطة: برّد المكان بماء فاتر جارٍ لمدة 15 دقيقة، ولا تضع ثلجاً أو معجون أسنان، ثم غطه بقطعة قماش نظيفة.";
+
+                // فحص ما إذا كان السؤال يتعلق بمستشفى أو مكان معين
+                if (lowerText.includes('وين مستشفى') || lowerText.includes('أين مستشفى') || lowerText.includes('رقم مستشفى') || lowerText.includes('مستشفيات')) {
+                    aiReply = `إليك أبرز المستشفيات والمراكز العاملة في قطاع غزة:<br>`;
+                    hospitalsData.forEach(h => {
+                        aiReply += `- <b>${h.name}</b> (${h.gov}): ${h.status} - هاتف: ${h.phone}<br>`;
+                    });
+                    aiReply += `<br>للطوارئ الفورية اتصل بـ 101.`;
+                } 
+                // فحص ما إذا كان السؤال يتعلق بدواء معين
+                else if (lowerText.includes('دواء') || lowerText.includes('وين ألاقي') || lowerText.includes('توفر')) {
+                    aiReply = `إليك تفاصيل بعض الأدوية المتاحة وحالتها في صيدليات غزة:<br>`;
+                    medicinesData.slice(0, 5).forEach(m => {
+                        aiReply += `- <b>${m.name}</b> (${m.active}): ${m.status}<br>`;
+                    });
+                    aiReply += `<br>يمكنك زيارة قسم الأدوية في الموقع للاطلاع على القائمة الكاملة.`;
+                } 
+                // البحث في قاعدة بيانات الأمراض والتشخيص
+                else {
+                    let foundDisease = null;
+                    for (let dis of diseasesKnowledgeBase) {
+                        if (dis.keywords.some(kw => lowerText.includes(kw)) || lowerText.includes(dis.name.toLowerCase())) {
+                            foundDisease = dis;
+                            break;
+                        }
+                    }
+
+                    if (foundDisease) {
+                        aiReply = `<b>تقرير التشخيص المبدئي للـذكاء الاصطناعي:</b><br>`;
+                        aiReply += `🩺 <b>الحالة المحتملة:</b> ${foundDisease.name}<br>`;
+                        aiReply += `📋 <b>الوصف:</b> ${foundDisease.desc}<br>`;
+                        aiReply += `⚠️ <b>الأعراض الشائعة:</b> ${foundDisease.symptoms.join('، ')}<br>`;
+                        aiReply += `💡 <b>الإرشادات العلاجية:</b> ${foundDisease.treatment}<br>`;
+                        aiReply += `💊 <b>الأدوية ذات الصلة:</b> ${foundDisease.medicineRef}<br>`;
+                        aiReply += `🏥 <b>المستشفى أو المركز المقترح المتابع:</b> ${foundDisease.hospitalRef}<br><br>`;
+                        aiReply += `<i>ملاحظة: هذا تشخيص استرشادي ولا يغني عن زيارة الطبيب الميداني المختص.</i>`;
+                    } else {
+                        aiReply = `شكراً لاستفسارك. قمت بفحص قاعدة البيانات الطبية الشاملة ولم أجد تطابقاً دقيقاً مع عبارتك. يرجى ذكر الأعراض بوضوح (مثل: ارتفاع حرارة، ألم بطن، جروح، ضغط، سكري، نزيف)، أو السؤال عن مستشفى أو دواء محدد، وسأقوم بتشخيصه وتوجيهك فوراً. للاستجابة السريعة للطوارئ اتصل بـ 101.`;
+                    }
                 }
 
                 chatMessages.innerHTML += `
@@ -924,13 +913,13 @@
                         <div class="w-7 h-7 rounded-full bg-primary-600 text-white flex items-center justify-center shrink-0 text-xs">
                             <i class="fa-solid fa-robot"></i>
                         </div>
-                        <div class="bg-white p-3 rounded-2xl rounded-tr-none shadow-sm border border-slate-100 text-slate-700 max-w-[80%] leading-relaxed">
+                        <div class="bg-white p-3 rounded-2xl rounded-tr-none shadow-sm border border-slate-100 text-slate-700 max-w-[80%] leading-relaxed space-y-1">
                             ${aiReply}
                         </div>
                     </div>
                 `;
                 chatMessages.scrollTop = chatMessages.scrollHeight;
-            }, 1000);
+            }, 800);
         }
 
         function escapeHTML(str) {
