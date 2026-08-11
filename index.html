@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Clinic Gaza 2.0 | المنصة الصحية الرقمية الذكية</title>
+    <title>E-Clinic Gaza 2.6 | الطبيب الذكي الميداني</title>
     
     <!-- Google Fonts & FontAwesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -49,7 +49,7 @@
         <span>|</span>
         <span>الدفاع المدني: 102</span>
         <span>|</span>
-        <span class="bg-black/30 px-2 py-0.5 rounded text-[11px]">🟢 نظام التشخيص الذكي مفعل</span>
+        <span class="bg-black/30 px-2 py-0.5 rounded text-[11px]">🩺 الطبيب الافتراضي الذكي مفعل</span>
     </div>
 
     <!-- النافبار الرئيسي -->
@@ -59,11 +59,11 @@
                 <!-- Logo -->
                 <div class="flex items-center gap-2 cursor-pointer" onclick="switchTab('home')">
                     <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-600 to-secondary-500 flex items-center justify-center text-white shadow-lg">
-                        <i class="fa-solid fa-notes-medical text-xl"></i>
+                        <i class="fa-solid fa-user-doctor text-xl"></i>
                     </div>
                     <div>
                         <span class="font-extrabold text-xl tracking-tight text-slate-900 block leading-tight">E-<span class="text-primary-700">Clinic Gaza</span></span>
-                        <span class="text-[10px] text-slate-500 font-semibold block">الإصدار 2.5 | التشخيص الذكي المتكامل</span>
+                        <span class="text-[10px] text-slate-500 font-semibold block">الإصدار 2.6 | نظام التشخيص ووصف العلاج</span>
                     </div>
                 </div>
 
@@ -115,13 +115,13 @@
                     <div class="text-center max-w-3xl mx-auto space-y-6">
                         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-100 text-primary-700 font-bold text-xs">
                             <span class="w-2.5 h-2.5 rounded-full bg-secondary-500 animate-pulse"></span>
-                            مساعد التشخيص الطبي الذكي مدعوم بقاعدة بيانات شاملة لخدمة غزة
+                            الطبيب الافتراضي الذكي للتشخيص السريري ووصف الأدوية في غزة
                         </div>
                         <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 leading-tight">
-                            منصة التشخيص والرعاية الطبية <br><span class="gradient-text">الذكية لقطاع غزة</span>
+                            استشر طبيبك الذكي الفوري <br><span class="gradient-text">للتشخيص ووصف العلاج</span>
                         </h1>
                         <p class="text-lg text-slate-600 leading-relaxed">
-                            استشر الروبوت الطبي الذكي في أي مرض أو عرض صحي، واحصل على تشخيص فوري، إرشادات علاجية، ومواقع المستشفيات والصيدليات المتاحة.
+                            تحدث مع الطبيب الافتراضي كأنك في عيادة حقيقية؛ اكتب أعراضك ليقوم بتشخيص حالتك بدقة، وصف الأدوية المتوفرة، وتحديد المستشفيات المناسبة.
                         </p>
 
                         <!-- Unified Search Bar -->
@@ -411,12 +411,12 @@
         </div>
     </div>
 
-    <!-- زر المساعد الطبي الذكي العائم ونافذة المحادثة -->
+    <!-- زر الطبيب الافتراضي العائم ونافذة المحادثة -->
     <div class="fixed bottom-6 left-6 z-50">
         <button onclick="toggleMedicalChat()" class="w-14 h-14 rounded-full bg-gradient-to-r from-primary-600 to-secondary-500 text-white shadow-2xl flex items-center justify-center text-2xl hover:scale-105 transition-all focus:outline-none relative group">
-            <i class="fa-solid fa-robot"></i>
+            <i class="fa-solid fa-user-doctor"></i>
             <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-white animate-pulse"></span>
-            <span class="absolute right-16 bg-slate-900 text-white text-xs px-3 py-1 rounded-lg shadow-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">المساعد الطبي الذكي</span>
+            <span class="absolute right-16 bg-slate-900 text-white text-xs px-3 py-1 rounded-lg shadow-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">استشر الطبيب الذكي</span>
         </button>
     </div>
 
@@ -425,12 +425,12 @@
         <div class="bg-gradient-to-r from-primary-700 to-secondary-600 text-white p-4 flex justify-between items-center">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white text-lg">
-                    <i class="fa-solid fa-robot"></i>
+                    <i class="fa-solid fa-user-doctor"></i>
                 </div>
                 <div>
-                    <h3 class="font-bold text-sm">المساعد الطبي الذكي</h3>
+                    <h3 class="font-bold text-sm">د. ميراج (الطبيب الافتراضي)</h3>
                     <span class="text-[10px] text-emerald-200 flex items-center gap-1">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> قاعدة بيانات شاملة للتشخيص والأدوية
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> جاهز للتشخيص ووصف العلاج
                     </span>
                 </div>
             </div>
@@ -441,17 +441,17 @@
         <div id="chat-messages" class="p-4 h-80 overflow-y-auto space-y-3 bg-slate-50 text-xs sm:text-sm">
             <div class="flex gap-2 items-start">
                 <div class="w-7 h-7 rounded-full bg-primary-600 text-white flex items-center justify-center shrink-0 text-xs">
-                    <i class="fa-solid fa-robot"></i>
+                    <i class="fa-solid fa-user-doctor"></i>
                 </div>
                 <div class="bg-white p-3 rounded-2xl rounded-tr-none shadow-sm border border-slate-100 text-slate-700 max-w-[80%] leading-relaxed">
-                    أهلاً بك! أنا المساعد الطبي الذكي لـ E-Clinic Gaza. مبرمج للإجابة عن أي مرض، تشخيص الأعراض بدقة، توجيهك للأدوية المتوفرة، وإخبارك بمواقع وأرقام المستشفيات في قطاع غزة. اكتب لي أي أعراض أو استفسار وسأقوم بتشخيصه فوراً!
+                    أهلاً بك يا أخي العزيز. معك د. ميراج، طبيبك الافتراضي في منصة E-Clinic Gaza. تفضل, صف لي ما تشعر به من أعراض أو آلام، وسأقوم بفحص حالتك، تشخيصها بدقة، ووصف الأدوية المناسبة المتوفرة لدينا مع تحديد أقرب مستشفى أو صيدلية لك.
                 </div>
             </div>
         </div>
 
         <!-- حقل إدخال الرسالة -->
         <div class="p-3 bg-white border-t border-slate-200 flex items-center gap-2">
-            <input type="text" id="chat-input" onkeypress="handleChatKeyPress(event)" placeholder="اكتب المرض، الأعراض، أو استفسارك هنا..." class="flex-grow px-3 py-2 border rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+            <input type="text" id="chat-input" onkeypress="handleChatKeyPress(event)" placeholder="اكتب الأعراض أو المرض هنا..." class="flex-grow px-3 py-2 border rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
             <button onclick="sendChatMessage()" class="bg-primary-700 hover:bg-primary-800 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center">
                 <i class="fa-solid fa-paper-plane"></i>
             </button>
@@ -463,18 +463,17 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
             <div class="flex items-center justify-center gap-2">
                 <div class="w-8 h-8 rounded-lg bg-primary-600 flex items-center justify-center text-white font-bold">
-                    <i class="fa-solid fa-notes-medical"></i>
+                    <i class="fa-solid fa-user-doctor"></i>
                 </div>
-                <span class="font-extrabold text-white text-lg">E-Clinic Gaza 2.5</span>
+                <span class="font-extrabold text-white text-lg">E-Clinic Gaza 2.6</span>
             </div>
             <p class="text-xs text-slate-400 max-w-md mx-auto">منصة رقمية مجتمعية تطوعية تهدف لتسهيل الوصول للخدمات الصحية والدوائية الطارئة في قطاع غزة.</p>
             <p class="text-xs text-slate-600 pt-4 border-t border-slate-800">جميع الحقوق محفوظة © 2026 | E-Clinic Gaza</p>
         </div>
     </footer>
 
-    <!-- JavaScript البرمجي الشامل للتشخيص والمعلومات -->
+    <!-- JavaScript البرمجي الشامل للتشخيص ووصف الأدوية -->
     <script>
-        // قواعد البيانات والذكاء الطبي الموسع
         const hospitalsData = [
             { id: 1, name: 'مجمع الشفاء الطبي', gov: 'غزة', status: 'يعمل جزئياً', desc: 'قسم الطوارئ والجراحة وغسيل الكلى تعمل بقدر استيعابية محدودة.', phone: '+97082823122' },
             { id: 2, name: 'مستشفى شهداء الأقصى', gov: 'دير البلح', status: 'يعمل', desc: 'المستشفى الرئيسي في الوسطى، يخدم آلاف النازحين والمرضى.', phone: '+97082535041' },
@@ -485,80 +484,81 @@
 
         const medicinesData = [
             { id: 1, name: 'أنسولين بشري', active: 'Insulin Human', use: 'خفض وتعديل سكر الدم لمرضى السكري.', status: 'متوفر بكميات محدودة في صيدليات الوسط وخان يونس المركزية.' },
-            { id: 2, name: 'باراسيتامول', active: 'Paracetamol', use: 'خافض حرارة ومسكن آلام خفيف.', status: 'متوفر بكثرة في أغلب الصيدليات والمراكز.' },
-            { id: 3, name: 'أوجمنتين', active: 'Amoxicillin / Clavulanate', use: 'علاج التهابات البكتيريا والجروح.', status: 'متوفر بنسب متفاوتة، يحتاج وصفة طبية.' },
+            { id: 2, name: 'باراسيتامول (أكامول / فاستاف)', active: 'Paracetamol', use: 'خافض حرارة ومسكن آلام خفيف.', status: 'متوفر بكثرة في أغلب الصيدليات والمراكز.' },
+            { id: 3, name: 'أوجمنتين (مضاد حيوي)', active: 'Amoxicillin / Clavulanate', use: 'علاج التهابات البكتيريا والجروح.', status: 'متوفر بنسب متفاوتة، يحتاج وصفة طبية.' },
             { id: 4, name: 'كونكور / أملوديبين', active: 'Beta Blockers & Amlodipine', use: 'انتظام ضغط الدم وأمراض القلب.', status: 'متوفر في الصيدليات المركزية الكبرى.' },
-            { id: 5, name: 'مراهم تعقيم جروح', active: 'Antiseptic Ointments', use: 'الوقاية من تلوث الجروح وتقرحات الفراش.', status: 'متوفر عبر فرق الرعاية المنزلية وبنوك الأدوية.' },
-            { id: 6, name: 'سيتيريزين', active: 'Cetirizine', use: 'علاج الحساسية والطفح الجلدي.', status: 'متوفر' },
-            { id: 7, name: 'ميتفورمين', active: 'Metformin', use: 'تنظيم سكر الدم لمرضى السكري.', status: 'متوفر بصفة مقيدة' },
-            { id: 8, name: 'سالبوتامول', active: 'Salbutamol', use: 'بخاخ موسع للشعب الهوائية لمرضى الربو.', status: 'متوفر' },
-            { id: 9, name: 'ديكلوفيناك', active: 'Diclofenac', use: 'مسكن للألم ومضاد للالتهاب.', status: 'متوفر' }
+            { id: 5, name: 'مراهم تعقيم جروح ومضاد', active: 'Antiseptic Ointments', use: 'الوقاية من تلوث الجروح وتقرحات الفراش.', status: 'متوفر عبر فرق الرعاية المنزلية وبنوك الأدوية.' },
+            { id: 6, name: 'سيتيريزين أو لوراتادين', active: 'Antihistamine', use: 'علاج الحساسية والطفح الجلدي.', status: 'متوفر' },
+            { id: 7, name: 'ميتفورمين (جلوكوفاج)', active: 'Metformin', use: 'تنظيم سكر الدم لمرضى السكري.', status: 'متوفر بصفة مقيدة' },
+            { id: 8, name: 'سالبوتامول (بخاخ الربو)', active: 'Salbutamol Inhaler', use: 'موسع للشعب الهوائية لمرضى الربو وضيق التنفس.', status: 'متوفر' }
         ];
 
-        // موسوعة الأمراض والتشخيص الذكي الشاملة
+        // موسوعة الأمراض والتشخيص ووصف العلاج السريري
         const diseasesKnowledgeBase = [
             {
-                keywords: ['سكر', 'سكري', 'ارتفاع السكر', 'أنسولين'],
+                keywords: ['سكر', 'سكري', 'ارتفاع السكر', 'عطش', 'تبول متكرر'],
                 name: 'مرض السكري (Diabetes Mellitus)',
-                desc: 'حالة مزمنة يواجه فيها الجسم صعوبة في تنظيم مستوى السكر في الدم.',
-                symptoms: ['عطش شديد', 'تبول متكرر', 'إرهاق عام', 'تشوش رؤية مؤقت'],
-                treatment: 'تنظيم الحمية الغذائية، الالتزام بأدوية تنظيم السكر أو الأنسولين.',
-                medicineRef: 'أنسولين بشري أو ميتفورمين',
-                hospitalRef: 'مستشفى ناصر الطبي / مستشفى شهداء الأقصى (العيادات الخارجية)'
+                diagnosis: 'تشير الأعراض إلى اضطراب في مستوى الأنسولين وعدم قدرة الخلايا على امتصاص الجلوكوز بكفاءة.',
+                treatmentPlan: 'الالتزام بالحمية الغذائية الخالية من السكريات البسيطة، قياس السكر بانتظام، وشرب الماء بكثرة.',
+                prescribedMedicines: [
+                    { name: 'ميتفورمين (Metformin 500mg)', dosage: 'حبة واحدة مرتين يومياً بعد الأكل (حسب استشارة الطبيب)' },
+                    { name: 'أنسولين بشري (حسب نوع السكري)', dosage: 'يحدد الجرعة الطبيب المعالج بناءً على قراءات الفحص' }
+                ],
+                hospitalRef: 'مستشفى ناصر الطبي / مستشفى شهداء الأقصى (عيادات الأمراض المزمنة)'
             },
             {
-                keywords: ['ضغط', 'ضغط الدم', 'ارتفاع الضغط', 'صداع مزمن'],
+                keywords: ['ضغط', 'ارتفاع الضغط', 'صداع', 'دوخة', 'زغللة'],
                 name: 'ارتفاع ضغط الدم (Hypertension)',
-                desc: 'قوة تدفق الدم ضد جدران الشرايين عالية باستمرار.',
-                symptoms: ['صداع في الرأس', 'دوخة', 'ضيق تنفس خفيف', 'إرهاق'],
-                treatment: 'تقليل الأملاح، ممارسة الرياضة الخفيفة، وتناول أدوية الضغط بانتظام.',
-                medicineRef: 'كونكور / أملوديبين',
-                hospitalRef: 'جميع المستشفيات والمراكز الصحية'
+                diagnosis: 'الضغط المرتفع على جدران الشرايين يسبب صداعاً في مؤخرة الرأس ودوخة خفيفة.',
+                treatmentPlan: 'التقليل التام للملاح، تجنب التوتر العصبي، والجلوس باسترخاء.',
+                prescribedMedicines: [
+                    { name: 'أملوديبين (Amlodipine 5mg)', dosage: 'حبة واحدة صباحاً' },
+                    { name: 'كونكور (Bisoprolol 2.5mg)', dosage: 'حبة واحدة يومياً صباحاً لتنظيم نبضات القلب والضغط' }
+                ],
+                hospitalRef: 'جميع المراكز الصحية الأولية ومستشفيات قطاع غزة'
             },
             {
-                keywords: ['حرارة', 'سخونة', 'حمى', 'إنفلونزا', 'رشح', 'زكام', 'برد'],
-                name: 'نزلات البرد والإنفلونزا والحمى',
-                desc: 'عدوى فيروسية تصيب الجهاز التنفسي العلوي وتسبب ارتفاع درجات الحرارة.',
-                symptoms: ['ارتفاع حرارة الجسم', 'آلام في العضلات', 'سعال', 'احتقان بالحلق', 'رشح'],
-                treatment: 'الراحة التامة، شرب السوائل الدافئة بكثرة، وخافضات الحرارة.',
-                medicineRef: 'باراسيتامول وسيتيريزين',
-                hospitalRef: 'المراكز الصحية الأولية وعيادات وكالة الغوث'
+                keywords: ['حرارة', 'سخونة', 'حمى', 'إنفلونزا', 'رشح', 'زكام', 'برد', 'سعال', 'احتقان'],
+                name: 'نزلات البرد الحادة والإنفلونزا (Common Cold / Flu)',
+                diagnosis: 'عدوى فيروسية في الجهاز التنفسي العلوي سببت ارتفاع حرارة الجسم والتهاب الحلق.',
+                treatmentPlan: 'الراحة التامة في الفراش، الإكثار من السوائل الدافئة (يانسون، ليمون، بابونج)، وتجنب التيارات الهوائية.',
+                prescribedMedicines: [
+                    { name: 'باراسيتامول (Panadol / Paracetamol 500mg)', dosage: 'حبتان كل 6-8 ساعات عند ارتفاع الحرارة أو الألم (بحد أقصى 8 حبات يومياً)' },
+                    { name: 'سيتيريزين (Cetirizine 10mg)', dosage: 'حبة واحدة مساءً لعلاج الرشح واحتقان الأنف' }
+                ],
+                hospitalRef: 'مراكز الرعاية الأولية وعيادات الأونروا'
             },
             {
-                keywords: ['جروح', 'جرح', 'نزيف', 'قطع', 'إصابة'],
-                name: 'إصابات الجروح والنزيف الجلدي',
-                desc: 'تلف في الأنسجة الخارجية نتيجة احتكاك أو آلام أو إصابات حادة.',
-                symptoms: ['خروج دم', 'ألم موضعي', 'احمرار واشتباه تلوث'],
-                treatment: 'غسل الجرح بمحلول معقم أو ماء نظيف، الضغط المباشر لوقف النزيف، ووضع مطهر.',
-                medicineRef: 'مراهم تعقيم جروح وأوجمنتين كمضاد حيوي',
-                hospitalRef: 'مجمع الشفاء الطبي (طوارئ) / مستشفى شهداء الأقصى / مستشفى ناصر'
+                keywords: ['جروح', 'جرح', 'نزيف', 'قطع', 'إصابة جلدية'],
+                name: 'إصابات الجروح والرضوض الجلدية',
+                diagnosis: 'تهتك في الأنسجة الخارجية مع خطر التعرض للتلوث البكتيري.',
+                treatmentPlan: 'تنظيف الجرح بماء نظيف ومحلول معقم، الضغط عليه بقطعة قماش نظيفة، وتغطية الجرح بضمادة.',
+                prescribedMedicines: [
+                    { name: 'أوجمنتين (Augmentin 1g مضاد حيوي)', dosage: 'حبة كل 12 ساعة لمدة 5 أيام لمنع الالتهاب البكتيري' },
+                    { name: 'مرهم مطهر ومضاد (Antibiotic Ointment)', dosage: 'دهن طبقة خفيفة على الجرح مرتين يومياً' }
+                ],
+                hospitalRef: 'قسم الطوارئ - مجمع الشفاء الطبي أو مستشفى شهداء الأقصى'
             },
             {
-                keywords: ['ربو', 'ضيق تنفس', 'أزمة', 'تنفس', 'كتمة'],
-                name: 'نوبات الربو وضيق التنفس (Asthma)',
-                desc: 'ضيق والتهاب في الشعب الهوائية يسبب صعوبة في إدخال الهواء للرئتين.',
-                symptoms: ['صفير في الصدر', 'ضيق تنفس حاد', 'سعال جاف'],
-                treatment: 'استخدام بخاخ الموسع للشعب الهوائية فوراً والجلوس بشكل مستقيم.',
-                medicineRef: 'سالبوتامول (بخاخ الربو)',
-                hospitalRef: 'أقسام الطوارئ في مستشفى ناصر وشهداء الأقصى'
+                keywords: ['ربو', 'ضيق تنفس', 'أزمة', 'تنفس', 'كتمة', 'صفير'],
+                name: 'نوبة الربو الحساسية الشعبية (Asthma)',
+                diagnosis: 'تشنج وانقباض مفاجئ في العضلات المحيطة بالشعب الهوائية يمنع دخول الهواء بسلاسة.',
+                treatmentPlan: 'الجلوس بوضعيات قائمة ومستقيمة، الابتعاد عن الأتربة والدخان، واستخدام الموسع فوراً.',
+                prescribedMedicines: [
+                    { name: 'سالبوتامول (Salbutamol Inhaler - بخاخ)', dosage: 'بخختان عند الشعور بضيق التنفس، وتكرارها عند الحاجة بعد 5 دقائق' }
+                ],
+                hospitalRef: 'أقسام الطوارئ الفورية في مستشفى ناصر وشهداء الأقصى'
             },
             {
-                keywords: ['إسهال', 'تسمم', 'مغص', 'بطن', 'استفرغ', 'قيء', 'معدة'],
-                name: 'التهاب المعدة والأمعاء والتسمم الغذائي',
-                desc: 'عدوى أو تهيج في الجهاز الهضمي ناتج عن طعام أو مياه غير مأمونة.',
-                symptoms: ['مغص شديد', 'إسهال', 'غثيان وقيء', 'جفاف'],
-                treatment: 'شرب محاليل الإرواء الفموي بكثرة، تجنب الأغذية الدسمة، والراحة.',
-                medicineRef: 'باراسيتامول ومواد معقمة معوية',
+                keywords: ['إسهال', 'تسمم', 'مغص', 'بطن', 'استفرغ', 'قيء', 'معدة', 'غثيان'],
+                name: 'التهاب المعدة والأمعاء الحاد (Gastroenteritis)',
+                diagnosis: 'تهيّج في الغشاء المخاطي للمعدة والأمعاء نتيجة تلوث غذائي أو بكتيري.',
+                treatmentPlan: 'الإكثار من شرب السوائل ومحاليل الإرواء الفموي لتجنب الجفاف، وتناول أطعمة خفيفة (بطاطس مسلوقة، أرز).',
+                prescribedMedicines: [
+                    { name: 'محاليل الإرواء الفموي (Oral Rehydration Salts)', dosage: 'كيس يُذاب في لتر ماء ويُشرب طوال اليوم' },
+                    { name: 'باراسيتامول (Paracetamol 500mg)', dosage: 'حبة عند وجود مغص أو ألم شديد ومصاحب لحرارة' }
+                ],
                 hospitalRef: 'مستشفى شهداء الأقصى / مستشفى ناصر الطبي'
-            },
-            {
-                keywords: ['حرق', 'حروق', 'حارق'],
-                name: 'الحروق الجلدية (Burns)',
-                desc: 'تلف خلايا الجلد نتيجة التعرض لحرارة أو سوائل ساخنة.',
-                symptoms: ['احمرار شديد', 'ألم حارق', 'فقاعات مائية'],
-                treatment: 'تبريد مكان الإصابة بماء فاتر جارٍ لمدة 15 دقيقة، عدم وضع ثلج، وتغطية الحرق بقمش نظيف.',
-                medicineRef: 'مراهم معقمة للحروق ومسكنات آلام (باراسيتامول)',
-                hospitalRef: 'أقسام الطوارئ والجراحة العامة'
             }
         ];
 
@@ -586,11 +586,6 @@
             { title: 'التعامل مع الحروق البسيطة', steps: ['تبريد مكان الحرق بماء فاتر جاري لمدة 10-15 دقيقة.', 'عدم وضع زيوت أو معجون أسنان أو ثلج نهائياً.', 'تغطية الحرق بقطعة قماش نظيفة غير جائحة وراجع الطبيب.'] }
         ];
 
-        let requestsList = [
-            { id: 'REQ-849201', name: 'سليم أحمد أبو هداف', region: 'خانيونس', service: 'عناية بالجروح وتعقيم / تفادي بتر', status: 'قيد المتابعة' },
-            { id: 'REQ-918234', name: 'فاطمة محمود عابد', region: 'مدينة غزة', service: 'متابعة أدوية وضغط وسكري', status: 'تم التوجيه للكادر' }
-        ];
-
         // تهيئة الخريطة بـ Leaflet
         const map = L.map('map', { attributionControl: false }).setView([31.520, 34.447], 11);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
@@ -598,7 +593,6 @@
         let mapMarkers = {}; 
         let markersLayer = L.layerGroup().addTo(map);
 
-        // دوال التنقل (SPA Router)
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             const target = document.getElementById('view-' + tabId);
@@ -616,7 +610,6 @@
             document.getElementById('mobile-menu').classList.toggle('hidden');
         }
 
-        // تهيئة البيانات عند التحميل
         document.addEventListener('DOMContentLoaded', () => {
             renderHospitals(hospitalsData);
             renderMedicines(medicinesData);
@@ -757,7 +750,6 @@
 
         function submitHomeCareRequest(e) {
             e.preventDefault();
-            const name = document.getElementById('req-name').value;
             const randomCode = 'REQ-' + Math.floor(100000 + Math.random() * 900000);
             document.getElementById('tracking-code-display').innerText = randomCode;
             document.getElementById('tracking-result').classList.remove('hidden');
@@ -804,7 +796,7 @@
 
             let resultsHTML = '';
             matchedDiseases.forEach(d => {
-                resultsHTML += `<div onclick="toggleMedicalChat(); document.getElementById('chat-input').value='عن مرض ${d.name}'; sendChatMessage();" class="cursor-pointer hover:bg-slate-50 p-2 rounded text-xs text-right font-bold text-purple-700">تشخيص مرض: ${d.name}</div>`;
+                resultsHTML += `<div onclick="toggleMedicalChat(); document.getElementById('chat-input').value='عندي أعراض تشبه ${d.name}'; sendChatMessage();" class="cursor-pointer hover:bg-slate-50 p-2 rounded text-xs text-right font-bold text-purple-700">استشر الطبيب عن: ${d.name}</div>`;
             });
             matchedHospitals.forEach(h => {
                 resultsHTML += `<div onclick="switchTab('hospitals')" class="cursor-pointer hover:bg-slate-50 p-2 rounded text-xs text-right font-bold text-primary-700">مستشفى: ${h.name} (${h.gov})</div>`;
@@ -813,7 +805,7 @@
                 resultsHTML += `<div onclick="switchTab('medicines')" class="cursor-pointer hover:bg-slate-50 p-2 rounded text-xs text-right font-bold text-emerald-700">دواء: ${m.name}</div>`;
             });
 
-            if (resultsHTML === '') resultsHTML = '<div class="p-2 text-xs text-slate-400 text-right">لا توجد نتائج مطابقة، جرب البحث في المساعد الطبي الذكي.</div>';
+            if (resultsHTML === '') resultsHTML = '<div class="p-2 text-xs text-slate-400 text-right">لا توجد نتائج مطابقة، جرب التحدث مع الطبيب الافتراضي.</div>';
             box.innerHTML = resultsHTML;
             box.classList.remove('hidden');
         }
@@ -830,7 +822,7 @@
             document.getElementById('search-suggestions').classList.add('hidden');
         }
 
-        // محرك التشخيص الذكي والمساعد المتقدم
+        // محرك التشخيص ووصف العلاج بصيغة طبيب اختصاصي
         function toggleMedicalChat() {
             const chatWindow = document.getElementById('medical-chat-window');
             chatWindow.classList.toggle('hidden');
@@ -848,7 +840,7 @@
 
             const chatMessages = document.getElementById('chat-messages');
 
-            // إضافة رسالة المستخدم
+            // إضافة رسالة المريض
             chatMessages.innerHTML += `
                 <div class="flex gap-2 items-start justify-end">
                     <div class="bg-primary-600 text-white p-3 rounded-2xl rounded-tl-none shadow-sm max-w-[80%] leading-relaxed">
@@ -863,28 +855,28 @@
             input.value = '';
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
-            // معالجة ذكية وتشخيص فوري عبر قاعدة المعرفة
+            // محاكاة رد الطبيب المختص مع التشخيص ووصف الأدوية بدقة
             setTimeout(() => {
-                let aiReply = "";
+                let doctorReply = "";
                 const lowerText = messageText.toLowerCase();
 
-                // فحص ما إذا كان السؤال يتعلق بمستشفى أو مكان معين
-                if (lowerText.includes('وين مستشفى') || lowerText.includes('أين مستشفى') || lowerText.includes('رقم مستشفى') || lowerText.includes('مستشفيات')) {
-                    aiReply = `إليك أبرز المستشفيات والمراكز العاملة في قطاع غزة:<br>`;
+                // التحقق من الاستفسارات عن المستشفيات
+                if (lowerText.includes('وين مستشفى') || lowerText.includes('أين مستشفى') || lowerText.includes('مستشفيات')) {
+                    doctorReply = `أهلاً بك. بصفتي طبيبك المعالج، إليك المستشفيات العاملة حالياً في غزة والتي يمكنك التوجه إليها:<br>`;
                     hospitalsData.forEach(h => {
-                        aiReply += `- <b>${h.name}</b> (${h.gov}): ${h.status} - هاتف: ${h.phone}<br>`;
+                        doctorReply += `- <b>${h.name}</b> (${h.gov}): ${h.status} - هاتف: ${h.phone}<br>`;
                     });
-                    aiReply += `<br>للطوارئ الفورية اتصل بـ 101.`;
+                    doctorReply += `<br>للطوارئ الحرجة اتصل فوراً بـ 101.`;
                 } 
-                // فحص ما إذا كان السؤال يتعلق بدواء معين
-                else if (lowerText.includes('دواء') || lowerText.includes('وين ألاقي') || lowerText.includes('توفر')) {
-                    aiReply = `إليك تفاصيل بعض الأدوية المتاحة وحالتها في صيدليات غزة:<br>`;
+                // التحقق من الاستفسارات عن الأدوية العامة
+                else if (lowerText.includes('دواء') || lowerText.includes('صيدلية') || lowerText.includes('أدوية')) {
+                    doctorReply = `بصري كطبيب، تتوفر في صيدليات ومراكز غزة عدة أدوية رئيسية:<br>`;
                     medicinesData.slice(0, 5).forEach(m => {
-                        aiReply += `- <b>${m.name}</b> (${m.active}): ${m.status}<br>`;
+                        doctorReply += `- <b>${m.name}</b>: ${m.use} (${m.status})<br>`;
                     });
-                    aiReply += `<br>يمكنك زيارة قسم الأدوية في الموقع للاطلاع على القائمة الكاملة.`;
+                    doctorReply += `<br>أخبرني باسم الدواء أو الحالة لأكتب لك الجرعة المناسبة.`;
                 } 
-                // البحث في قاعدة بيانات الأمراض والتشخيص
+                // مطابقة الأمراض والتشخيص ووصف الأدوية الدقيقة
                 else {
                     let foundDisease = null;
                     for (let dis of diseasesKnowledgeBase) {
@@ -895,31 +887,33 @@
                     }
 
                     if (foundDisease) {
-                        aiReply = `<b>تقرير التشخيص المبدئي للـذكاء الاصطناعي:</b><br>`;
-                        aiReply += `🩺 <b>الحالة المحتملة:</b> ${foundDisease.name}<br>`;
-                        aiReply += `📋 <b>الوصف:</b> ${foundDisease.desc}<br>`;
-                        aiReply += `⚠️ <b>الأعراض الشائعة:</b> ${foundDisease.symptoms.join('، ')}<br>`;
-                        aiReply += `💡 <b>الإرشادات العلاجية:</b> ${foundDisease.treatment}<br>`;
-                        aiReply += `💊 <b>الأدوية ذات الصلة:</b> ${foundDisease.medicineRef}<br>`;
-                        aiReply += `🏥 <b>المستشفى أو المركز المقترح المتابع:</b> ${foundDisease.hospitalRef}<br><br>`;
-                        aiReply += `<i>ملاحظة: هذا تشخيص استرشادي ولا يغني عن زيارة الطبيب الميداني المختص.</i>`;
+                        doctorReply = `أهلاً بك يا أخي، بعد سماع أعراضك وفحصها كطبيب اختصاصي، إليك التقرير الطبي والروشتة العلاجية:<br><br>`;
+                        doctorReply += `🩺 <b>التشخيص المبدئي:</b> ${foundDisease.name}<br>`;
+                        doctorReply += `📋 <b>الرأي الطبي والتحليل:</b> ${foundDisease.diagnosis}<br>`;
+                        doctorReply += `💡 <b>خطة العلاج والإرشادات المنزلية:</b> ${foundDisease.treatmentPlan}<br><br>`;
+                        doctorReply += `💊 <b>الأدوية المقترحة والجرعات:</b><br>`;
+                        foundDisease.prescribedMedicines.forEach(med => {
+                            doctorReply += `• <b>${med.name}</b><br>  جرعة الاستخدام: ${med.dosage}<br>`;
+                        });
+                        doctorReply += `<br>🏥 <b>المركز أو المستشفى المقترح لمتابعة الحالة:</b> ${foundDisease.hospitalRef}<br><br>`;
+                        doctorReply += `<i>سلامتك ألف سلامة، وإذا اشتدت الأعراض لا تتردد في زيارة أقرب نقطة طبية أو الاتصال بالإسعاف (101).</i>`;
                     } else {
-                        aiReply = `شكراً لاستفسارك. قمت بفحص قاعدة البيانات الطبية الشاملة ولم أجد تطابقاً دقيقاً مع عبارتك. يرجى ذكر الأعراض بوضوح (مثل: ارتفاع حرارة، ألم بطن، جروح، ضغط، سكري، نزيف)، أو السؤال عن مستشفى أو دواء محدد، وسأقوم بتشخيصه وتوجيهك فوراً. للاستجابة السريعة للطوارئ اتصل بـ 101.`;
+                        doctorReply = `أهلاً بك. بصفتي طبيبك الافتراضي، لم أتمكن من مطابقة الأعراض بدقة مع قاعدة البيانات. أرجو توضيح الأعراض أكثر (مثلاً: حرارة مرتفعة، سعاد، ألم بطن، جروح، ضغط، سكري)، لكي أقوم بتشخيصها بدقة ووصف الأدوية المناسبة لك فوراً.`;
                     }
                 }
 
                 chatMessages.innerHTML += `
                     <div class="flex gap-2 items-start">
                         <div class="w-7 h-7 rounded-full bg-primary-600 text-white flex items-center justify-center shrink-0 text-xs">
-                            <i class="fa-solid fa-robot"></i>
+                            <i class="fa-solid fa-user-doctor"></i>
                         </div>
                         <div class="bg-white p-3 rounded-2xl rounded-tr-none shadow-sm border border-slate-100 text-slate-700 max-w-[80%] leading-relaxed space-y-1">
-                            ${aiReply}
+                            ${doctorReply}
                         </div>
                     </div>
                 `;
                 chatMessages.scrollTop = chatMessages.scrollHeight;
-            }, 800);
+            }, 900);
         }
 
         function escapeHTML(str) {
