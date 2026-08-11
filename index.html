@@ -547,6 +547,13 @@
             { id: 'REQ-918234', name: 'فاطمة محمود عابد', region: 'مدينة غزة', service: 'متابعة أدوية وضغط وسكري', status: 'تم التوجيه للكادر' }
         ];
 
+        // تهيئة الخريطة بـ Leaflet
+        const map = L.map('map', { attributionControl: false }).setView([31.520, 34.447], 11);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
+
+        let mapMarkers = {}; // تخزين العلامات المرتبطة بالخريطة
+        let markersLayer = L.layerGroup().addTo(map);
+
         // دوال التنقل (SPA Router)
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -580,7 +587,6 @@
             renderMapLocations(mapLocationsData);
             renderArticles(articlesData);
             renderAwareness(awarenessData);
-            renderAdminRequests();
         });
 
         // 1. عرض وتصفية المستشفيات
@@ -683,15 +689,18 @@
             closeModal('doctor-modal');
             alert('تم إضافتك بنجاح إلى دليل الكوادر الطبية!');
             document.getElementById('doctor-join-form').reset();
-            document.getElementById('admin-doc-count').innerText = doctorsData.length;
         }
 
-        // 4. الخريطة التفاعلية
+        // 4. الخريطة التفاعلية مع دعم الانتقال عند النقر
         function renderMapLocations(data) {
             const container = document.getElementById('map-locations-list');
             if (!container) return;
+
+            markersLayer.clearLayers();
+            mapMarkers = {};
+
             container.innerHTML = data.map(l => `
-                <div onclick="selectMapLocation('${l.name}', '${l.coords}', '${l.status}')" class="p-4 bg-slate-50 hover:bg-primary-50 border rounded-xl cursor-pointer transition-all">
+                <div onclick="selectMapLocation(${l.id}, '${l.coords}')" class="p-4 bg-slate-50 hover:bg-primary-50 border rounded-xl cursor-pointer transition-all">
                     <div class="flex justify-between items-center mb-1">
                         <span class="font-bold text-sm text-slate-900">${l.name}</span>
                         <span class="text-[10px] bg-slate-200 px-2 py-0.5 rounded">${l.gov}</span>
@@ -700,11 +709,21 @@
                     <span class="text-[11px] font-bold text-emerald-600 block mt-1">${l.status}</span>
                 </div>
             `).join('');
+
+            data.forEach(l => {
+                const latLng = l.coords.split(',').map(Number);
+                const marker = L.marker(latLng).bindPopup(`<b>${l.name}</b><br>${l.status}`);
+                markersLayer.addLayer(marker);
+                mapMarkers[l.id] = marker;
+            });
         }
 
-        function selectMapLocation(name, coords, status) {
-            document.getElementById('map-selected-title').innerText = name;
-            document.getElementById('map-selected-desc').innerText = `الإحداثيات الجغرافية: ${coords} | الحالة التشغيلية: ${status}`;
+        function selectMapLocation(id, coordsStr) {
+            const latLng = coordsStr.split(',').map(Number);
+            map.setView(latLng, 15, { animate: true });
+            if (mapMarkers[id]) {
+                mapMarkers[id].openPopup();
+            }
         }
 
         function filterMap(type) {
@@ -722,7 +741,6 @@
             
             const randomCode = 'REQ-' + Math.floor(100000 + Math.random() * 900000);
             
-            // إضافة الطلب لقائمة المدير
             requestsList.unshift({
                 id: randomCode,
                 name: name,
@@ -734,8 +752,6 @@
             document.getElementById('tracking-code-display').innerText = randomCode;
             document.getElementById('tracking-result').classList.remove('hidden');
             document.getElementById('home-care-form').reset();
-            document.getElementById('admin-req-count').innerText = requestsList.length;
-            renderAdminRequests();
         }
 
         // 6. المقالات والتوعية
@@ -766,21 +782,6 @@
                         ${aw.steps.map(step => `<li>${step}</li>`).join('')}
                     </ul>
                 </div>
-            `).join('');
-        }
-
-        // 7. لوحة التحكم (Admin Table)
-        function renderAdminRequests() {
-            const tbody = document.getElementById('admin-requests-table');
-            if (!tbody) return;
-            tbody.innerHTML = requestsList.map(req => `
-                <tr class="border-b hover:bg-slate-50">
-                    <td class="p-3 font-bold text-primary-700">${req.id}</td>
-                    <td class="p-3 font-bold text-slate-900">${req.name}</td>
-                    <td class="p-3 text-slate-600">${req.region}</td>
-                    <td class="p-3 text-slate-600">${req.service}</td>
-                    <td class="p-3"><span class="bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded font-bold">${req.status}</span></td>
-                </tr>
             `).join('');
         }
 
@@ -818,14 +819,6 @@
             else switchTab('hospitals');
             document.getElementById('search-suggestions').classList.add('hidden');
         }
-    </script>
-    <script>
-        // تشغيل الخريطة وتحديد المركز على غزة مع إخفاء شعار وحقوق Leaflet
-        const map = L.map('map', { attributionControl: false }).setView([31.520, 34.447], 11);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19
-        }).addTo(map);
     </script>
 </body>
 </html>
