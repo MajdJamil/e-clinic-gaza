@@ -465,6 +465,55 @@
         </div>
     </div>
 
+    <!-- زر المساعد الطبي الذكي العائم ونافذة المحادثة -->
+    <div class="fixed bottom-6 left-6 z-50">
+        <!-- زر الروبوت الطبي -->
+        <button onclick="toggleMedicalChat()" class="w-14 h-14 rounded-full bg-gradient-to-r from-primary-600 to-secondary-500 text-white shadow-2xl flex items-center justify-center text-2xl hover:scale-105 transition-all focus:outline-none relative group">
+            <i class="fa-solid fa-robot"></i>
+            <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-white animate-pulse"></span>
+            <span class="absolute right-16 bg-slate-900 text-white text-xs px-3 py-1 rounded-lg shadow-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">المساعد الطبي الذكي</span>
+        </button>
+    </div>
+
+    <!-- نافذة المحادثة الطبية المصغرة -->
+    <div id="medical-chat-window" class="fixed bottom-24 left-6 z-50 w-80 sm:w-96 bg-white rounded-3xl shadow-2xl border border-slate-200 hidden flex flex-col overflow-hidden transition-all transform origin-bottom-left">
+        <!-- رأس نافذة المحادثة -->
+        <div class="bg-gradient-to-r from-primary-700 to-secondary-600 text-white p-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white text-lg">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-sm">المساعد الطبي الذكي</h3>
+                    <span class="text-[10px] text-emerald-200 flex items-center gap-1">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> متصل للإجابة والاستفسارات
+                    </span>
+                </div>
+            </div>
+            <button onclick="toggleMedicalChat()" class="text-white/80 hover:text-white text-xl font-bold p-1">&times;</button>
+        </div>
+        
+        <!-- رسائل المحادثة -->
+        <div id="chat-messages" class="p-4 h-80 overflow-y-auto space-y-3 bg-slate-50 text-xs sm:text-sm">
+            <div class="flex gap-2 items-start">
+                <div class="w-7 h-7 rounded-full bg-primary-600 text-white flex items-center justify-center shrink-0 text-xs">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+                <div class="bg-white p-3 rounded-2xl rounded-tr-none shadow-sm border border-slate-100 text-slate-700 max-w-[80%] leading-relaxed">
+                    أهلاً بك! أنا المساعد الطبي الذكي لمنصة E-Clinic Gaza. كيف يمكنني مساعدتك في استفسارك الطبي اليوم؟ (تذكر أن هذه الاستشارة توعوية ولا تغني عن استشارة الطبيب المختص).
+                </div>
+            </div>
+        </div>
+
+        <!-- حقل إدخال الرسالة -->
+        <div class="p-3 bg-white border-t border-slate-200 flex items-center gap-2">
+            <input type="text" id="chat-input" onkeypress="handleChatKeyPress(event)" placeholder="اكتب استفسارك الطبي هنا..." class="flex-grow px-3 py-2 border rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+            <button onclick="sendChatMessage()" class="bg-primary-700 hover:bg-primary-800 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="bg-slate-900 text-slate-400 py-12 mt-12 border-t border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
@@ -551,7 +600,7 @@
         const map = L.map('map', { attributionControl: false }).setView([31.520, 34.447], 11);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
 
-        let mapMarkers = {}; // تخزين العلامات المرتبطة بالخريطة
+        let mapMarkers = {}; 
         let markersLayer = L.layerGroup().addTo(map);
 
         // دوال التنقل (SPA Router)
@@ -563,14 +612,12 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
             
-            // تحديث مقاسات الخريطة عند الانتقال لتبويب الخريطة لحل مشكلة المربع الرمادي
             if (tabId === 'map' && typeof map !== 'undefined') {
                 setTimeout(() => {
                     map.invalidateSize();
                 }, 150);
             }
 
-            // إغلاق القائمة الموبايل إن كانت مفتوحة
             document.getElementById('mobile-menu').classList.add('hidden');
         }
 
@@ -818,6 +865,78 @@
             else if (val.includes('دواء') || val.includes('أنسولين')) switchTab('medicines');
             else switchTab('hospitals');
             document.getElementById('search-suggestions').classList.add('hidden');
+        }
+
+        // دوال نافذة المحادثة الطبية الذكية
+        function toggleMedicalChat() {
+            const chatWindow = document.getElementById('medical-chat-window');
+            chatWindow.classList.toggle('hidden');
+            if (!chatWindow.classList.contains('hidden')) {
+                document.getElementById('chat-input').focus();
+            }
+        }
+
+        function handleChatKeyPress(e) {
+            if (e.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const messageText = input.value.trim();
+            if (!messageText) return;
+
+            const chatMessages = document.getElementById('chat-messages');
+
+            // إضافة رسالة المستخدم
+            chatMessages.innerHTML += `
+                <div class="flex gap-2 items-start justify-end">
+                    <div class="bg-primary-600 text-white p-3 rounded-2xl rounded-tl-none shadow-sm max-w-[80%] leading-relaxed">
+                        ${escapeHTML(messageText)}
+                    </div>
+                    <div class="w-7 h-7 rounded-full bg-slate-700 text-white flex items-center justify-center shrink-0 text-xs">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                </div>
+            `;
+
+            input.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // محاكاة رد الذكاء الاصطناعي الطبي
+            setTimeout(() => {
+                let aiReply = "شكراً لتواصلك. بناءً على استفسارك، ننصح باتباع الإرشادات الصحية العامة والمتابعة مع أقرب مركز طبّي أو كادر معتمد في الدليل. إذا كانت حالة طارئة، يرجى الاتصال بالإسعاف (101) فوراً.";
+                
+                const lowerText = messageText.toLowerCase();
+                if (lowerText.includes('سكري') || lowerText.includes('انسولين') || lowerText.includes('سكر')) {
+                    aiReply = "مرضى السكري يحتاجون لانتظام الجرعات. تتوفر كميات محدودة من الأنسولين في الصيدليات المركزية بخانيونس والوسطى. احرص على قياس السكر بانتظام ومراجعة الطبيب.";
+                } else if (lowerText.includes('ضغط') || lowerText.includes('صداع')) {
+                    aiReply = "ارتفاع ضغط الدم قد يسبب صداعاً. ينصح بالهدوء، قياس الضغط لدى أقرب نقطة طبية، وتناول الأدوية المخصصة بوصفة طبية.";
+                } else if (lowerText.includes('جروح') || lowerText.includes('تعقيم') || lowerText.includes('نزيف')) {
+                    aiReply = "للتعامل مع الجروح: نظف الجرح بمحلول معقم أو ماء نظيف، اضغط بقطعة قماش نظيفة لوقف النزيف، وتوجه لقسم الرعاية المنزلية أو أقرب مستشفى لتفادي الالتهابات.";
+                } else if (lowerText.includes('حرق') || lowerText.includes('حروق')) {
+                    aiReply = "للتعامل مع الحروق البسيطة: برّد المكان بماء فاتر جارٍ لمدة 15 دقيقة، ولا تضع ثلجاً أو معجون أسنان، ثم غطه بقطعة قماش نظيفة.";
+                }
+
+                chatMessages.innerHTML += `
+                    <div class="flex gap-2 items-start">
+                        <div class="w-7 h-7 rounded-full bg-primary-600 text-white flex items-center justify-center shrink-0 text-xs">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+                        <div class="bg-white p-3 rounded-2xl rounded-tr-none shadow-sm border border-slate-100 text-slate-700 max-w-[80%] leading-relaxed">
+                            ${aiReply}
+                        </div>
+                    </div>
+                `;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 1000);
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
         }
     </script>
 </body>
