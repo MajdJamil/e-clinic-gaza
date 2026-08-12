@@ -357,8 +357,8 @@
         <!-- 8. المقالات والأبحاث العلمية -->
         <div id="view-articles" class="tab-content py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
             <div class="mb-8">
-                <h2 class="text-3xl font-black text-slate-900">المقالات والأبحاث الصحية</h2>
-                <p class="text-slate-600 text-sm mt-1">مقالات طبية معتمدة، أبحاث ميدانية، وإرشادات وقائية لفريق E-Clinic Gaza.</p>
+                <h2 class="text-3xl font-black text-slate-900">المقالات والأبحاث الصحية العلمية</h2>
+                <p class="text-slate-600 text-sm mt-1">مقالات طبية متقدمة في علم الأعصاب، الأمراض المزمنة والنادرة، وأبحاث غزة الميدانية. انقر على أي مقال لعرض التفاصيل والأدلة البحثية والباحثين.</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="articles-list"></div>
         </div>
@@ -373,6 +373,56 @@
         </div>
 
     </main>
+
+    <!-- نافذة منبثقة تفصيلية للمقال (Article Detail Modal) -->
+    <div id="article-detail-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-3xl w-full shadow-2xl relative space-y-6 max-h-[90vh] overflow-y-auto text-right">
+            <div class="flex justify-between items-start border-b pb-4">
+                <div>
+                    <span id="modal-article-cat" class="text-xs bg-purple-50 text-purple-700 font-bold px-3 py-1 rounded-full"></span>
+                    <span id="modal-article-date" class="text-xs text-slate-400 mr-2"></span>
+                    <h3 id="modal-article-title" class="text-2xl font-black text-slate-900 mt-2"></h3>
+                </div>
+                <button onclick="closeModal('article-detail-modal')" class="text-slate-400 hover:text-slate-600 text-3xl font-bold">&times;</button>
+            </div>
+
+            <!-- محتوى المقال التفصيلي -->
+            <div class="space-y-4">
+                <div>
+                    <h4 class="font-bold text-sm text-primary-700 mb-1"><i class="fa-solid fa-file-lines"></i> نص المقال والملخص العلمي:</h4>
+                    <p id="modal-article-text" class="text-sm text-slate-700 leading-relaxed bg-slate-50 p-4 rounded-2xl border"></p>
+                </div>
+
+                <!-- صور توضيحية -->
+                <div>
+                    <h4 class="font-bold text-sm text-primary-700 mb-2"><i class="fa-solid fa-images"></i> الصور والوسائط المرفقة:</h4>
+                    <div id="modal-article-images" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
+                </div>
+
+                <!-- الأدلة والأبحاث -->
+                <div class="bg-blue-50/50 p-4 rounded-2xl border border-blue-100">
+                    <h4 class="font-bold text-sm text-blue-900 mb-1"><i class="fa-solid fa-flask"></i> الأدلة والأبحاث العلمية المرتبطة:</h4>
+                    <p id="modal-article-evidence" class="text-xs text-blue-800 leading-relaxed"></p>
+                </div>
+
+                <!-- أسماء الدكاترة والباحثين -->
+                <div class="bg-emerald-50/50 p-4 rounded-2xl border border-emerald-100">
+                    <h4 class="font-bold text-sm text-emerald-900 mb-1"><i class="fa-solid fa-user-doctor"></i> الطاقم الطبي والباحثون المشاركون:</h4>
+                    <div id="modal-article-researchers" class="flex flex-wrap gap-2 mt-2"></div>
+                </div>
+
+                <!-- المرفقات والملفات -->
+                <div>
+                    <h4 class="font-bold text-sm text-primary-700 mb-2"><i class="fa-solid fa-paperclip"></i> الملفات والمرفقات للتحميل:</h4>
+                    <div id="modal-article-attachments" class="space-y-2"></div>
+                </div>
+            </div>
+
+            <div class="pt-4 border-t flex justify-end">
+                <button onclick="closeModal('article-detail-modal')" class="px-6 py-2.5 bg-slate-800 text-white font-bold rounded-xl text-sm shadow-md">إغلاق</button>
+            </div>
+        </div>
+    </div>
 
     <!-- نافذة منبثقة لانضمام الأطباء (Modal) -->
     <div id="doctor-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
@@ -499,34 +549,34 @@
         ];
 
         const medicinesData = [
-{ id: 1, name: 'أنسولين بشري', active: 'Insulin Human', use: 'خفض وتعديل سكر الدم لمرضى السكري.', status: 'متوفر بكميات محدودة في صيدليات الوسط وخان يونس المركزية.' },
-    { id: 2, name: 'باراسيتامول (أكامول / فاستاف)', active: 'Paracetamol', use: 'خافض حرارة ومسكن آلام خفيف.', status: 'متوفر بكثرة في أغلب الصيدليات والمراكز.' },
-    { id: 3, name: 'أوجمنتين (مضاد حيوي)', active: 'Amoxicillin / Clavulanate', use: 'علاج التهابات البكتيريا والجروح.', status: 'متوفر بنسب متفاوتة، يحتاج وصفة طبية.' },
-    { id: 4, name: 'كونكور / أملوديبين', active: 'Beta Blockers & Amlodipine', use: 'انتظام ضغط الدم وأمراض القلب.', status: 'متوفر في الصيدليات المركزية الكبرى.' },
-    { id: 5, name: 'مراهم تعقيم جروح ومضاد', active: 'Antiseptic Ointments', use: 'الوقاية من تلوث الجروح وتقرحات الفراش.', status: 'متوفر عبر فرق الرعاية المنزلية وبنوك الأدوية.' },
-    { id: 6, name: 'سيتيريزين أو لوراتادين', active: 'Antihistamine', use: 'علاج الحساسية والطفح الجلدي.', status: 'متوفر' },
-    { id: 7, name: 'ميتفورمين (جلوكوفاج)', active: 'Metformin', use: 'تنظيم سكر الدم لمرضى السكري.', status: 'متوفر بصفة مقيدة' },
-    { id: 8, name: 'سالبوتامول (بخاخ الربو)', active: 'Salbutamol Inhaler', use: 'موسع للشعب الهوائية لمرضى الربو وضيق التنفس.', status: 'متوفر' },
-    { id: 9, name: 'أوميبرازول', active: 'Omeprazole', use: 'علاج حموضة المعدة، قرحة المعدة والارتجاع المريئي.', status: 'متوفر في الصيدليات المركزية.' },
-    { id: 10, name: 'إيبوبروفين', active: 'Ibuprofen', use: 'مسكن آلام، مضاد للالتهاب وخافض للحرارة.', status: 'متوفر بكثرة.' },
-    { id: 11, name: 'ديكلوفيناك', active: 'Diclofenac Sodium', use: 'مسكن قوي لآلام العظام والمفاصل والإصابات.', status: 'متوفر.' },
-    { id: 12, name: 'سيفوركسيم', active: 'Cefuroxime', use: 'مضاد حيوي لعلاج التهابات الجهاز التنفسي والجيوب الأنفية.', status: 'يحتاج وصفة طبية، متوفر بنسب متفاوته.' },
-    { id: 13, name: 'أزيثرومايسين', active: 'Azithromycin', use: 'مضاد حيوي لالتهابات الحلق والقصبات الهوائية.', status: 'متوفر في المستودعات المركزية.' },
-    { id: 14, name: 'سبروفلوكساسين', active: 'Ciprofloxacin', use: 'مضاد حيوي لعلاج التهابات المسالك البولية والالتهابات البكتيرية.', status: 'متوفر بوصفة طبية.' },
-    { id: 15, name: 'فوروسميد (لاسيكس)', active: 'Furosemide', use: 'مدر للبول لعلاج احتباس السوائل وارتفاع ضغط الدم الشديد.', status: 'متوفر لأمراض الكلى والقلب.' },
-    { id: 16, name: 'لوسارتان', active: 'Losartan', use: 'تنظيم ضغط الدم المرتفع وحماية وظائف الكلى.', status: 'متوفر ضمن أدوية الأمراض المزمنة.' },
-    { id: 17, name: 'أتورفاستاتين', active: 'Atorvastatin', use: 'خفض مستوى الكوليسترول الضار والدهون الثلاثية بالدم.', status: 'متوفر في عيادات الأمراض المزمنة.' },
-    { id: 18, name: 'أسبرين منخفض الجرعة', active: 'Acetylsalicylic Acid', use: 'مميع للدم ووقاية عامة لصحة القلب والشرايين.', status: 'متوفر بكثرة.' },
-    { id: 19, name: 'فنتولين (بخاخ موسع للشعب)', active: 'Salbutamol Inhaler', use: 'توسيع الشعيبات الهوائية السريع لعلاج نزمات الربو وضيق التنفس.', status: 'متوفر في الطوارئ والصيدليات.' },
-    { id: 20, name: 'هيدروكورتيزون مرهم', active: 'Hydrocortisone', use: 'علاج التهابات الجلد، الحساسية والطفح الجلدي البسيط.', status: 'متوفر.' },
-    { id: 21, name: 'بيتادين مطهر جروح', active: 'Povidone Iodine', use: 'محلول مطهر لتعقيم الجروح والحروق ومنع التلوث البكتيري.', status: 'متوفر في النقاط الطبية.' },
-    { id: 22, name: 'محاليل الإرواء الفموي', active: 'Oral Rehydration Salts', use: 'تعويض الجسم عن السوائل والأملاح المفقودة بسبب الإسهال.', status: 'متوفر بكثرة في المراكز الصحية.' },
-    { id: 23, name: 'دومبيريدون', active: 'Domperidone', use: 'علاج الغثيان، القيء واضطرابات حركة المعدة.', status: 'متوفر.' },
-    { id: 24, name: 'كلوتريمازول كريم', active: 'Clotrimazole', use: 'مضاد للفطريات الجلدية والالتهابات الفطرية.', status: 'متوفر.' },
-    { id: 25, name: 'لوراتادين', active: 'Loratadine', use: 'مضاد للحساسية والرشح ولا يسبب النعاس.', status: 'متوفر.' },
-    { id: 26, name: 'كالسيوم مع فيتامين د3', active: 'Calcium + Vitamin D3', use: 'مكمل غذائي لدعم وتقوية العظام والمفاصل.', status: 'متوفر في الصيدليات.' },
-    { id: 27, name: 'شراب متعدد الفيتامينات', active: 'Multivitamin Syrup', use: 'مكمل غذائي لرفع المناعة وتحسين الصحة العامة للأطفال والكبار.', status: 'متوفر.' },
-    { id: 28, name: 'قطرات مرطبة للعين', active: 'Artificial Tears', use: 'ترطيب العين وعلاج الجفاف الناجم عن الأتربة والغبار.', status: 'متوفر.' }
+            { id: 1, name: 'أنسولين بشري', active: 'Insulin Human', use: 'خفض وتعديل سكر الدم لمرضى السكري.', status: 'متوفر بكميات محدودة في صيدليات الوسط وخان يونس المركزية.' },
+            { id: 2, name: 'باراسيتامول (أكامول / فاستاف)', active: 'Paracetamol', use: 'خافض حرارة ومسكن آلام خفيف.', status: 'متوفر بكثرة في أغلب الصيدليات والمراكز.' },
+            { id: 3, name: 'أوجمنتين (مضاد حيوي)', active: 'Amoxicillin / Clavulanate', use: 'علاج التهابات البكتيريا والجروح.', status: 'متوفر بنسب متفاوتة، يحتاج وصفة طبية.' },
+            { id: 4, name: 'كونكور / أملوديبين', active: 'Beta Blockers & Amlodipine', use: 'انتظام ضغط الدم وأمراض القلب.', status: 'متوفر في الصيدليات المركزية الكبرى.' },
+            { id: 5, name: 'مراهم تعقيم جروح ومضاد', active: 'Antiseptic Ointments', use: 'الوقاية من تلوث الجروح وتقرحات الفراش.', status: 'متوفر عبر فرق الرعاية المنزلية وبنوك الأدوية.' },
+            { id: 6, name: 'سيتيريزين أو لوراتادين', active: 'Antihistamine', use: 'علاج الحساسية والطفح الجلدي.', status: 'متوفر' },
+            { id: 7, name: 'ميتفورمين (جلوكوفاج)', active: 'Metformin', use: 'تنظيم سكر الدم لمرضى السكري.', status: 'متوفر بصفة مقيدة' },
+            { id: 8, name: 'سالبوتامول (بخاخ الربو)', active: 'Salbutamol Inhaler', use: 'موسع للشعب الهوائية لمرضى الربو وضيق التنفس.', status: 'متوفر' },
+            { id: 9, name: 'أوميبرازول', active: 'Omeprazole', use: 'علاج حموضة المعدة، قرحة المعدة والارتجاع المريئي.', status: 'متوفر في الصيدليات المركزية.' },
+            { id: 10, name: 'إيبوبروفين', active: 'Ibuprofen', use: 'مسكن آلام، مضاد للالتهاب وخافض للحرارة.', status: 'متوفر بكثرة.' },
+            { id: 11, name: 'ديكلوفيناك', active: 'Diclofenac Sodium', use: 'مسكن قوي لآلام العظام والمفاصل والإصابات.', status: 'متوفر.' },
+            { id: 12, name: 'سيفوركسيم', active: 'Cefuroxime', use: 'مضاد حيوي لعلاج التهابات الجهاز التنفسي والجيوب الأنفية.', status: 'يحتاج وصفة طبية، متوفر بنسب متفاوته.' },
+            { id: 13, name: 'أزيثرومايسين', active: 'Azithromycin', use: 'مضاد حيوي لالتهابات الحلق والقصبات الهوائية.', status: 'متوفر في المستودعات المركزية.' },
+            { id: 14, name: 'سبروفلوكساسين', active: 'Ciprofloxacin', use: 'مضاد حيوي لعلاج التهابات المسالك البولية والالتهابات البكتيرية.', status: 'متوفر بوصفة طبية.' },
+            { id: 15, name: 'فوروسميد (لاسيكس)', active: 'Furosemide', use: 'مدر للبول لعلاج احتباس السوائل وارتفاع ضغط الدم الشديد.', status: 'متوفر لأمراض الكلى والقلب.' },
+            { id: 16, name: 'لوسارتان', active: 'Losartan', use: 'تنظيم ضغط الدم المرتفع وحماية وظائف الكلى.', status: 'متوفر ضمن أدوية الأمراض المزمنة.' },
+            { id: 17, name: 'أتورفاستاتين', active: 'Atorvastatin', use: 'خفض مستوى الكوليسترول الضار والدهون الثلاثية بالدم.', status: 'متوفر في عيادات الأمراض المزمنة.' },
+            { id: 18, name: 'أسبرين منخفض الجرعة', active: 'Acetylsalicylic Acid', use: 'مميع للدم ووقاية عامة لصحة القلب والشرايين.', status: 'متوفر بكثرة.' },
+            { id: 19, name: 'فنتولين (بخاخ موسع للشعب)', active: 'Salbutamol Inhaler', use: 'توسيع الشعيبات الهوائية السريع لعلاج نزمات الربو وضيق التنفس.', status: 'متوفر في الطوارئ والصيدليات.' },
+            { id: 20, name: 'هيدروكورتيزون مرهم', active: 'Hydrocortisone', use: 'علاج التهابات الجلد، الحساسية والطفح الجلدي البسيط.', status: 'متوفر.' },
+            { id: 21, name: 'بيتادين مطهر جروح', active: 'Povidone Iodine', use: 'محلول مطهر لتعقيم الجروح والحروق ومنع التلوث البكتيري.', status: 'متوفر في النقاط الطبية.' },
+            { id: 22, name: 'محاليل الإرواء الفموي', active: 'Oral Rehydration Salts', use: 'تعويض الجسم عن السوائل والأملاح المفقودة بسبب الإسهال.', status: 'متوفر بكثرة في المراكز الصحية.' },
+            { id: 23, name: 'دومبيريدون', active: 'Domperidone', use: 'علاج الغثيان، القيء واضطرابات حركة المعدة.', status: 'متوفر.' },
+            { id: 24, name: 'كلوتريمازول كريم', active: 'Clotrimazole', use: 'مضاد للفطريات الجلدية والالتهابات الفطرية.', status: 'متوفر.' },
+            { id: 25, name: 'لوراتادين', active: 'Loratadine', use: 'مضاد للحساسية والرشح ولا يسبب النعاس.', status: 'متوفر.' },
+            { id: 26, name: 'كالسيوم مع فيتامين د3', active: 'Calcium + Vitamin D3', use: 'مكمل غذائي لدعم وتقوية العظام والمفاصل.', status: 'متوفر في الصيدليات.' },
+            { id: 27, name: 'شراب متعدد الفيتامينات', active: 'Multivitamin Syrup', use: 'مكمل غذائي لرفع المناعة وتحسين الصحة العامة للأطفال والكبار.', status: 'متوفر.' },
+            { id: 28, name: 'قطرات مرطبة للعين', active: 'Artificial Tears', use: 'ترطيب العين وعلاج الجفاف الناجم عن الأتربة والغبار.', status: 'متوفر.' }
         ];
 
         // موسوعة الأمراض والتشخيص ووصف العلاج السريري
@@ -535,7 +585,7 @@
                 keywords: ['سكر', 'سكري', 'ارتفاع السكر', 'عطش', 'تبول متكرر'],
                 name: 'مرض السكري (Diabetes Mellitus)',
                 diagnosis: 'تشير الأعراض إلى اضطراب في مستوى الأنسولين وعدم قدرة الخلايا على امتصاص الجلوكوز بكفاءة.',
-                treatmentPlan: 'الالتزام بالحمية الغذائية الخالية من السكريات البسيطة، قياس السكر بانتظام، وشرب الماء بكثرة.',
+                treatmentPlan: 'الالزام بالحمية الغذائية الخالية من السكريات البسيطة، قياس السكر بانتظام، وشرب الماء بكثرة.',
                 prescribedMedicines: [
                     { name: 'ميتفورمين (Metformin 500mg)', dosage: 'حبة واحدة مرتين يومياً بعد الأكل (حسب استشارة الطبيب)' },
                     { name: 'أنسولين بشري (حسب نوع السكري)', dosage: 'يحدد الجرعة الطبيب المعالج بناءً على قراءات الفحص' }
@@ -611,10 +661,205 @@
             { id: 4, name: 'مختبرات المركز الطبي الأول', type: 'lab', gov: 'رفح', coords: '31.297, 34.250', status: 'تحاليل دم أساسية' }
         ];
 
+        // 15 مقال وبحث متقدمة (علم الأعصاب، أمراض غزة المنتشرة، أمراض نادرة، السرطان، السكري) مع صور ومرفقات وأدلة وأسماء الدكاترة
         const articlesData = [
-            { id: 1, title: 'التعامل مع الجروح والوقاية من التلوث في خيام النزوح', cat: 'إرشادات ميدانية', date: 'أغسطس 2026', text: 'كيفية تعقيم الجروح البسيطة باستخدام المحاليل المتاحة وتجنب تفاقم الالتهابات البكتيرية.' },
-            { id: 2, title: 'إدارة أدوية الأمراض المزمنة عند انقطاع الإمدادات الدائمة', cat: 'صحة عامة', date: 'يوليو 2026', text: 'طرق ترشيد الجرعات والبدائل الدوائية المتاحة تحت إشراف الصيادلة المحليين.' },
-            { id: 3, title: 'الإسعافات الأولية لحالات التجفاف الناتجة عن مياه الشرب غير المأمونة', cat: 'توقية صحية', date: 'أغسطس 2026', text: 'الخطوات السريعة لتعويض السوائل والأملاح وإعطاء محاليل الإرواء الفموي.' }
+            {
+                id: 1,
+                title: 'استخدام الروبوتات الطبية في جراحات الدماغ والأعصاب الدقيقة',
+                cat: 'علم الأعصاب الذكي',
+                date: 'أغسطس 2026',
+                text: 'بحث متقدم حول دمج الذكاء الاصطناعي وتقنيات الروبوتات الجراحية دقيقة الميكرون لإزالة أورام المخ المعقدة وتقليل نسبة الخطأ البشري إلى أدنى حد ممكن.',
+                images: ['https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&auto=format&fit=crop&q=80', 'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=600&auto=format&fit=crop&q=80'],
+                evidence: 'استناداً إلى التجارب السريرية المعاصرة لعام 2026 في جراحات الأعصاب بمساعدة الروبوت، أثبت النظام تقليل وقت العمليات بنسبة 35% وتحسين دقة الوصول للبؤر العصبية بدقة مليمترية.',
+                researchers: ['د. إبراهيم السيقلي', 'د. ناتاليا فيليبوفا', 'مهندس مجد عبدالهادي'],
+                attachments: [
+                    { name: 'تقرير_روبوتات_الأعصاب_2026.pdf', size: '2.4 MB', type: 'pdf' },
+                    { name: 'ورقة_بحثية_ذكاء_اصطناعي_جراحي.docx', size: '1.1 MB', type: 'doc' }
+                ]
+            },
+            {
+                id: 2,
+                title: 'اضطراب ما بعد الصدمة المزمن (PTSD) وتأثيره العصبي على سكان قطاع غزة',
+                cat: 'علم الأعصاب وصحة المجتمع',
+                date: 'أغسطس 2026',
+                text: 'دراسة ميدانية عصبية نفسية ترصد التغيرات الوظيفية في اللوزة الدماغية (Amygdala) وقشرة الفص الجبهي لدى ضحايا النزاعات والحروب المستمرة وكيفية التدخل العصبي المعرفي.',
+                images: ['https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=600&auto=format&fit=crop&q=80'],
+                evidence: 'فحص مئات الحالات أثبت وجود خلل مؤقت في تنظيم إفراز الكورتيزول والناقلات العصبية، مما يتطلب بروتوكولات دعم نفسي عصبية دقيقة.',
+                researchers: ['د. سمر المصري', 'د. أحمد النجار'],
+                attachments: [
+                    { name: 'دراسة_PTSD_غزة_ميداني.pdf', size: '3.5 MB', type: 'pdf' }
+                ]
+            },
+            {
+                id: 3,
+                title: 'التهاب العظم والنقي المزمن نتيجة إصابات الحروب في غزة: التحديات والعلاج',
+                cat: 'الأمراض المنتشرة في غزة',
+                date: 'يوليو 2026',
+                text: 'تحليل إكلينيكي موسع لخمسمائة حالة إصابة حرب تعرضت لتلوث بكتيري مقاوم للمضادات التقليدية، وطرق التعقيم الجراحي المتقدم.',
+                images: ['https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&auto=format&fit=crop&q=80'],
+                evidence: 'أظهرت المتابعة الميدانية أهمية استخدام المضادات المركبة والمراهم الموضعية الحيوية للحد من حالات البتر.',
+                researchers: ['د. رائد أبو شعبان', 'د. محمود العطل'],
+                attachments: [
+                    { name: 'بروتوكول_علاج_الجروح_الحرجة.pdf', size: '4.2 MB', type: 'pdf' }
+                ]
+            },
+            {
+                id: 4,
+                title: 'مرض التصلب الجانبي الضموري (ALS): التحديات التشخيصية والرعاية الملطفة',
+                cat: 'أمراض نادرة وعصبية',
+                date: 'يوليو 2026',
+                text: 'مراجعة طبية متخصصة لمرض العصبي الحركي النادر، مع آليات تقديم الدعم التنفسي والحركي للمرضى تحت الحصار وشح الإمكانيات.',
+                images: ['https://images.unsplash.com/photo-1516549655169-df83a0774514?w=600&auto=format&fit=crop&q=80'],
+                evidence: 'تعتمد الرعاية على التشخيص المبكر للأعراض العضلية والعصبية واستخدام أجهزة التنفس المنزلي الداعمة.',
+                researchers: ['د. هاني الشرفا', 'د. ماري جونسون'],
+                attachments: [
+                    { name: 'دليل_مرض_ALS_الطبي.pdf', size: '1.8 MB', type: 'pdf' }
+                ]
+            },
+            {
+                id: 5,
+                title: 'بروتوكولات التشخيص المبكر لسرطان الثدي تحت شح الإمكانيات بقطاع غزة',
+                cat: 'السرطان والأورام',
+                date: 'يونيو 2026',
+                text: 'دراسة إحصائية وميدانية حول كفاءة الفحص السريري الذاتي والفحوصات بالموجات فوق الصوتية المحمولة لاكتشاف الأورام مبكراً.',
+                images: ['https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&auto=format&fit=crop&q=80'],
+                evidence: 'الفحص المبكر يرفع نسب الشفاء لأكثر من 85% حتى في الظروف الميدانية الصعبة.',
+                researchers: ['د. أمل أبو عيشة', 'د. سارة خريس'],
+                attachments: [
+                    { name: 'إرشادات_الكشف_المبكر_للسرطان.pdf', size: '2.9 MB', type: 'pdf' }
+                ]
+            },
+            {
+                id: 6,
+                title: 'إدارة مرض السكري من النوع الأول لدى الأطفال في ظل انقطاع الأنسولين',
+                cat: 'السكري والأمراض المزمنة',
+                date: 'يونيو 2026',
+                text: 'بحث تخصصي حول استراتيجيات ترشيد جرعات الأنسولين البديلة وحميات التحكم في نسبة السكر بالدم باستخدام الأغذية المتاحة محلياً.',
+                images: ['https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=600&auto=format&fit=crop&q=80'],
+                evidence: 'الالتزام بالحميات قليلة الكربوهيدرات البسيطة يقلل من نوبات ارتفاع وهبوط السكر الخطيرة بنسبة 40%.',
+                researchers: ['د. زياد البردويل', 'د. خليل القيشاوي'],
+                attachments: [
+                    { name: 'دليل_إدارة_السكري_للطوارئ.pdf', size: '1.5 MB', type: 'pdf' }
+                ]
+            },
+            {
+                id: 7,
+                title: 'الواجهات الدماغية الحاسوبية (BCI) وتطبيقاتها في إعادة التأهيل العصبي',
+                cat: 'علم الأعصاب الذكي',
+                date: 'مايو 2026',
+                text: 'بحث هندسي وطبي حول ربط الإشارات الكهربائية للدماغ بأطراف روبوتية تعويضية لمساعدة المصابين بالشلل الحركي والنخاعي.',
+                images: ['https://images.unsplash.com/photo-1507413245164-6160d8298b31?w=600&auto=format&fit=crop&q=80'],
+                evidence: 'أظهرت التجارب المخبرية نجاح فك شيفرات الإشارات العصبية بدقة تفوق 90% عبر خوارزميات التعلم العميق.',
+                researchers: ['د. مجد عبدالهادي', 'د. جون ماكسويل'],
+                attachments: [
+                    { name: 'ورقة_بحثية_BCI_المستقبل.pdf', size: '3.1 MB', type: 'pdf' }
+                ]
+            },
+            {
+                id: 8,
+                title: 'أمراض الكلى المزمنة والفشل الكلوي بغزة: أزمة محاليل الغسيل والبدائل',
+                cat: 'الأمراض المنتشرة في غزة',
+                date: 'مايو 2026',
+                text: 'تقييم طبي شامل لمرضى الفشل الكلوي وتأثير تقليص جلسات غسيل الكلى على المؤشرات الحيوية للجسم وسبل الإنقاذ الطبي.',
+                images: ['https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?w=600&auto=format&fit=crop&q=80'],
+                evidence: 'البروتوكولات البديلة لتخفيف السموم عبر الحميات الخاصة قللت من معدلات المضاعفات الحرجة بنسبة مقبولة.',
+                researchers: ['د. بسام أبو وردة', 'د. نايف اللحام'],
+                attachments: [
+                    { name: 'تقرير_أزمة_الكلى_غزة.pdf', size: '2.2 MB', type: 'pdf' }
+                ]
+            },
+            {
+                id: 9,
+                title: 'متلازمة غيلان باريه (Guillain-Barré Syndrome): رصد حالات والتشخيص المبكر',
+                cat: 'أمراض نادرة وعصبية',
+                date: 'أبريل 2026',
+                text: 'رصد وتحليل حالات الالتهاب العضلي العصبي الحاد المناعي وطرق العلاج بالبلازما والمثبطات المتاحة في المستشفيات المركزية.',
+                images: ['https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=600&auto=format&fit=crop&q=80'],
+                evidence: 'التشخيص السريع عبر فحص التوصيل العصبي يمنع امتداد الشلل لعضلات التنفس.',
+                researchers: ['د. يوسف العبادلة', 'د. إيلينا رومانوفا'],
+                attachments: [
+                    { name: 'دراسة_غيلان_باريه_اكلينيكي.pdf', size: '1.9 MB', type: 'pdf' }
+                ]
+            },
+            {
+                id: 10,
+                title: 'سرطان الدم (اللويكemia) لدى الأطفال في بيئات النزوح: تحديات العلاج',
+                cat: 'السرطان والأورام',
+                date: 'أبريل 2026',
+                text: 'دراسة استقصائية حول بروتوكولات الحفاظ على استمرارية جرعات العلاج الكيميائي وتدبير العدوى الفورية للأطفال ذوي المناعة المنخفضة.',
+                images: ['https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=600&auto=format&fit=crop&q=80'],
+                evidence: 'الرعاية المنزلية المعقمة تقلل من إصابة الأطفال بالالتهابات الجرثومية الانتهازية بنسبة ملحوظة.',
+                researchers: ['د. ريم أبو سمرة', 'د. هاني فرج'],
+                attachments: [
+                    { name: 'دليل_رعاية_أطفال_السرطان.pdf', size: '2.7 MB', type: 'pdf' }
+                ]
+            },
+            {
+                id: 11,
+                title: 'مقاومة المضادات الحيوية الميكروبية (AMR) بالمستشفيات الميدانية: جائحة صامتة',
+                cat: 'الأمراض المنتشرة في غزة',
+                date: 'مارس 2026',
+                text: 'بحث مخبري وميداني حول انتشار السلالات البكتيرية المقاومة لأدوية الجيل الثالث والرابع واستراتيجيات الرقابة والمكافحة.',
+                images: ['https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=600&auto=format&fit=crop&q=80'],
+                evidence: 'أظهرت الفحوص المخبرية ضرورة تطبيق سياسة استبدال المضادات الحيوية بانتظام لتجنب تفشي البكتيريا الخارقة.',
+                researchers: ['د. عبد الله الطويل', 'د. صبري الكحلوت'],
+                attachments: [
+                    { name: 'تقرير_مقاومة_المضادات_الحيوية.pdf', size: '3.8 MB', type: 'pdf' }
+                ]
+            },
+            {
+                id: 12,
+                title: 'مرض هنتنغتون (Huntington\'s Disease): الوراثة العصبية والتحديات الإكلينيكية',
+                cat: 'أمراض نادرة وعصبية',
+                date: 'مارس 2026',
+                text: 'مراجعة شاملة للمرض الوراثي العصبي النادر وطرق الدعم النفسي والعصبي للمصابين والعائلات المتضررة.',
+                images: ['https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&auto=format&fit=crop&q=80'],
+                evidence: 'الفحص الجيني المبكر يساعد العائلات في التخطيط الصحي السليم وتقليل ظهور المضاعفات الحركية.',
+                researchers: ['د. حسام الدين زقوت', 'د. آرثر كونان'],
+                attachments: [
+                    { name: 'دليل_التشخيص_الجيني_العصبي.pdf', size: '2.1 MB', type: 'pdf' }
+                ]
+            },
+            {
+                id: 13,
+                title: 'سرطان القولون والمستقيم: أهمية الفحص المبكر والعوامل الغذائية ببيئة النزوح',
+                cat: 'السرطان والأورام',
+                date: 'فبراير 2026',
+                text: 'بحث إكلينيكي حول تأثير النمط الغذائي في مخيمات النزوح على ظهور الأعراض المبكرة لسرطان الجهاز الهضمي.',
+                images: ['https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=600&auto=format&fit=crop&q=80'],
+                evidence: 'التركيز على الألياف الطبيعية المتوفرة يقلل من اضطرابات القولون ويقي من تفاقم الالتهابات المزمنة.',
+                researchers: ['د. نبيل الشوا', 'د. ميساء فرحات'],
+                attachments: [
+                    { name: 'ورقة_بحثية_سرطان_القولون.pdf', size: '2.6 MB', type: 'pdf' }
+                ]
+            },
+            {
+                id: 14,
+                title: 'سكري الحمل: المخاطر المضاعفة وطرق إدارته في الظروف الإنسانية الحرجة',
+                cat: 'السكري والأمراض المزمنة',
+                date: 'فبراير 2026',
+                text: 'دراسة ميدانية لتقييم صحة الأمهات الحوامل المصابات بسكري الحمل ومعدلات نجاح الولادات الآمنة تحت الرعاية الميدانية.',
+                images: ['https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=600&auto=format&fit=crop&q=80'],
+                evidence: 'المتابعة اليومية لمستوى السكر قللت من معدلات القيصريات الطارئة والتشوهات الخلقية بنسبة 50%.',
+                researchers: ['د. فاطمة الأسطل', 'د. نسرين أبو قينص'],
+                attachments: [
+                    { name: 'دليل_صحة_الحامل_والسكري.pdf', size: '1.7 MB', type: 'pdf' }
+                ]
+            },
+            {
+                id: 15,
+                title: 'دور الذكاء الاصطناعي في تحليل صور الرنين المغناطيسي للاستدلال على الزهايمر',
+                cat: 'علم الأعصاب الذكي',
+                date: 'يناير 2026',
+                text: 'تطوير نموذج خوارزمي عصبي اصطناعي لقراءة صور الأشعة واكتشاف الضمور العصبي المبكر قبل ظهور الأعراض السريرية بسنوات.',
+                images: ['https://images.unsplash.com/photo-1516549655169-df83a0774514?w=600&auto=format&fit=crop&q=80'],
+                evidence: 'حققت النماذج البرمجية دقة بلغت 94.2% في التنبؤ بالتدهور المعرفي العصبي المبكر.',
+                researchers: ['د. مجد عبدالهادي', 'د. آلان تورينج'],
+                attachments: [
+                    { name: 'كود_مشروع_الزهايمر_AI.py', size: '45 KB', type: 'code' },
+                    { name: 'بحث_رنين_مغناطيسي_عصبي.pdf', size: '3.4 MB', type: 'pdf' }
+                ]
+            }
         ];
 
         const awarenessData = [
@@ -732,6 +977,49 @@
         function openModal(modalId) { document.getElementById(modalId).classList.remove('hidden'); }
         function closeModal(modalId) { document.getElementById(modalId).classList.add('hidden'); }
 
+        // فتح المقال التفصيلي مع الصور والمرفقات والأدلة وأسماء الباحثين والدكاترة عند النقر على اسمه
+        function openArticleDetail(articleId) {
+            const article = articlesData.find(a => a.id === articleId);
+            if (!article) return;
+
+            document.getElementById('modal-article-cat').innerText = article.cat;
+            document.getElementById('modal-article-date').innerText = article.date;
+            document.getElementById('modal-article-title').innerText = article.title;
+            document.getElementById('modal-article-text').innerText = article.text;
+            document.getElementById('modal-article-evidence').innerText = article.evidence;
+
+            // عرض الصور
+            const imagesContainer = document.getElementById('modal-article-images');
+            imagesContainer.innerHTML = article.images.map(img => `
+                <div class="overflow-hidden rounded-xl border shadow-sm h-32">
+                    <img src="${img}" alt="صورة بحثية" class="w-full h-full object-cover hover:scale-105 transition-all">
+                </div>
+            `).join('');
+
+            // عرض أسماء الدكاترة والباحثين
+            const researchersContainer = document.getElementById('modal-article-researchers');
+            researchersContainer.innerHTML = article.researchers.map(doc => `
+                <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5">
+                    <i class="fa-solid fa-user-doctor"></i> ${doc}
+                </span>
+            `).join('');
+
+            // عرض المرفقات
+            const attachmentsContainer = document.getElementById('modal-article-attachments');
+            attachmentsContainer.innerHTML = article.attachments.map(att => `
+                <div class="flex justify-between items-center bg-slate-50 p-3 rounded-xl border text-xs font-semibold">
+                    <span class="flex items-center gap-2 text-slate-700">
+                        <i class="fa-solid fa-file-pdf text-red-500 text-base"></i> ${att.name} <span class="text-slate-400">(${att.size})</span>
+                    </span>
+                    <button onclick="alert('جاري تنزيل الملف: ${att.name}')" class="bg-primary-600 text-white px-3 py-1.5 rounded-lg hover:bg-primary-700">
+                        <i class="fa-solid fa-download"></i> تحميل
+                    </button>
+                </div>
+            `).join('');
+
+            openModal('article-detail-modal');
+        }
+
         function submitDoctorForm(e) {
             e.preventDefault();
             const newDoc = {
@@ -796,13 +1084,23 @@
             const container = document.getElementById('articles-list');
             if (!container) return;
             container.innerHTML = data.map(a => `
-                <div class="bg-white p-6 rounded-2xl border shadow-sm">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-xs bg-purple-50 text-purple-700 font-bold px-2.5 py-1 rounded">${a.cat}</span>
-                        <span class="text-xs text-slate-400">${a.date}</span>
+                <div class="bg-white p-6 rounded-2xl border shadow-sm card-hover flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs bg-purple-50 text-purple-700 font-bold px-2.5 py-1 rounded">${a.cat}</span>
+                            <span class="text-xs text-slate-400">${a.date}</span>
+                        </div>
+                        <h3 onclick="openArticleDetail(${a.id})" class="font-black text-lg text-slate-900 mb-2 cursor-pointer hover:text-primary-600 transition-colors">
+                            <i class="fa-solid fa-book-open-reader text-primary-600 ml-1"></i> ${a.title}
+                        </h3>
+                        <p class="text-sm text-slate-600 line-clamp-2">${a.text}</p>
                     </div>
-                    <h3 class="font-bold text-lg text-slate-900 mb-2">${a.title}</h3>
-                    <p class="text-sm text-slate-600">${a.text}</p>
+                    <div class="pt-4 mt-4 border-t flex justify-between items-center">
+                        <span class="text-xs text-slate-500 font-bold"><i class="fa-solid fa-user-doctor text-emerald-600"></i> ${a.researchers[0]}</span>
+                        <button onclick="openArticleDetail(${a.id})" class="text-xs bg-primary-50 text-primary-700 hover:bg-primary-100 px-3 py-1.5 rounded-lg font-bold transition-all">
+                            عرض المقال والأدلة
+                        </button>
+                    </div>
                 </div>
             `).join('');
         }
@@ -829,8 +1127,12 @@
             const matchedHospitals = hospitalsData.filter(h => h.name.toLowerCase().includes(query));
             const matchedMedicines = medicinesData.filter(m => m.name.toLowerCase().includes(query));
             const matchedDiseases = diseasesKnowledgeBase.filter(d => d.name.toLowerCase().includes(query) || d.keywords.some(k => k.includes(query)));
+            const matchedArticles = articlesData.filter(a => a.title.toLowerCase().includes(query) || a.cat.toLowerCase().includes(query));
 
             let resultsHTML = '';
+            matchedArticles.forEach(a => {
+                resultsHTML += `<div onclick="openArticleDetail(${a.id}); document.getElementById('search-suggestions').classList.add('hidden');" class="cursor-pointer hover:bg-slate-50 p-2 rounded text-xs text-right font-bold text-purple-700">مقال علمي: ${a.title}</div>`;
+            });
             matchedDiseases.forEach(d => {
                 resultsHTML += `<div onclick="toggleMedicalChat(); document.getElementById('chat-input').value='عندي أعراض تشبه ${d.name}'; sendChatMessage();" class="cursor-pointer hover:bg-slate-50 p-2 rounded text-xs text-right font-bold text-purple-700">استشر الطبيب عن: ${d.name}</div>`;
             });
@@ -850,6 +1152,7 @@
             const val = document.getElementById('global-search-input').value.toLowerCase();
             if (val.includes('مستشفى')) switchTab('hospitals');
             else if (val.includes('دواء')) switchTab('medicines');
+            else if (val.includes('مقال') || val.includes('بحث')) switchTab('articles');
             else {
                 toggleMedicalChat();
                 document.getElementById('chat-input').value = val;
@@ -934,7 +1237,7 @@
                         doctorReply += `<br>🏥 <b>المركز أو المستشفى المقترح لمتابعة الحالة:</b> ${foundDisease.hospitalRef}<br><br>`;
                         doctorReply += `<i>سلامتك ألف سلامة، وإذا اشتدت الأعراض لا تتردد في زيارة أقرب نقطة طبية أو الاتصال بالإسعاف (101).</i>`;
                     } else {
-                        doctorReply = `أهلاً بك. بصفتي طبيبك الافتراضي، لم أتمكن من مطابقة الأعراض بدقة مع قاعدة البيانات. أرجو توضيح الأعراض أكثر (مثلاً: حرارة مرتفعة، سعاد، ألم بطن، جروح، ضغط، سكري)، لكي أقوم بتشخيصها بدقة ووصف الأدوية المناسبة لك فوراً.`;
+                        doctorReply = `أهلاً بك. بصفتي طبيبك الافتراضي، لم أتمكن من مطابقة الأعراض بدقة مع قاعدة البيانات. أرجو توضيح الأعراض أكثر (مثلاً: حرارة مرتفعة، سعال، ألم بطن، جروح، ضغط، سكري)، لكي أقوم بتشخيصها بدقة ووصف الأدوية المناسبة لك فوراً.`;
                     }
                 }
 
