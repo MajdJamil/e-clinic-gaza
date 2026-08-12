@@ -70,6 +70,7 @@
                 <!-- Desktop Menu -->
                 <div class="hidden xl:flex items-center space-x-4 space-x-reverse text-sm font-bold text-slate-600">
                     <button onclick="switchTab('home')" class="nav-link hover:text-primary-600 transition-colors">الرئيسية</button>
+                    <button onclick="switchTab('news')" class="nav-link hover:text-primary-600 transition-colors">آخر الأخبار</button>
                     <button onclick="switchTab('hospitals')" class="nav-link hover:text-primary-600 transition-colors">المستشفيات</button>
                     <button onclick="switchTab('map')" class="nav-link hover:text-primary-600 transition-colors">الخريطة</button>
                     <button onclick="switchTab('medicines')" class="nav-link hover:text-primary-600 transition-colors">الأدوية</button>
@@ -93,6 +94,7 @@
         <div id="mobile-menu" class="hidden xl:hidden bg-white border-t border-slate-100 absolute w-full shadow-xl max-h-[80vh] overflow-y-auto">
             <div class="px-4 py-4 space-y-2 flex flex-col">
                 <button onclick="switchTab('home'); toggleMobileMenu()" class="text-right px-3 py-2 rounded-lg font-bold text-slate-700 hover:bg-slate-100">الرئيسية</button>
+                <button onclick="switchTab('news'); toggleMobileMenu()" class="text-right px-3 py-2 rounded-lg font-bold text-slate-700 hover:bg-slate-100">آخر الأخبار</button>
                 <button onclick="switchTab('hospitals'); toggleMobileMenu()" class="text-right px-3 py-2 rounded-lg font-bold text-slate-700 hover:bg-slate-100">المستشفيات والمراكز الصحية</button>
                 <button onclick="switchTab('map'); toggleMobileMenu()" class="text-right px-3 py-2 rounded-lg font-bold text-slate-700 hover:bg-slate-100">الخريطة الطبية التفاعلية</button>
                 <button onclick="switchTab('medicines'); toggleMobileMenu()" class="text-right px-3 py-2 rounded-lg font-bold text-slate-700 hover:bg-slate-100">دليل الأدوية وتوفرها</button>
@@ -133,7 +135,11 @@
                         <div id="search-suggestions" class="bg-white rounded-xl shadow-lg border border-slate-100 max-w-2xl mx-auto text-right hidden p-3 space-y-2"></div>
 
                         <!-- Quick Action Buttons -->
-                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 pt-6">
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-7 gap-3 pt-6">
+                            <button onclick="switchTab('news')" class="p-4 bg-white rounded-xl shadow-sm border border-slate-200 hover:border-primary-500 card-hover flex flex-col items-center text-center gap-2">
+                                <i class="fa-solid fa-newspaper text-2xl text-sky-600"></i>
+                                <span class="text-xs font-bold">آخر الأخبار</span>
+                            </button>
                             <button onclick="switchTab('hospitals')" class="p-4 bg-white rounded-xl shadow-sm border border-slate-200 hover:border-primary-500 card-hover flex flex-col items-center text-center gap-2">
                                 <i class="fa-solid fa-hospital text-2xl text-primary-600"></i>
                                 <span class="text-xs font-bold">المستشفيات</span>
@@ -164,7 +170,16 @@
             </section>
         </div>
 
-        <!-- 2. صفحة المستشفيات والمراكز الصحية -->
+        <!-- 2. صفحة آخر الأخبار -->
+        <div id="view-news" class="tab-content py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="mb-8">
+                <h2 class="text-3xl font-black text-slate-900">آخر الأخبار والتحديثات الطبية</h2>
+                <p class="text-slate-600 text-sm mt-1">متابعة فورية ومباشرة لأحدث المستجدات الصحية، التطورات الميدانية، والخدمات الطبية في قطاع غزة.</p>
+            </div>
+            <div id="news-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+
+        <!-- 3. صفحة المستشفيات والمراكز الصحية -->
         <div id="view-hospitals" class="tab-content py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
                 <div>
@@ -186,7 +201,7 @@
             <div id="hospitals-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </div>
 
-        <!-- 3. الخريطة الطبية التفاعلية -->
+        <!-- 4. الخريطة الطبية التفاعلية -->
         <div id="view-map" class="tab-content py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
             <div class="mb-6">
                 <h2 class="text-3xl font-black text-slate-900">الخريطة الطبية التفاعلية لقطاع غزة</h2>
@@ -205,7 +220,7 @@
             </div>
         </div>
 
-        <!-- 4. صفحة الأدوية -->
+        <!-- 5. صفحة الأدوية -->
         <div id="view-medicines" class="tab-content py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
                 <div>
@@ -226,7 +241,7 @@
             <div id="medicines-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </div>
 
-        <!-- 5. صفحة الأطباء والكوادر الطبية -->
+        <!-- 6. صفحة الأطباء والكوادر الطبية -->
         <div id="view-doctors" class="tab-content py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
                 <div>
@@ -240,7 +255,7 @@
             <div id="doctors-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </div>
 
-        <!-- 6. طلب رعاية منزلية -->
+        <!-- 7. طلب رعاية منزلية -->
         <div id="view-request" class="tab-content py-10 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
             <div class="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-slate-200">
                 <div class="text-center mb-8">
@@ -299,7 +314,7 @@
                         </div>
                     </div>
                     <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-2">وصف مختصر للحالة الصحية</label>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">وصف مختصر بالحالة الصحية</label>
                         <textarea id="req-notes" rows="3" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary-500 focus:outline-none" placeholder="اكتب تفاصيل الأعراض أو الإصابة باختصار..."></textarea>
                     </div>
                     <div class="bg-slate-50 p-4 rounded-xl border text-xs text-slate-500 flex items-start gap-2">
@@ -321,7 +336,7 @@
             </div>
         </div>
 
-        <!-- 7. نظام الطوارئ -->
+        <!-- 8. نظام الطوارئ -->
         <div id="view-emergency" class="tab-content py-10 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto space-y-8">
             <div class="text-center space-y-3">
                 <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-100 text-red-700 font-bold text-xs">
@@ -354,7 +369,7 @@
             </div>
         </div>
 
-        <!-- 8. المقالات والأبحاث العلمية -->
+        <!-- 9. المقالات والأبحاث العلمية -->
         <div id="view-articles" class="tab-content py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
             <div class="mb-8">
                 <h2 class="text-3xl font-black text-slate-900">المقالات والأبحاث الصحية العلمية</h2>
@@ -363,7 +378,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="articles-list"></div>
         </div>
 
-        <!-- 9. التوعية والإسعافات الأولية -->
+        <!-- 10. التوعية والإسعافات الأولية -->
         <div id="view-awareness" class="tab-content py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
             <div class="mb-8">
                 <h2 class="text-3xl font-black text-slate-900">التوعية والإسعافات الأولية</h2>
@@ -502,38 +517,65 @@
         </div>
     </div>
 
-  <!-- Footer -->
-<footer class="bg-slate-900 text-slate-400 py-12 mt-12 border-t border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-        <div class="flex items-center justify-center gap-2">
-            <div class="w-8 h-8 rounded-lg bg-primary-600 flex items-center justify-center text-white font-bold">
-                <i class="fa-solid fa-user-doctor"></i>
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-12 mt-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+            <div class="flex items-center justify-center gap-2">
+                <div class="w-8 h-8 rounded-lg bg-primary-600 flex items-center justify-center text-white font-bold">
+                    <i class="fa-solid fa-user-doctor"></i>
+                </div>
+                <span class="font-extrabold text-white text-lg">E-Clinic Gaza 2.6</span>
             </div>
-            <span class="font-extrabold text-white text-lg">E-Clinic Gaza 2.6</span>
-        </div>
-        <p class="text-xs text-slate-400 max-w-md mx-auto">منصة رقمية مجتمعية تطوعية تهدف لتسهيل الوصول للخدمات الصحية والدوائية الطارئة في قطاع غزة</p>
-        
-        <!-- بطاقة المطور الرسمية -->
-        <div class="bg-slate-950/80 border border-slate-800/80 p-5 rounded-2xl max-w-lg mx-auto text-xs text-slate-300 space-y-2 shadow-xl my-6">
-            <p class="font-bold text-white text-sm mb-1"><i class="fa-solid fa-code text-blue-400"></i> المطور الرسمي ومهندس الموقع:</p>
-            <p class="text-blue-300 font-extrabold text-base">المهندس . مجد جميل صبحي عبدالهادي</p>
-            <p class="text-slate-400">مهندس برمجيات وذكاء اصطناعي | مؤسس منصة المجد التعليمية</p>
-            <div class="pt-3 border-t border-slate-800/60 flex flex-wrap justify-center gap-6 text-slate-300 text-xs">
-                <a href="tel:+972595630187" class="inline-flex items-center gap-1.5 hover:text-white transition-colors" dir="ltr">
-                    <i class="fa-solid fa-phone text-blue-400"></i> +972595630187
-                </a>
-                <a href="mailto:majd424425726@gmail.com" class="inline-flex items-center gap-1.5 hover:text-white transition-colors">
-                    <i class="fa-solid fa-envelope text-blue-400"></i> majd424425726@gmail.com
-                </a>
+            <p class="text-xs text-slate-400 max-w-md mx-auto">منصة رقمية مجتمعية تطوعية تهدف لتسهيل الوصول للخدمات الصحية والدوائية الطارئة في قطاع غزة</p>
+            
+            <!-- بطاقة المطور الرسمية -->
+            <div class="bg-slate-950/80 border border-slate-800/80 p-5 rounded-2xl max-w-lg mx-auto text-xs text-slate-300 space-y-2 shadow-xl my-6">
+                <p class="font-bold text-white text-sm mb-1"><i class="fa-solid fa-code text-blue-400"></i> المطور الرسمي ومهندس الموقع:</p>
+                <p class="text-blue-300 font-extrabold text-base">المهندس . مجد جميل صبحي عبدالهادي</p>
+                <p class="text-slate-400">مهندس برمجيات وذكاء اصطناعي | مؤسس منصة المجد التعليمية</p>
+                <div class="pt-3 border-t border-slate-800/60 flex flex-wrap justify-center gap-6 text-slate-300 text-xs">
+                    <a href="tel:+972595630187" class="inline-flex items-center gap-1.5 hover:text-white transition-colors" dir="ltr">
+                        <i class="fa-solid fa-phone text-blue-400"></i> +972595630187
+                    </a>
+                    <a href="mailto:majd424425726@gmail.com" class="inline-flex items-center gap-1.5 hover:text-white transition-colors">
+                        <i class="fa-solid fa-envelope text-blue-400"></i> majd424425726@gmail.com
+                    </a>
+                </div>
             </div>
-        </div>
 
-        <p class="text-xs text-slate-600 pt-4 border-t border-slate-800">2026 © جميع الحقوق محفوظة | E-Clinic Gaza</p>
-    </div>
-</footer>
+            <p class="text-xs text-slate-600 pt-4 border-t border-slate-800">2026 © جميع الحقوق محفوظة | E-Clinic Gaza</p>
+        </div>
+    </footer>
 
     <!-- JavaScript البرمجي الشامل للتشخيص ووصف الأدوية -->
     <script>
+        const newsData = [
+            {
+                id: 1,
+                title: 'وصول شحنة مستلزمات طبية وأدوية طوارئ إلى مستشفيات وسط وجنوب غزة',
+                date: '12 أغسطس 2026',
+                category: 'تحديث طارئ',
+                summary: 'وصول دفعة جديدة من الأدوية الأساسية والمستهلكات الجراحية لتغطية العجز في أقسام الطوارئ والعناية المركزة.',
+                source: 'وزارة الصحة / منظمة الصحة العالمية'
+            },
+            {
+                id: 2,
+                title: 'إعادة تشغيل جزئي لأقسام العيادات الخارجية والتصوير الطبي بمجمع الشفاء',
+                date: '11 أغسطس 2026',
+                category: 'مستشفيات',
+                summary: 'جهود مكثفة لإعادة استعادة الخدمات الطبية الأساسية واستقبال المراجعين في الأقسام المعاد تأهيلها.',
+                source: 'الميدان الطبي'
+            },
+            {
+                id: 3,
+                title: 'إطلاق حملة تطعيمات وخدمات رعاية منزلية موسعة للنازحين',
+                date: '10 أغسطس 2026',
+                category: 'صحة وقائية',
+                summary: 'فرق تمريضية وطبية متنقلة تبدأ جولات ميدانية لتقديم التطعيمات ومتابعة الأمراض المزمنة في المخيمات.',
+                source: 'E-Clinic Gaza'
+            }
+        ];
+
         const hospitalsData = [
             { id: 1, name: 'مجمع الشفاء الطبي', gov: 'غزة', status: 'يعمل جزئياً', desc: 'قسم الطوارئ والجراحة وغسيل الكلى تعمل بقدر استيعابية محدودة.', phone: '+972 59-966-7161' },
             { id: 2, name: 'مستشفى شهداء الأقصى', gov: 'دير البلح', status: 'يعمل', desc: 'المستشفى الرئيسي في الوسطى، يخدم آلاف النازحين والمرضى.', phone: '08 253 9142' },
@@ -691,7 +733,7 @@
                 title: 'مرض التصلب الجانبي الضموري (ALS): التحديات التشخيصية والرعاية الملطفة',
                 cat: 'أمراض نادرة وعصبية',
                 date: 'يوليو 2026',
-                text: 'يعد مرض التصلب الجانبي الضموري من أشد الأمراض العصبية الحركية خطورة وغموضاً، حيث يؤدي تدريجياً إلى تلف الخلايا العصبية المسؤولة عن حركة العضلات الإرادية. تقدم هذه المراجعة الطبية المتخصصة تحليلاً دقيقاً لمراحل تطور المرض والأعراض المبكرة التي غالباً ما يتم الخلط بينها وبين حالات الإجهاد العضلي العادي. تم بحث التحديات الكبيرة التي تواجه تشخيص المرض في قطاع غزة بسبب محدودية أجهزة التوصيل العصبي المتقدمة ونقص الكوادر المتخصصة في علم الأعصاب النادر. يستعرض البحث أحدث بروتوكولات الرعاية الملطفة والتهوية الدعمية المنزلية التي تساهم في تحسين جودة حياة المرضى وإطالة فترات استقرارهم الصحي. كما تناقش الدراسة أهمية الدعم الغذائي والرعاية التمريضية المتكاملة لمنع تقرحات الفراش ومضاعفات الجهاز التنفسي الناتجة عن ضعف عضلات البلع والبلعوم. ويؤكد الباحثون على ضرورة توفير برامج تدريبية للفرق الطبية الميدانية للتعامل مع هذه الحالات الإنسانية الصعبة وتقديم الإرشاد اللازم للعائلات المتضررة بأسلوب علمي وإنساني راقٍ.',
+                text: 'يعد مرض التصلب الجانبي الضموري من أشد الأمراض العصبية الحركية خطورة وغموضاً، حيث تؤدي تدريجياً إلى تلف الخلايا العصبية المسؤولة عن حركة العضلات الإرادية. تقدم هذه المراجعة الطبية المتخصصة تحليلاً دقيقاً لمراحل تطور المرض والأعراض المبكرة التي غالباً ما يتم الخلط بينها وبين حالات الإجهاد العضلي العادي. تم بحث التحديات الكبيرة التي تواجه تشخيص المرض في قطاع غزة بسبب محدودية أجهزة التوصيل العصبي المتقدمة ونقص الكوادر المتخصصة في علم الأعصاب النادر. يستعرض البحث أحدث بروتوكولات الرعاية الملطفة والتهوية الدعمية المنزلية التي تساهم في تحسين جودة حياة المرضى وإطالة فترات استقرارهم الصحي. كما تناقش الدراسة أهمية الدعم الغذائي والرعاية التمريضية المتكاملة لمنع تقرحات الفراش ومضاعفات الجهاز التنفسي الناتجة عن ضعف عضلات البلع والبلعوم. ويؤكد الباحثون على ضرورة توفير برامج تدريبية للفرق الطبية الميدانية للتعامل مع هذه الحالات الإنسانية الصعبة وتقديم الإرشاد اللازم للعائلات المتضررة بأسلوب علمي وإنساني راقٍ.',
                 images: ['https://images.unsplash.com/photo-1516549655169-df83a0774514?w=600&auto=format&fit=crop&q=80'],
                 evidence: 'تعتمد الرعاية على التشخيص المبكر للأعراض العضلية والعصبية واستخدام أجهزة التنفس المنزلي الداعمة.',
                 researchers: ['د. هاني الشرفا', 'د. ماري جونسون']
@@ -721,7 +763,7 @@
                 title: 'الواجهات الدماغية الحاسوبية (BCI) وتطبيقاتها في إعادة التأهيل العصبي',
                 cat: 'علم الأعصاب الذكي',
                 date: 'مايو 2026',
-                text: 'يستكشف هذا البحث الهندسي والطبي المتقدم آفاقاً مستقبلية مذهلة حول تقنيات الواجهات الدماغية الحاسوبية وكيفية تسخيرها في إعادة التأهيل العصبي للمصابين بالشلل التام والإصابات النخاعية العميقة. تركز الدراسة على كيفية التقاط الإشارات الكهربائية الدقيقة الصادرة عن الدماغ البشري وترجمتها عبر خوارزميات التعلم العميق والذكاء الاصطناعي إلى أوامر حركية قابلة للتنفيذ عبر أطراف روبوتية تعويضية. تم استعراض التجارب المخبرية الناجحة في فك شيفرات الإشارات العصبية بدقة فاقت التسعين بالمائة، مما يفتح باباً واسعاً لاستعادة الحركة للملايين من ذوي الإعاقات الحركية الشديدة. يناقش البحث التحديات التقنية المتعلقة بزرع الأقطاب الكهربائية الدماغية واستقرار الإشارة على المدى الطويل وكيفية تقليل المخاطر الجراحية المرتبطة بها. كما يسلط الضوء على دور مهندسي البرمجيات والذكاء الاصطناعي بالتعاون مع جراحي الأعصاب في تصميم تطبيقات برمجية ذكية تتكيف مع الخصائص الفريدة لدماغ كل مريض. ويؤكد المقال على أن هذه التقنيات تمثل مستقبل العلاج العصبي الحديث وستغير حياة المرضى جذرياً في العقود القادمة.',
+                text: 'يستكشف هذا البحث الهندسي والطبي المتقدم آفاقاً مستقبلية مذهلة حول تقنيات الواجهات الدماغية الحاسوبية وكيفية تسخيرها في إعادة التأهيل العصبي للمصابين بالشلل التام والإصابات النخاعية العميقة. تركز الدراسة على كيفية التقاط الإشارات الكهربائية الدقيقة الصادرة عن الدماغ البشري وترجمتها عبر خوارزميات التعلم العميق والذكاء الاصطناعي إلى أوامر حركية قابلة للتنفيذ عبر أطراف روبوتية تعويضية. تم استعراض التجارب المخبرية الناجحة في فك شيفرات الإشارات العصبية بدقة فاقت التسعين بالمائة، مما يفتح باباً واسعاً لاستعادة الحركة للملايين من ذوي الإعاقات الحركية الشديدة. يناقش البحث التحديات التقنية المتعلقةزرع الأقطاب الكهربائية الدماغية واستقرار الإشارة على المدى الطويل وكيفية تقليل المخاطر الجراحية المرتبطة بها. كما يسلط الضوء على دور مهندسي البرمجيات والذكاء الاصطناعي بالتعاون مع جراحي الأعصاب في تصميم تطبيقات برمجية ذكية تتكيف مع الخصائص الفريدة لدماغ كل مريض. ويؤكد المقال على أن هذه التقنيات تمثل مستقبل العلاج العصبي الحديث وستغير حياة المرضى جذرياً في العقود القادمة.',
                 images: ['https://images.unsplash.com/photo-1507413245164-6160d8298b31?w=600&auto=format&fit=crop&q=80'],
                 evidence: 'أظهرت التجارب المخبرية نجاح فك شيفرات الإشارات العصبية بدقة تفوق 90% عبر خوارزميات التعلم العميق.',
                 researchers: ['د. مجد عبدالهادي', 'د. جون ماكسويل']
@@ -838,6 +880,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            renderNews(newsData);
             renderHospitals(hospitalsData);
             renderMedicines(medicinesData);
             renderDoctors(doctorsData);
@@ -845,6 +888,26 @@
             renderArticles(articlesData);
             renderAwareness(awarenessData);
         });
+
+        function renderNews(data) {
+            const container = document.getElementById('news-list');
+            if (!container) return;
+            container.innerHTML = data.map(n => `
+                <div class="bg-white p-6 rounded-2xl border shadow-sm card-hover flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-blue-50 text-blue-700">${n.category}</span>
+                            <span class="text-xs text-slate-400 font-bold"><i class="fa-solid fa-clock ml-1"></i>${n.date}</span>
+                        </div>
+                        <h3 class="font-black text-xl text-slate-900 mb-2 leading-snug">${n.title}</h3>
+                        <p class="text-sm text-slate-600 mb-4 leading-relaxed">${n.summary}</p>
+                    </div>
+                    <div class="pt-4 border-t flex justify-between items-center text-xs font-bold text-slate-500">
+                        <span><i class="fa-solid fa-newspaper ml-1 text-primary-600"></i> المصدر: ${n.source}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
 
         function renderHospitals(data) {
             const container = document.getElementById('hospitals-list');
@@ -1026,9 +1089,9 @@
                         <p class="text-sm text-slate-600 line-clamp-2">${a.text}</p>
                     </div>
                     <div class="pt-4 mt-4 border-t flex justify-between items-center">
-                        <span class="text-xs text-slate-500 font-bold"><i class="fa-solid fa-user-doctor text-emerald-600"></i> ${a.researchers[0]}</span>
-                        <button onclick="openArticleDetail(${a.id})" class="text-xs bg-primary-50 text-primary-700 hover:bg-primary-100 px-3 py-1.5 rounded-lg font-bold transition-all">
-                            عرض المقال والأدلة
+                        <span class="text-xs text-slate-500"><i class="fa-solid fa-users text-primary-600"></i> ${a.researchers.length} باحثين</span>
+                        <button onclick="openArticleDetail(${a.id})" class="text-xs font-bold text-primary-700 hover:text-primary-800 bg-primary-50 px-3 py-1.5 rounded-lg transition-colors">
+                            قراءة البحث <i class="fa-solid fa-arrow-left mr-1"></i>
                         </button>
                     </div>
                 </div>
@@ -1038,66 +1101,25 @@
         function renderAwareness(data) {
             const container = document.getElementById('awareness-list');
             if (!container) return;
-            container.innerHTML = data.map(aw => `
-                <div class="bg-white p-6 rounded-2xl border shadow-sm space-y-3">
-                    <h3 class="font-bold text-lg text-slate-900 flex items-center gap-2">
-                        <i class="fa-solid fa-shield-heart text-primary-600"></i> ${aw.title}
+            container.innerHTML = data.map(item => `
+                <div class="bg-white p-6 rounded-2xl border shadow-sm">
+                    <h3 class="font-black text-xl text-slate-900 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-kit-medical text-red-600"></i> ${item.title}
                     </h3>
-                    <ul class="list-disc list-inside text-sm text-slate-600 space-y-1.5">
-                        ${aw.steps.map(step => `<li>${step}</li>`).join('')}
+                    <ul class="space-y-2">
+                        ${item.steps.map(step => `<li class="text-sm text-slate-600 flex items-start gap-2"><i class="fa-solid fa-check text-emerald-500 mt-1"></i> <span>${step}</span></li>`).join('')}
                     </ul>
                 </div>
             `).join('');
         }
 
-        function handleGlobalSearch(val) {
-            const box = document.getElementById('search-suggestions');
-            if (!val.trim()) { box.classList.add('hidden'); return; }
-            const query = val.toLowerCase();
-            const matchedHospitals = hospitalsData.filter(h => h.name.toLowerCase().includes(query));
-            const matchedMedicines = medicinesData.filter(m => m.name.toLowerCase().includes(query));
-            const matchedDiseases = diseasesKnowledgeBase.filter(d => d.name.toLowerCase().includes(query) || d.keywords.some(k => k.includes(query)));
-            const matchedArticles = articlesData.filter(a => a.title.toLowerCase().includes(query) || a.cat.toLowerCase().includes(query));
-
-            let resultsHTML = '';
-            matchedArticles.forEach(a => {
-                resultsHTML += `<div onclick="openArticleDetail(${a.id}); document.getElementById('search-suggestions').classList.add('hidden');" class="cursor-pointer hover:bg-slate-50 p-2 rounded text-xs text-right font-bold text-purple-700">مقال علمي: ${a.title}</div>`;
-            });
-            matchedDiseases.forEach(d => {
-                resultsHTML += `<div onclick="toggleMedicalChat(); document.getElementById('chat-input').value='عندي أعراض تشبه ${d.name}'; sendChatMessage(); document.getElementById('search-suggestions').classList.add('hidden');" class="cursor-pointer hover:bg-slate-50 p-2 rounded text-xs text-right font-bold text-primary-700">تشخيص مرضي: ${d.name}</div>`;
-            });
-            matchedHospitals.forEach(h => {
-                resultsHTML += `<div onclick="switchTab('hospitals'); document.getElementById('search-suggestions').classList.add('hidden');" class="cursor-pointer hover:bg-slate-50 p-2 rounded text-xs text-right font-bold text-slate-700">مستشفى: ${h.name}</div>`;
-            });
-            matchedMedicines.forEach(m => {
-                resultsHTML += `<div onclick="switchTab('medicines'); document.getElementById('search-suggestions').classList.add('hidden');" class="cursor-pointer hover:bg-slate-50 p-2 rounded text-xs text-right font-bold text-emerald-700">دواء: ${m.name}</div>`;
-            });
-
-            if (resultsHTML === '') {
-                resultsHTML = '<div class="p-2 text-xs text-slate-500 text-right">لا توجد نتائج مطابقة</div>';
-            }
-            box.innerHTML = resultsHTML;
-            box.classList.remove('hidden');
-        }
-
-        function executeSearch() {
-            const val = document.getElementById('global-search-input').value;
-            handleGlobalSearch(val);
-        }
-
-        // دالة الطبيب الافتراضي الذكي (د. ميراج) للتشخيص ووصف العلاج السريري
         function toggleMedicalChat() {
             const chatWin = document.getElementById('medical-chat-window');
             chatWin.classList.toggle('hidden');
-            if(!chatWin.classList.contains('hidden')) {
-                document.getElementById('chat-input').focus();
-            }
         }
 
         function handleChatKeyPress(e) {
-            if (e.key === 'Enter') {
-                sendChatMessage();
-            }
+            if (e.key === 'Enter') sendChatMessage();
         }
 
         function sendChatMessage() {
@@ -1106,43 +1128,41 @@
             if (!text) return;
 
             const messagesContainer = document.getElementById('chat-messages');
-            
-            // رسالة المستخدم
+
+            // User Message
             messagesContainer.innerHTML += `
                 <div class="flex gap-2 items-start justify-end">
-                    <div class="bg-primary-600 text-white p-3 rounded-2xl rounded-tl-none shadow-sm max-w-[80%] leading-relaxed">
+                    <div class="bg-primary-700 text-white p-3 rounded-2xl rounded-tl-none shadow-sm max-w-[80%] leading-relaxed">
                         ${text}
-                    </div>
-                    <div class="w-7 h-7 rounded-full bg-slate-700 text-white flex items-center justify-center shrink-0 text-xs">
-                        <i class="fa-solid fa-user"></i>
                     </div>
                 </div>
             `;
             input.value = '';
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-            // رد الطبيب الذكي الميداني
+            // Simulated AI Diagnosis Reply
             setTimeout(() => {
-                let botReply = "أهلاً بك. بناءً على الأعراض التي ذكرتها، أنصحك بالراحة التامة، شرب السوائل، ومراجعة أقرب مركز صحي أو مستشفى إذا استمرت الأعراض.";
-                
-                const lowerText = text.toLowerCase();
-                let matchedDisease = null;
+                let matchedDisease = diseasesKnowledgeBase.find(d => d.keywords.some(kw => text.includes(kw)));
 
-                for (let disease of diseasesKnowledgeBase) {
-                    if (disease.keywords.some(k => lowerText.includes(k))) {
-                        matchedDisease = disease;
-                        break;
-                    }
-                }
-
+                let replyHTML = '';
                 if (matchedDisease) {
-                    let medsList = matchedDisease.prescribedMedicines.map(m => `- ${m.name} (${m.dosage})`).join('<br>');
-                    botReply = `<strong>التشخيص السريري المقترح:</strong> ${matchedDisease.name}<br><br>` +
-                               `<strong>التقييم:</strong> ${matchedDisease.diagnosis}<br><br>` +
-                               `<strong>خطة العلاج والإرشادات:</strong> ${matchedDisease.treatmentPlan}<br><br>` +
-                               `<strong>الأدوية الموصوفة المقترحة والمتوفرة:</strong><br>${medsList}<br><br>` +
-                               `<strong>المنشأة الطبية الموصى بها:</strong> ${matchedDisease.hospitalRef}<br><br>` +
-                               `<span class="text-red-600 font-bold text-[11px]">تنبيه: هذه استشارة افتراضية ذكية ولا تغني عن زيارة الطبيب الميداني المختص في الحالات الحرجة.</span>`;
+                    replyHTML = `
+                        <div class="space-y-2">
+                            <p class="font-bold text-primary-700"><i class="fa-solid fa-stethoscope"></i> التشخيص المبدئي: ${matchedDisease.name}</p>
+                            <p class="text-xs text-slate-600">${matchedDisease.diagnosis}</p>
+                            <div class="bg-slate-100 p-2 rounded-xl text-xs">
+                                <strong>خطة العلاج والأدوية الموصى بها:</strong>
+                                <ul class="list-disc list-inside mt-1 space-y-1 text-slate-700">
+                                    ${matchedDisease.prescribedMedicines.map(m => `<li><strong>${m.name}:</strong> ${m.dosage}</li>`).join('')}
+                                </ul>
+                            </div>
+                            <p class="text-[11px] text-slate-500"><strong>المستشفى الموصى به:</strong> ${matchedDisease.hospitalRef}</p>
+                        </div>
+                    `;
+                } else {
+                    replyHTML = `
+                        بناءً على الأعراض المدخلة، أنصح بزيارة أسرع نقطة طبية أو مستشفى مجاور لإجراء الفحوصات اللازمة، أو التواصل مباشرة مع قسم الطوارئ (101) إذا كانت الحالة حرجة.
+                    `;
                 }
 
                 messagesContainer.innerHTML += `
@@ -1151,12 +1171,39 @@
                             <i class="fa-solid fa-user-doctor"></i>
                         </div>
                         <div class="bg-white p-3 rounded-2xl rounded-tr-none shadow-sm border border-slate-100 text-slate-700 max-w-[80%] leading-relaxed">
-                            ${botReply}
+                            ${replyHTML}
                         </div>
                     </div>
                 `;
                 messagesContainer.scrollTop = messagesContainer.scrollHeight;
             }, 600);
+        }
+
+        function handleGlobalSearch(query) {
+            const suggestions = document.getElementById('search-suggestions');
+            if (!query.trim()) {
+                suggestions.classList.add('hidden');
+                return;
+            }
+            suggestions.classList.remove('hidden');
+            suggestions.innerHTML = `
+                <div class="p-2 text-xs text-slate-500 font-bold border-b">نتائج البحث المقترحة لـ: "${query}"</div>
+                <div onclick="switchTab('medicines'); filterMedicines();" class="p-2 hover:bg-slate-50 rounded-lg cursor-pointer text-xs font-bold text-slate-700 flex items-center gap-2">
+                    <i class="fa-solid fa-pills text-emerald-600"></i> البحث في الأدوية
+                </div>
+                <div onclick="switchTab('hospitals'); filterHospitals();" class="p-2 hover:bg-slate-50 rounded-lg cursor-pointer text-xs font-bold text-slate-700 flex items-center gap-2">
+                    <i class="fa-solid fa-hospital text-primary-600"></i> البحث في المستشفيات
+                </div>
+            `;
+        }
+
+        function executeSearch() {
+            const val = document.getElementById('global-search-input').value;
+            if (val) {
+                switchTab('medicines');
+                document.getElementById('medicine-search').value = val;
+                filterMedicines();
+            }
         }
     </script>
 </body>
