@@ -601,7 +601,7 @@
                 keywords: ['حرارة', 'سخونة', 'حمى', 'إنفلونزا', 'رشح', 'زكام', 'برد', 'سعال', 'احتقان'],
                 name: 'نزلات البرد الحادة والإنفلونزا (Common Cold / Flu)',
                 diagnosis: 'عدوى فيروسية في الجهاز التنفسي العلوي سببت ارتفاع حرارة الجسم والتهاب الحلق.',
-                treatmentPlan: 'الراحة التامة في الفراش، الإكثار من السوائل الدافئة (يانسون، ليمون، بابونج), وتجنب التيارات الهوائية.',
+                treatmentPlan: 'الراحة التامة في الفراش، الإكثار من السوائل الدافئة (يانسون، ليمون، بابونج)، وتجنب التيارات الهوائية.',
                 prescribedMedicines: [
                     { name: 'باراسيتامول (Panadol / Paracetamol 500mg)', dosage: 'حبتان كل 6-8 ساعات عند ارتفاع الحرارة أو الألم (بحد أقصى 8 حبات يومياً)' },
                     { name: 'سيتيريزين (Cetirizine 10mg)', dosage: 'حبة واحدة مساءً لعلاج الرشح واحتقان الأنف' }
@@ -655,7 +655,7 @@
             { id: 4, name: 'مختبرات المركز الطبي الأول', type: 'lab', gov: 'رفح', coords: '31.297, 34.250', status: 'تحاليل دم أساسية' }
         ];
 
-        // 15 مقال وبحث متقدمة مع شرح كامل ومفصل لكل مقال (لا يقل عن 10 أسطر واضحة)
+        // 15 مقال وبحث متقدمة مع شرح كامل ومفصل لكل مقال
         const articlesData = [
             {
                 id: 1,
@@ -702,7 +702,7 @@
                 title: 'بروتوكولات التشخيص المبكر لسرطان الثدي تحت شح الإمكانيات بقطاع غزة',
                 cat: 'السرطان والأورام',
                 date: 'يونيو 2026',
-                text: 'تتداول هذه الدراسة الإحصائية والميدانية الهامة استراتيجيات الكشف المبكر عن سرطان الثدي وكيفية تطبيقها بفعالية عالية رغم الظروف الإنسانية وشح الأجهزة الطبية المتقدمة في قطاع غزة. يركز البحث على أهمية نشر الوعي الصحي المجتمعي حول الفحص الذاتي الدوري وكيفية توظيف أجهزة الموجات فوق الصوتية المحمولة في العيادات المحلية والمراكز الصحية. تم تحليل بيانات آلاف الفحوصات النسائية ودراسة العوامل المؤثرة في تأخر التشخيص لدى بعض الحالات وكيفية التغلب عليها. أثبتت النتائج الإحصائية أن برامج التوعية الميدانية والفحص المبدئي المنتظم تساهم في رفع نسب الشفاء التام لأكثر من 85% من المصابات عند اكتشاف الورم في مراحله الأولى. يقدم البحث دليلاً ارشادياً مبسطاً للكوادر التمريضية والنسائية حول آليات الفحص السليم وتحويل الحالات المشتبه بها فوراً للمراكز المتخصصة. كما يناقش التحديات النفسية والاجتماعية التي تواجه المصابات وسبل تقديم الدعم النفسي المتكامل لهن ولمعائلاتهن طوال رحلة العلاج الطبي.',
+                text: 'تتناول هذه الدراسة الإحصائية والميدانية الهامة استراتيجيات الكشف المبكر عن سرطان الثدي وكيفية تطبيقها بفعالية عالية رغم الظروف الإنسانية وشح الأجهزة الطبية المتقدمة في قطاع غزة. يركز البحث على أهمية نشر الوعي الصحي المجتمعي حول الفحص الذاتي الدوري وكيفية توظيف أجهزة الموجات فوق الصوتية المحمولة في العيادات المحلية والمراكز الصحية. تم تحليل بيانات آلاف الفحوصات النسائية ودراسة العوامل المؤثرة في تأخر التشخيص لدى بعض الحالات وكيفية التغلب عليها. أثبتت النتائج الإحصائية أن برامج التوعية الميدانية والفحص المبدئي المنتظم تساهم في رفع نسب الشفاء التام لأكثر من 85% من المصابات عند اكتشاف الورم في مراحله الأولى. يقدم البحث دليلاً ارشادياً مبسطاً للكوادر التمريضية والنسائية حول آليات الفحص السليم وتحويل الحالات المشتبه بها فوراً للمراكز المتخصصة. كما يناقش التحديات النفسية والاجتماعية التي تواجه المصابات وسبل تقديم الدعم النفسي المتكامل لهن ولمعائلاتهن طوال رحلة العلاج الطبي.',
                 images: ['https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&auto=format&fit=crop&q=80'],
                 evidence: 'الفحص المبكر يرفع نسب الشفاء لأكثر من 85% حتى في الظروف الميدانية الصعبة.',
                 researchers: ['د. أمل أبو عيشة', 'د. سارة خريس']
@@ -924,7 +924,6 @@
         function openModal(modalId) { document.getElementById(modalId).classList.remove('hidden'); }
         function closeModal(modalId) { document.getElementById(modalId).classList.add('hidden'); }
 
-        // فتح المقال التفصيلي مع الشرح الكامل والأدلة وأسماء الباحثين والدكاترة عند النقر على اسمه (بدون زر تحميل الملفات)
         function openArticleDetail(articleId) {
             const article = articlesData.find(a => a.id === articleId);
             if (!article) return;
@@ -935,7 +934,6 @@
             document.getElementById('modal-article-text').innerText = article.text;
             document.getElementById('modal-article-evidence').innerText = article.evidence;
 
-            // عرض الصور
             const imagesContainer = document.getElementById('modal-article-images');
             imagesContainer.innerHTML = article.images.map(img => `
                 <div class="overflow-hidden rounded-xl border shadow-sm h-32">
@@ -943,7 +941,6 @@
                 </div>
             `).join('');
 
-            // عرض أسماء الدكاترة والباحثين
             const researchersContainer = document.getElementById('modal-article-researchers');
             researchersContainer.innerHTML = article.researchers.map(doc => `
                 <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5">
@@ -1068,46 +1065,34 @@
                 resultsHTML += `<div onclick="openArticleDetail(${a.id}); document.getElementById('search-suggestions').classList.add('hidden');" class="cursor-pointer hover:bg-slate-50 p-2 rounded text-xs text-right font-bold text-purple-700">مقال علمي: ${a.title}</div>`;
             });
             matchedDiseases.forEach(d => {
-                resultsHTML += `<div onclick="toggleMedicalChat(); document.getElementById('chat-input').value='عندي أعراض ${d.name}'; document.getElementById('search-suggestions').classList.add('hidden');" class="cursor-pointer hover:bg-slate-50 p-2 rounded text-xs text-right font-bold text-blue-700">تشخيص: ${d.name}</div>`;
-            });
-            matchedMedicines.forEach(m => {
-                resultsHTML += `<div onclick="switchTab('medicines'); document.getElementById('medicine-search').value='${m.name}'; filterMedicines(); document.getElementById('search-suggestions').classList.add('hidden');" class="cursor-pointer hover:bg-slate-50 p-2 rounded text-xs text-right font-bold text-emerald-700">دواء: ${m.name}</div>`;
+                resultsHTML += `<div onclick="toggleMedicalChat(); document.getElementById('chat-input').value='عندي أعراض تشبه ${d.name}'; sendChatMessage(); document.getElementById('search-suggestions').classList.add('hidden');" class="cursor-pointer hover:bg-slate-50 p-2 rounded text-xs text-right font-bold text-primary-700">تشخيص مرضي: ${d.name}</div>`;
             });
             matchedHospitals.forEach(h => {
-                resultsHTML += `<div onclick="switchTab('hospitals'); document.getElementById('hospital-search').value='${h.name}'; filterHospitals(); document.getElementById('search-suggestions').classList.add('hidden');" class="cursor-pointer hover:bg-slate-50 p-2 rounded text-xs text-right font-bold text-primary-700">مستشفى: ${h.name}</div>`;
+                resultsHTML += `<div onclick="switchTab('hospitals'); document.getElementById('search-suggestions').classList.add('hidden');" class="cursor-pointer hover:bg-slate-50 p-2 rounded text-xs text-right font-bold text-slate-700">مستشفى: ${h.name}</div>`;
+            });
+            matchedMedicines.forEach(m => {
+                resultsHTML += `<div onclick="switchTab('medicines'); document.getElementById('search-suggestions').classList.add('hidden');" class="cursor-pointer hover:bg-slate-50 p-2 rounded text-xs text-right font-bold text-emerald-700">دواء: ${m.name}</div>`;
             });
 
-            if(!resultsHTML) {
+            if (resultsHTML === '') {
                 resultsHTML = '<div class="p-2 text-xs text-slate-500 text-right">لا توجد نتائج مطابقة</div>';
             }
-
             box.innerHTML = resultsHTML;
             box.classList.remove('hidden');
         }
 
         function executeSearch() {
-            const val = document.getElementById('global-search-input').value.trim();
-            if(!val) return;
-            const query = val.toLowerCase();
-            if(hospitalsData.some(h => h.name.toLowerCase().includes(query))) {
-                switchTab('hospitals');
-                document.getElementById('hospital-search').value = val;
-                filterHospitals();
-            } else if(medicinesData.some(m => m.name.toLowerCase().includes(query))) {
-                switchTab('medicines');
-                document.getElementById('medicine-search').value = val;
-                filterMedicines();
-            } else {
-                switchTab('home');
-                toggleMedicalChat();
-                document.getElementById('chat-input').value = val;
-            }
-            document.getElementById('search-suggestions').classList.add('hidden');
+            const val = document.getElementById('global-search-input').value;
+            handleGlobalSearch(val);
         }
 
+        // دالة الطبيب الافتراضي الذكي (د. ميراج) للتشخيص ووصف العلاج السريري
         function toggleMedicalChat() {
-            const chatWindow = document.getElementById('medical-chat-window');
-            chatWindow.classList.toggle('hidden');
+            const chatWin = document.getElementById('medical-chat-window');
+            chatWin.classList.toggle('hidden');
+            if(!chatWin.classList.contains('hidden')) {
+                document.getElementById('chat-input').focus();
+            }
         }
 
         function handleChatKeyPress(e) {
@@ -1118,16 +1103,16 @@
 
         function sendChatMessage() {
             const input = document.getElementById('chat-input');
-            const message = input.value.trim();
-            if (!message) return;
+            const text = input.value.trim();
+            if (!text) return;
 
-            const chatMessages = document.getElementById('chat-messages');
-
-            // User Message
-            chatMessages.innerHTML += `
+            const messagesContainer = document.getElementById('chat-messages');
+            
+            // رسالة المستخدم
+            messagesContainer.innerHTML += `
                 <div class="flex gap-2 items-start justify-end">
                     <div class="bg-primary-600 text-white p-3 rounded-2xl rounded-tl-none shadow-sm max-w-[80%] leading-relaxed">
-                        ${message}
+                        ${text}
                     </div>
                     <div class="w-7 h-7 rounded-full bg-slate-700 text-white flex items-center justify-center shrink-0 text-xs">
                         <i class="fa-solid fa-user"></i>
@@ -1135,23 +1120,33 @@
                 </div>
             `;
             input.value = '';
-            chatMessages.scrollTop = chatMessages.scrollHeight;
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-            // Bot Response Generation based on Diseases Knowledge Base
+            // رد الطبيب الذكي الميداني
             setTimeout(() => {
-                let botReply = "أهلاً بك. بناءً على ما ذكرت، أنصحك بمراجعة أقرب مركز طبي أو مستشفى فورا للاطمئنان.";
-                let matchedDisease = diseasesKnowledgeBase.find(d => d.keywords.some(k => message.toLowerCase().includes(k)));
+                let botReply = "أهلاً بك. بناءً على الأعراض التي ذكرتها، أنصحك بالراحة التامة، شرب السوائل، ومراجعة أقرب مركز صحي أو مستشفى إذا استمرت الأعراض.";
+                
+                const lowerText = text.toLowerCase();
+                let matchedDisease = null;
 
-                if (matchedDisease) {
-                    botReply = `<strong>التشخيص المبدئي:</strong> ${matchedDisease.name}<br><br>` +
-                               `<strong>التقييم السريري:</strong> ${matchedDisease.diagnosis}<br><br>` +
-                               `<strong>خطة العلاج المقترحة:</strong> ${matchedDisease.treatmentPlan}<br><br>` +
-                               `<strong>الأدوية الموصوفة المقترحة:</strong><br>` +
-                               matchedDisease.prescribedMedicines.map(med => `- ${med.name}: ${med.dosage}`).join('<br>') +
-                               `<br><br><strong>المستشفى أو المركز الموصى به:</strong> ${matchedDisease.hospitalRef}`;
+                for (let disease of diseasesKnowledgeBase) {
+                    if (disease.keywords.some(k => lowerText.includes(k))) {
+                        matchedDisease = disease;
+                        break;
+                    }
                 }
 
-                chatMessages.innerHTML += `
+                if (matchedDisease) {
+                    let medsList = matchedDisease.prescribedMedicines.map(m => `- ${m.name} (${m.dosage})`).join('<br>');
+                    botReply = `<strong>التشخيص السريري المقترح:</strong> ${matchedDisease.name}<br><br>` +
+                               `<strong>التقييم:</strong> ${matchedDisease.diagnosis}<br><br>` +
+                               `<strong>خطة العلاج والإرشادات:</strong> ${matchedDisease.treatmentPlan}<br><br>` +
+                               `<strong>الأدوية الموصوفة المقترحة والمتوفرة:</strong><br>${medsList}<br><br>` +
+                               `<strong>المنشأة الطبية الموصى بها:</strong> ${matchedDisease.hospitalRef}<br><br>` +
+                               `<span class="text-red-600 font-bold text-[11px]">تنبيه: هذه استشارة افتراضية ذكية ولا تغني عن زيارة الطبيب الميداني المختص في الحالات الحرجة.</span>`;
+                }
+
+                messagesContainer.innerHTML += `
                     <div class="flex gap-2 items-start">
                         <div class="w-7 h-7 rounded-full bg-primary-600 text-white flex items-center justify-center shrink-0 text-xs">
                             <i class="fa-solid fa-user-doctor"></i>
@@ -1161,7 +1156,7 @@
                         </div>
                     </div>
                 `;
-                chatMessages.scrollTop = chatMessages.scrollHeight;
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
             }, 600);
         }
     </script>
