@@ -160,7 +160,7 @@
                             </button>
                         </div>
                         <!-- قسم الأخبار والتحديثات العاجلة -->
-<!-- قسم الأخبار والتحديثات العاجلة -->
+<!-- قسم الأخبار والتحديثات العاجلة (ديناميكي) -->
 <section class="max-w-[950px] mx-auto my-8 px-4 text-right">
   <div class="flex items-center gap-2 mb-4">
     <span class="relative flex h-3 w-3">
@@ -170,24 +170,9 @@
     <h3 class="text-lg font-bold text-slate-800">تحديثات وأخبار عاجلة</h3>
   </div>
 
-  <div class="flex flex-col gap-3">
-    <!-- بطاقة خبر عاجل 1 -->
-    <div class="bg-red-50/50 border-r-4 border-red-600 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
-      <div class="flex justify-between items-center mb-2">
-        <span class="bg-red-100 text-red-600 text-xs font-bold px-2.5 py-1 rounded-full">عاجل</span>
-        <span class="text-xs text-slate-500">قبل 10 دقائق</span>
-      </div>
-      <p class="text-slate-700 text-sm leading-relaxed">توفر كميات جديدة من أدوية الأطفال والانسولين في صيدلية الشفاء المركزية.</p>
-    </div>
-
-    <!-- بطاقة خبر 2 -->
-    <div class="bg-white border-r-4 border-sky-600 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
-      <div class="flex justify-between items-center mb-2">
-        <span class="bg-sky-100 text-sky-600 text-xs font-bold px-2.5 py-1 rounded-full">تحديث ميداني</span>
-        <span class="text-xs text-slate-500">قبل 45 دقيقة</span>
-      </div>
-      <p class="text-slate-700 text-sm leading-relaxed">النقطة الطبية الميدانية في حي الرمال تعمل بانتظام وتستقبل الحالات الطارئة.</p>
-    </div>
+  <!-- الحاوية التي سيتم تعبئتها أوتوماتيكياً -->
+  <div id="news-container" class="flex flex-col gap-3">
+    <!-- الأسباب والبطاقات ستظهر هنا برمجياً -->
   </div>
 </section>
                     </div>
@@ -1219,5 +1204,67 @@
             initMap();
         });
     </script>
+    <script>
+  // 1. مصفوفة البيانات التجريبية (سيتصل بها قاعدة البيانات لاحقاً)
+  const newsData = [
+    {
+      id: 1,
+      type: 'urgent',
+      badge: 'عاجل',
+      text: 'توفر كميات جديدة من أدوية الأطفال والانسولين في صيدلية الشفاء المركزية.',
+      createdAt: new Date(Date.now() - 10 * 60 * 1000).toISOString() // قبل 10 دقائق
+    },
+    {
+      id: 2,
+      type: 'info',
+      badge: 'تحديث ميداني',
+      text: 'النقطة الطبية الميدانية في حي الرمال تعمل بانتظام وتستقبل الحالات الطارئة.',
+      createdAt: new Date(Date.now() - 45 * 60 * 1000).toISOString() // قبل 45 دقيقة
+    }
+  ];
+
+  // 2. دالة حساب الوقت المنقضي تلقائياً
+  function formatTimeAgo(timestamp) {
+    const now = new Date();
+    const newsDate = new Date(timestamp);
+    const diffInSeconds = Math.floor((now - newsDate) / 1000);
+
+    if (diffInSeconds < 60) return 'الآن';
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    if (diffInMinutes < 60) return `منذ ${diffInMinutes} دقيقة`;
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) return `منذ ${diffInHours} ساعة`;
+    const diffInDays = Math.floor(diffInHours / 24);
+    return `منذ ${diffInDays} يوم`;
+  }
+
+  // 3. دالة بناء وعرض البطاقات في الصفحة
+  function renderNews() {
+    const container = document.getElementById('news-container');
+    if (!container) return;
+
+    container.innerHTML = newsData.map(news => {
+      const isUrgent = news.type === 'urgent';
+      const bgClass = isUrgent ? 'bg-red-50/50 border-red-600' : 'bg-white border-sky-600';
+      const badgeClass = isUrgent ? 'bg-red-100 text-red-600' : 'bg-sky-100 text-sky-600';
+
+      return `
+        <div class="${bgClass} border-r-4 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex justify-between items-center mb-2">
+            <span class="${badgeClass} text-xs font-bold px-2.5 py-1 rounded-full">${news.badge}</span>
+            <span class="text-xs text-slate-500">${formatTimeAgo(news.createdAt)}</span>
+          </div>
+          <p class="text-slate-700 text-sm leading-relaxed">${news.text}</p>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // 4. التشغيل عند فتح الصفحة والتحديث الدائم كل دقيقة
+  document.addEventListener('DOMContentLoaded', () => {
+    renderNews();
+    setInterval(renderNews, 60000); // إعادة حساب الوقت تلقائياً كل 60 ثانية
+  });
+</script>
 </body>
 </html>
