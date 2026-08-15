@@ -125,12 +125,23 @@
                         </p>
 
                         <!-- Unified Search Bar -->
-                        <div class="bg-white p-3 rounded-2xl shadow-xl border border-slate-200 max-w-2xl mx-auto flex items-center gap-2 relative">
-                            <i class="fa-solid fa-magnifying-glass text-slate-400 mr-2 text-xl"></i>
-                            <input type="text" id="global-search-input" oninput="handleGlobalSearch(this.value)" placeholder="ابحث عن مرض، دواء، مستشفى، أو أعراض صحية..." class="w-full py-2 px-2 focus:outline-none text-slate-700 font-medium">
-                            <button onclick="executeSearch()" class="bg-primary-700 hover:bg-primary-800 text-white px-6 py-3 rounded-xl font-bold transition-all">بحث</button>
-                        </div>
-                        <div id="search-suggestions" class="bg-white rounded-xl shadow-lg border border-slate-100 max-w-2xl mx-auto text-right hidden p-3 space-y-2"></div>
+<div class="bg-white p-3 rounded-2xl shadow-xl border border-slate-200 max-w-2xl mx-auto flex items-center gap-2 relative">
+    <i class="fa-solid fa-magnifying-glass text-slate-400 mr-2 text-xl"></i>
+    <input type="text" 
+           id="global-search-input" 
+           oninput="handleGlobalSearch(this.value)" 
+           onkeypress="if(event.key === 'Enter') executeSearch()" 
+           placeholder="ابحث عن مرض، دواء، مستشفى، أو أعراض صحية..." 
+           class="w-full py-2 px-2 focus:outline-none text-slate-700 font-medium">
+    <button onclick="executeSearch()" class="bg-primary-700 hover:bg-primary-800 text-white px-6 py-3 rounded-xl font-bold transition-all shrink-0">بحث</button>
+</div>
+
+<!-- Search Suggestions Container -->
+<div id="search-suggestions" class="bg-white rounded-xl shadow-lg border border-slate-100 max-w-2xl mx-auto text-right hidden p-3 space-y-2 mt-2"></div>
+
+<!-- Quick Action Buttons -->
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 pt-6">
+    <button onclick="switchTab('hospitals')" class="p-4 bg-white rounded-xl shadow-sm border border-slate-200 hover:border-primary-500 transition-all card-hover">
 
                         <!-- Quick Action Buttons -->
                         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 pt-6">
@@ -1189,6 +1200,43 @@ const awarenessData = [
 
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
+        function executeSearch() {
+    const input = document.getElementById('global-search-input');
+    if (!input) return;
+
+    const query = input.value.trim().toLowerCase();
+    if (!query) return;
+
+    // البحث في بيانات الأدوية والمستشفيات المخزنة
+    const foundMed = (typeof medicinesData !== 'undefined') 
+        ? medicinesData.find(m => m.name.toLowerCase().includes(query) || m.active.toLowerCase().includes(query)) 
+        : null;
+
+    const foundHosp = (typeof hospitalsData !== 'undefined') 
+        ? hospitalsData.find(h => h.name.toLowerCase().includes(query) || h.gov.toLowerCase().includes(query)) 
+        : null;
+
+    let fullInfoText = query;
+
+    // تجميع البيانات الشاملة
+    if (foundMed) {
+        fullInfoText = `استفسار عن دواء: ${foundMed.name} (${foundMed.active}). دواعي الاستعمال: ${foundMed.use}. التوفر: ${foundMed.status}`;
+    } else if (foundHosp) {
+        fullInfoText = `استفسار عن منشأة: ${foundHosp.name} (${foundHosp.gov}). الوصف: ${foundHosp.desc}. التواصل: ${foundHosp.phone}`;
+    }
+
+    // فتح شباك المحادثة الطبية وتمرير النص
+    const chatWindow = document.getElementById('medical-chat-window');
+    if (chatWindow && chatWindow.classList.contains('hidden')) {
+        if (typeof toggleMedicalChat === 'function') toggleMedicalChat();
+    }
+
+    const chatInput = document.getElementById('chat-input');
+    if (chatInput) {
+        chatInput.value = fullInfoText;
+        chatInput.focus();
+    }
+}
     </script>
 </body>
 </html>
