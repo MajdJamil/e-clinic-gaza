@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عيادة غزة الإلكترونية | Dr. Miraj - الطبيب الافتراضي الذكي</title>
+    <title>عيادة غزة الإلكترونية | Dr. Majd - الطبيب الافتراضي الذكي</title>
     <meta name="description" content="منصة طبية رقمية تقدم تشخيصًا فوريًا بالذكاء الاصطناعي، ودليل مستشفيات وأدوية وأطباء في قطاع غزة">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🩺</text></svg>">
 
@@ -532,7 +532,7 @@
                     <i class="fa-solid fa-user-doctor"></i>
                 </div>
                 <div>
-                    <h3 class="font-bold text-sm">د. ميراج (الطبيب الافتراضي)</h3>
+                    <h3 class="font-bold text-sm">دكتور مجد (الطبيب الافتراضي)</h3>
                     <span class="text-[10px] text-emerald-200 flex items-center gap-1">
                         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> جاهز للتشخيص ووصف العلاج
                     </span>
@@ -548,7 +548,7 @@
                     <i class="fa-solid fa-user-doctor"></i>
                 </div>
                 <div class="bg-white p-3 rounded-2xl rounded-tr-none shadow-sm border border-slate-100 text-slate-700 max-w-[80%] leading-relaxed">
-                    أهلاً بك يا أخي العزيز. معك د. ميراج، طبيبك الافتراضي في منصة E-Clinic Gaza. تفضل, صف لي ما تشعر به من أعراض أو آلام، وسأقوم بفحص حالتك، تشخيصها بدقة، ووصف الأدوية المناسبة المتوفرة لدينا مع تحديد أقرب مستشفى أو صيدلية لك.
+                    أهلاً بك يا أخي العزيز. معك دكتور مجد، طبيبك الافتراضي في منصة E-Clinic Gaza. تفضل, صف لي ما تشعر به من أعراض أو آلام، وسأقوم بفحص حالتك، تشخيصها بدقة، ووصف الأدوية المناسبة المتوفرة لدينا مع تحديد أقرب مستشفى أو صيدلية لك.
                 </div>
             </div>
         </div>
@@ -1242,7 +1242,7 @@ const awarenessData = [
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         }
 
-        // محادثة الطبيب الافتراضي الذكي (د. ميراج)
+        // محادثة الطبيب الافتراضي الذكي (دكتور مجد)
         function toggleMedicalChat() {
             const chatWin = document.getElementById('medical-chat-window');
             chatWin.classList.toggle('hidden');
@@ -1281,7 +1281,7 @@ const awarenessData = [
                 if (matchedDisease) {
                     let medsList = matchedDisease.prescribedMedicines.map(m => `• <strong>${m.name}</strong>: ${m.dosage}`).join('<br>');
                     reply = `
-                        <strong>تشخيص د. ميراج المبدئي: ${matchedDisease.name}</strong><br><br>
+                        <strong>تشخيص دكتور مجد المبدئي: ${matchedDisease.name}</strong><br><br>
                         <strong>التقييم السريري:</strong> ${matchedDisease.diagnosis}<br><br>
                         <strong>الخطة العلاجية والتوجيهات:</strong> ${matchedDisease.treatmentPlan}<br><br>
                         <strong>الأدوية المقترحة والموصوفة:</strong><br>${medsList}<br><br>
