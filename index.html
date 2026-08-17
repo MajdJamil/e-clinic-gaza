@@ -45,6 +45,13 @@
             outline: 2px solid #0ea5e9;
             outline-offset: 2px;
         }
+        @keyframes voice-pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5); }
+            50% { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+        }
+        #voice-input-btn.listening {
+            animation: voice-pulse 1.2s ease-in-out infinite;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
@@ -556,6 +563,9 @@
         <!-- حقل إدخال الرسالة -->
         <div class="p-3 bg-white border-t border-slate-200 flex items-center gap-2">
             <input type="text" id="chat-input" onkeypress="handleChatKeyPress(event)" placeholder="اكتب الأعراض أو المرض هنا..." class="flex-grow px-3 py-2 border rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+            <button id="voice-input-btn" onclick="toggleVoiceInput()" class="hidden w-9 h-9 rounded-full bg-emerald-50 text-emerald-600 hover:bg-emerald-100 transition-all duration-300 flex items-center justify-center shrink-0" title="إدخال صوتي">
+                <i class="fa-solid fa-microphone"></i>
+            </button>
             <button onclick="sendChatMessage()" class="bg-primary-700 hover:bg-primary-800 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center">
                 <i class="fa-solid fa-paper-plane"></i>
             </button>
@@ -1240,6 +1250,62 @@ const awarenessData = [
             document.getElementById('home-care-form').reset();
             document.getElementById('tracking-result').classList.remove('hidden');
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
+        // الإدخال الصوتي لحقل المحادثة (Web Speech API)
+        const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let voiceRecognition = null;
+        let isVoiceListening = false;
+
+        if (SpeechRecognitionAPI) {
+            const voiceBtnEl = document.getElementById('voice-input-btn');
+            if (voiceBtnEl) voiceBtnEl.classList.remove('hidden');
+
+            voiceRecognition = new SpeechRecognitionAPI();
+            voiceRecognition.lang = 'ar-SA';
+            voiceRecognition.interimResults = false;
+            voiceRecognition.maxAlternatives = 1;
+
+            voiceRecognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                const input = document.getElementById('chat-input');
+                if (input) input.value = transcript;
+            };
+
+            voiceRecognition.onerror = () => {
+                setVoiceListeningState(false);
+            };
+
+            voiceRecognition.onend = () => {
+                setVoiceListeningState(false);
+            };
+        }
+
+        function setVoiceListeningState(listening) {
+            isVoiceListening = listening;
+            const voiceBtn = document.getElementById('voice-input-btn');
+            if (!voiceBtn) return;
+            if (listening) {
+                voiceBtn.classList.add('listening', 'bg-red-50', 'text-red-600');
+                voiceBtn.classList.remove('bg-emerald-50', 'text-emerald-600', 'hover:bg-emerald-100');
+            } else {
+                voiceBtn.classList.remove('listening', 'bg-red-50', 'text-red-600');
+                voiceBtn.classList.add('bg-emerald-50', 'text-emerald-600', 'hover:bg-emerald-100');
+            }
+        }
+
+        function toggleVoiceInput() {
+            if (!voiceRecognition) return;
+            if (isVoiceListening) {
+                voiceRecognition.stop();
+                return;
+            }
+            try {
+                voiceRecognition.start();
+                setVoiceListeningState(true);
+            } catch (err) {
+                setVoiceListeningState(false);
+            }
         }
 
         // محادثة الطبيب الافتراضي الذكي (دكتور مجد)
