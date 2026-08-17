@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Clinic Gaza 2.6 | الطبيب الذكي الميداني</title>
-    
+    <title>عيادة غزة الإلكترونية | Dr. Miraj - الطبيب الافتراضي الذكي</title>
+    <meta name="description" content="منصة طبية رقمية تقدم تشخيصًا فوريًا بالذكاء الاصطناعي، ودليل مستشفيات وأدوية وأطباء في قطاع غزة">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🩺</text></svg>">
+
     <!-- Google Fonts & FontAwesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,6 +41,10 @@
         .tab-content.opacity-0 { opacity: 0; }
         html { scroll-behavior: smooth; }
         * { transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+        button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+            outline: 2px solid #0ea5e9;
+            outline-offset: 2px;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
@@ -383,24 +389,26 @@
                 <p class="text-slate-600 text-sm max-w-xl mx-auto">في حالات الخطر الشديد والحوادث الطارئة، يرجى التواصل المباشر مع الجهات الرسمية المختصة فوراً.</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white p-6 rounded-2xl border-2 border-red-100 shadow-sm flex items-center justify-between">
+                <div class="bg-white p-6 rounded-2xl border-2 border-red-100 shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-between gap-4">
                     <div>
                         <span class="text-xs font-bold text-red-600 bg-red-50 px-2.5 py-1 rounded-md">طوارئ طبية</span>
                         <h3 class="text-xl font-black text-slate-900 mt-2">الإسعاف والطوارئ</h3>
                         <p class="text-xs text-slate-500 mt-1">الخط الساخن للاستجابة السريعة ونقل الإصابات.</p>
                     </div>
-                    <a href="tel:101" class="bg-red-600 hover:bg-red-700 text-white font-black px-5 py-3 rounded-xl text-xl shadow-md flex items-center gap-2">
-                        <i class="fa-solid fa-phone"></i> 101
+                    <a href="tel:101" class="bg-red-600 hover:bg-red-700 active:scale-95 text-white font-black rounded-2xl shadow-md transition-all duration-200 flex flex-col items-center justify-center gap-1 shrink-0 w-28 h-28">
+                        <i class="fa-solid fa-phone text-lg"></i>
+                        <span class="text-4xl leading-none">101</span>
                     </a>
                 </div>
-                <div class="bg-white p-6 rounded-2xl border-2 border-red-100 shadow-sm flex items-center justify-between">
+                <div class="bg-white p-6 rounded-2xl border-2 border-red-100 shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-between gap-4">
                     <div>
                         <span class="text-xs font-bold text-red-600 bg-red-50 px-2.5 py-1 rounded-md">إنقاذ وإطفاء</span>
                         <h3 class="text-xl font-black text-slate-900 mt-2">الدفاع المدني</h3>
                         <p class="text-xs text-slate-500 mt-1">لإصابات الحرائق والإنقاذ تحت الأنقاض.</p>
                     </div>
-                    <a href="tel:102" class="bg-red-600 hover:bg-red-700 text-white font-black px-5 py-3 rounded-xl text-xl shadow-md flex items-center gap-2">
-                        <i class="fa-solid fa-phone"></i> 102
+                    <a href="tel:102" class="bg-red-600 hover:bg-red-700 active:scale-95 text-white font-black rounded-2xl shadow-md transition-all duration-200 flex flex-col items-center justify-center gap-1 shrink-0 w-28 h-28">
+                        <i class="fa-solid fa-phone text-lg"></i>
+                        <span class="text-4xl leading-none">102</span>
                     </a>
                 </div>
             </div>
@@ -555,18 +563,34 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 py-12 mt-12 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-            <div class="flex items-center justify-center gap-2">
-                <div class="w-8 h-8 rounded-lg bg-primary-600 flex items-center justify-center text-white font-bold">
-                    <i class="fa-solid fa-user-doctor"></i>
+    <footer class="bg-slate-900 text-slate-300 py-10 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-right">
+            <div>
+                <div class="flex items-center justify-center md:justify-start gap-2 mb-2">
+                    <div class="w-8 h-8 rounded-lg bg-primary-600 flex items-center justify-center text-white font-bold">
+                        <i class="fa-solid fa-user-doctor"></i>
+                    </div>
+                    <span class="text-white font-black text-lg">عيادة غزة الإلكترونية</span>
                 </div>
-                <span class="font-extrabold text-white text-lg">E-Clinic Gaza 2.6</span>
+                <p class="text-sm text-slate-400">طبيبك الافتراضي الذكي — تشخيص فوري، أدوية متوفرة، وأقرب مستشفى في متناول يدك.</p>
             </div>
-            <p class="text-xs text-slate-400 max-w-md mx-auto">منصة رقمية مجتمعية تطوعية تهدف لتسهيل الوصول للخدمات الصحية والدوائية الطارئة في قطاع غزة</p>
-            
-            <!-- بطاقة المطور الرسمية -->
-            <div class="bg-slate-950/80 border border-slate-800/80 p-5 rounded-2xl max-w-lg mx-auto text-xs text-slate-300 space-y-2 shadow-xl my-6">
+            <div>
+                <div class="text-white font-bold mb-2 text-sm">روابط سريعة</div>
+                <div class="flex flex-col items-center md:items-start gap-1 text-sm text-slate-400">
+                    <button onclick="switchTab('hospitals')" class="text-right hover:text-white transition-colors focus-visible:outline-none">المستشفيات</button>
+                    <button onclick="switchTab('medicines')" class="text-right hover:text-white transition-colors focus-visible:outline-none">الأدوية</button>
+                    <button onclick="switchTab('emergency')" class="text-right hover:text-white transition-colors focus-visible:outline-none">الطوارئ</button>
+                </div>
+            </div>
+            <div>
+                <div class="text-white font-bold mb-2 text-sm">تنويه</div>
+                <p class="text-xs text-slate-500">هذه المنصة أداة دعم أولية ولا تغني عن استشارة طبيب مختص عند توفر الإمكانية.</p>
+            </div>
+        </div>
+
+        <!-- بطاقة المطور الرسمية -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-slate-950/80 border border-slate-800/80 p-5 rounded-2xl max-w-lg mx-auto text-xs text-slate-300 space-y-2 shadow-xl mt-8 text-center">
                 <p class="font-bold text-white text-sm mb-1"><i class="fa-solid fa-code text-blue-400"></i> المطور الرسمي ومهندس الموقع:</p>
                 <p class="text-blue-300 font-extrabold text-base">المهندس . مجد جميل صبحي عبدالهادي</p>
                 <p class="text-slate-400">مهندس برمجيات وذكاء اصطناعي | مؤسس منصة المجد التعليمية</p>
@@ -579,8 +603,10 @@
                     </a>
                 </div>
             </div>
+        </div>
 
-            <p class="text-xs text-slate-600 pt-4 border-t border-slate-800">2026 © جميع الحقوق محفوظة | E-Clinic Gaza</p>
+        <div class="text-center text-xs text-slate-600 mt-8 pt-6 border-t border-slate-800 mx-4 sm:mx-6 lg:mx-8">
+            © 2026 عيادة غزة الإلكترونية — جميع الحقوق محفوظة
         </div>
     </footer>
 
@@ -916,12 +942,14 @@ const awarenessData = [
             if (!target || target === current) return;
 
             const showTarget = () => {
-                target.classList.add('active', 'opacity-0');
-                requestAnimationFrame(() => requestAnimationFrame(() => target.classList.remove('opacity-0')));
+                target.classList.add('active', 'opacity-50', 'pointer-events-none');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 if (tabId === 'map') {
                     setTimeout(() => { map.invalidateSize(); }, 200);
                 }
+                setTimeout(() => {
+                    target.classList.remove('opacity-50', 'pointer-events-none');
+                }, 150);
             };
 
             if (current) {
@@ -956,14 +984,24 @@ const awarenessData = [
                 container.innerHTML = '<p class="text-slate-500 col-span-full text-center py-8">لا توجد نتائج مطابقة للبحث.</p>';
                 return;
             }
+            const statusStyles = {
+                'يعمل': { badge: 'bg-emerald-50 text-emerald-700 border-emerald-200', circle: 'bg-emerald-50 text-emerald-600', icon: 'fa-circle-check' },
+                'يعمل جزئياً': { badge: 'bg-amber-50 text-amber-700 border-amber-200', circle: 'bg-amber-50 text-amber-600', icon: 'fa-triangle-exclamation' },
+                'مغلق': { badge: 'bg-red-50 text-red-700 border-red-200', circle: 'bg-red-50 text-red-600', icon: 'fa-circle-xmark' }
+            };
             data.forEach(h => {
-                let badgeColor = h.status === 'يعمل' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-amber-50 text-amber-700 border-amber-200';
+                const s = statusStyles[h.status] || statusStyles['يعمل جزئياً'];
                 container.innerHTML += `
-                    <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm card-hover flex flex-col justify-between space-y-4">
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between space-y-4">
                         <div>
                             <div class="flex justify-between items-start gap-2">
-                                <span class="text-xs font-bold px-3 py-1 rounded-full bg-primary-50 text-primary-700">${h.gov}</span>
-                                <span class="text-xs font-bold px-3 py-1 rounded-full border ${badgeColor}">${h.status}</span>
+                                <div class="flex items-center gap-2">
+                                    <div class="w-9 h-9 rounded-full ${s.circle} flex items-center justify-center shrink-0">
+                                        <i class="fa-solid ${s.icon} text-sm"></i>
+                                    </div>
+                                    <span class="text-xs font-bold px-3 py-1 rounded-full bg-primary-50 text-primary-700">${h.gov}</span>
+                                </div>
+                                <span class="text-xs font-bold px-3 py-1 rounded-full border ${s.badge}">${h.status}</span>
                             </div>
                             <h3 class="text-xl font-black text-slate-900 mt-3">${h.name}</h3>
                             <p class="text-xs text-slate-600 mt-2 leading-relaxed">${h.desc}</p>
@@ -1000,13 +1038,16 @@ const awarenessData = [
             }
             data.forEach(m => {
                 container.innerHTML += `
-                    <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm card-hover flex flex-col justify-between space-y-4">
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between space-y-4">
                         <div>
-                            <div class="flex justify-between items-start">
-                                <span class="text-xs font-bold px-3 py-1 rounded-full bg-emerald-50 text-emerald-700">${m.active}</span>
+                            <div class="flex justify-between items-start gap-3">
+                                <div class="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center shrink-0">
+                                    <i class="fa-solid fa-pills text-emerald-600"></i>
+                                </div>
                                 <span class="text-xs text-slate-400 font-medium">#MED-${m.id}</span>
                             </div>
-                            <h3 class="text-xl font-black text-slate-900 mt-3">${m.name}</h3>
+                            <span class="inline-block text-xs font-bold px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 mt-3">${m.active}</span>
+                            <h3 class="text-xl font-black text-slate-900 mt-2">${m.name}</h3>
                             <p class="text-xs text-slate-600 mt-2 leading-relaxed"><strong>الاستخدام الطبي:</strong> ${m.use}</p>
                         </div>
                         <div class="pt-3 border-t text-xs font-bold text-emerald-700 bg-emerald-50/50 p-3 rounded-2xl">
@@ -1028,12 +1069,17 @@ const awarenessData = [
             const container = document.getElementById('doctors-list');
             container.innerHTML = '';
             data.forEach(d => {
+                const isNurse = d.spec.includes('تمريض');
+                const specIcon = isNurse ? 'fa-user-nurse' : 'fa-user-doctor';
+                const specCircle = isNurse ? 'bg-blue-50 text-blue-600' : 'bg-primary-50 text-primary-600';
                 container.innerHTML += `
-                    <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm card-hover flex flex-col justify-between space-y-4">
+                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between space-y-4">
                         <div>
                             <div class="flex justify-between items-start">
                                 <span class="text-xs font-bold px-3 py-1 rounded-full bg-blue-50 text-blue-700">${d.region}</span>
-                                <i class="fa-solid fa-user-doctor text-primary-600 text-xl"></i>
+                                <div class="w-10 h-10 rounded-full ${specCircle} flex items-center justify-center">
+                                    <i class="fa-solid ${specIcon} text-lg"></i>
+                                </div>
                             </div>
                             <h3 class="text-xl font-black text-slate-900 mt-3">${d.name}</h3>
                             <p class="text-xs font-bold text-primary-700 mt-1">${d.spec}</p>
@@ -1070,8 +1116,11 @@ const awarenessData = [
             container.innerHTML = '';
             articlesData.forEach(a => {
                 container.innerHTML += `
-                    <div onclick="openArticleModal(${a.id})" class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm card-hover cursor-pointer flex flex-col justify-between space-y-4">
-                        <div>
+                    <div onclick="openArticleModal(${a.id})" class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col h-full">
+                        <div class="flex-grow">
+                            <div class="w-12 h-12 rounded-full bg-purple-50 flex items-center justify-center mb-3">
+                                <i class="fa-solid fa-book-medical text-xl text-purple-600"></i>
+                            </div>
                             <div class="flex justify-between items-center mb-3">
                                 <span class="text-xs font-bold px-3 py-1 rounded-full bg-purple-50 text-purple-700">${a.cat}</span>
                                 <span class="text-xs text-slate-400">${a.date}</span>
@@ -1079,7 +1128,7 @@ const awarenessData = [
                             <h3 class="text-lg font-black text-slate-900 leading-snug">${a.title}</h3>
                             <p class="text-xs text-slate-600 mt-2 line-clamp-3 leading-relaxed">${a.text}</p>
                         </div>
-                        <div class="pt-4 border-t flex justify-between items-center text-xs font-bold text-primary-700">
+                        <div class="pt-4 mt-4 border-t flex justify-between items-center text-xs font-bold text-primary-700">
                             <span>قراءة البحث والأدلة العلمية</span>
                             <i class="fa-solid fa-arrow-left"></i>
                         </div>
@@ -1120,9 +1169,9 @@ const awarenessData = [
             awarenessData.forEach(item => {
                 let stepsHtml = item.steps.map(s => `<li class="flex items-start gap-2 text-xs text-slate-700 leading-relaxed"><i class="fa-solid fa-check text-secondary-600 mt-1"></i><span>${s}</span></li>`).join('');
                 container.innerHTML += `
-                    <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm card-hover space-y-3">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 space-y-3">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-secondary-50 text-secondary-700 flex items-center justify-center font-bold text-lg">
+                            <div class="w-10 h-10 rounded-full bg-secondary-50 text-secondary-700 flex items-center justify-center font-bold text-lg">
                                 <i class="fa-solid fa-shield-heart"></i>
                             </div>
                             <h3 class="text-lg font-black text-slate-900">${item.title}</h3>
