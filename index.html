@@ -6,6 +6,8 @@
     <title>عيادة غزة الإلكترونية | Dr. Majd - الطبيب الافتراضي الذكي</title>
     <meta name="description" content="منصة طبية رقمية تقدم تشخيصًا فوريًا بالذكاء الاصطناعي، ودليل مستشفيات وأدوية وأطباء في قطاع غزة">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🩺</text></svg>">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0EA5E9">
 
     <!-- Google Fonts & FontAwesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -94,6 +96,7 @@
                     <button onclick="switchTab('emergency')" class="nav-link text-red-600 hover:text-red-700 transition-colors">الطوارئ</button>
                     <button onclick="switchTab('articles')" class="nav-link hover:text-primary-600 transition-colors">المقالات</button>
                     <button onclick="switchTab('awareness')" class="nav-link hover:text-primary-600 transition-colors">التوعية</button>
+                    <button onclick="switchTab('sources')" class="nav-link hover:text-primary-600 transition-colors">المصادر والمنهجية</button>
                 </div>
 
                 <!-- Mobile menu button -->
@@ -117,6 +120,7 @@
                 <button onclick="switchTab('emergency'); toggleMobileMenu()" class="text-right px-3 py-2 rounded-lg font-bold text-red-600 hover:bg-red-50">الإسعاف والطوارئ</button>
                 <button onclick="switchTab('articles'); toggleMobileMenu()" class="text-right px-3 py-2 rounded-lg font-bold text-slate-700 hover:bg-slate-100">المقالات والأبحاث العلمية</button>
                 <button onclick="switchTab('awareness'); toggleMobileMenu()" class="text-right px-3 py-2 rounded-lg font-bold text-slate-700 hover:bg-slate-100">التوعية والإسعافات الأولية</button>
+                <button onclick="switchTab('sources'); toggleMobileMenu()" class="text-right px-3 py-2 rounded-lg font-bold text-slate-700 hover:bg-slate-100">المصادر والمنهجية</button>
             </div>
         </div>
     </nav>
@@ -439,6 +443,70 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="awareness-list"></div>
         </div>
 
+        <!-- 10. المصادر والمنهجية -->
+        <div id="view-sources" class="tab-content py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="mb-8">
+                <h2 class="text-3xl font-black text-slate-900">المصادر والمنهجية</h2>
+                <p class="text-slate-600 text-sm mt-1">كل معلومة بهذه المنصة مبنية على معايير ومصادر موثوقة عالميًا</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-4">
+                        <i class="fa-solid fa-chart-line text-xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-lg font-black text-slate-900 mb-2">بيانات واقع القطاع الصحي</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">الأرقام المعروضة عن حالة المستشفيات مأخوذة من تقرير منظمة الصحة العالمية الرسمي HeRAMS، بيانات حتى 31 مايو 2026.</p>
+                    <a href="https://cdn.who.int/media/docs/default-source/documents/emergencies/herams/herams-opt-gaza-infographics-2026-05a4f1cf74a63741629eca8f716e189f5a.pdf" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-primary-600 hover:text-primary-700 transition-colors">عرض التقرير الرسمي ↗</a>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center mb-4">
+                        <i class="fa-solid fa-pills text-xl text-emerald-600"></i>
+                    </div>
+                    <h3 class="text-lg font-black text-slate-900 mb-2">تصنيف وبيانات الأدوية</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">تصنيف الأدوية مبني ليتوافق مع القائمة النموذجية لمنظمة الصحة العالمية للأدوية الأساسية (الإصدار 24، 2025). القائمة الحالية عيّنة توضيحية للنموذج الأولي، وخطتنا التحقق السريري الكامل بالشراكة مع صيادلة مختصين قبل الاستخدام الفعلي.</p>
+                    <a href="https://www.who.int/publications/i/item/B09474" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-primary-600 hover:text-primary-700 transition-colors">عرض القائمة الرسمية ↗</a>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-full bg-purple-50 flex items-center justify-center mb-4">
+                        <i class="fa-solid fa-stethoscope text-xl text-purple-600"></i>
+                    </div>
+                    <h3 class="text-lg font-black text-slate-900 mb-2">قاعدة معرفة الأعراض والتشخيص</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">مبنية بالاسترشاد بالتصنيف الدولي للأمراض الصادر عن منظمة الصحة العالمية (ICD-11). أداة دعم قرار أولية للتوجيه العام فقط، ولا تغني عن تشخيص طبيب مختص.</p>
+                    <a href="https://icd.who.int/en" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-primary-600 hover:text-primary-700 transition-colors">عن التصنيف الدولي للأمراض ↗</a>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-4">
+                        <i class="fa-solid fa-hospital text-xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-lg font-black text-slate-900 mb-2">دليل المستشفيات والمرافق الصحية</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">أسماء ومواقع المستشفيات موثقة من قوائم أممية، ونعمل على ربط الخريطة ببيانات مفتوحة محدّثة من مشروع healthsites.io العالمي.</p>
+                    <div class="flex flex-col gap-1">
+                        <a href="https://healthsites.io" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-primary-600 hover:text-primary-700 transition-colors">عن healthsites.io ↗</a>
+                        <a href="https://en.wikipedia.org/wiki/List_of_hospitals_in_the_State_of_Palestine" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-primary-600 hover:text-primary-700 transition-colors">قائمة مستشفيات فلسطين ↗</a>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mb-4">
+                        <i class="fa-solid fa-shield-halved text-xl text-slate-700"></i>
+                    </div>
+                    <h3 class="text-lg font-black text-slate-900 mb-2">خصوصيتك محمية بالتصميم</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">المنصة تعمل بالكامل من طرف المستخدم (Client-side)، لا تُرسل أي بيانات لأي خادم خارجي، كل شيء يبقى على جهازك أنت فقط.</p>
+                </div>
+            </div>
+
+            <div class="bg-primary-50 border border-primary-100 rounded-xl p-6 text-center mt-6">
+                <p class="text-sm text-slate-700 mb-2">هذا مشروع مفتوح المصدر بالكامل</p>
+                <a href="https://github.com/majdjamil/e-clinic-gaza" target="_blank" rel="noopener noreferrer" class="text-sm font-bold text-primary-700 hover:text-primary-800 transition-colors inline-flex items-center gap-1.5">
+                    <i class="fa-brands fa-github"></i> عرض الكود المصدري ↗
+                </a>
+            </div>
+        </div>
+
     </main>
 
     <!-- نافذة منبثقة تفصيلية للمقال (Article Detail Modal) -->
@@ -590,6 +658,7 @@
                     <button onclick="switchTab('hospitals')" class="text-right hover:text-white transition-colors focus-visible:outline-none">المستشفيات</button>
                     <button onclick="switchTab('medicines')" class="text-right hover:text-white transition-colors focus-visible:outline-none">الأدوية</button>
                     <button onclick="switchTab('emergency')" class="text-right hover:text-white transition-colors focus-visible:outline-none">الطوارئ</button>
+                    <button onclick="switchTab('sources')" class="text-right hover:text-white transition-colors focus-visible:outline-none">المصادر والمنهجية</button>
                 </div>
             </div>
             <div>
@@ -615,7 +684,13 @@
             </div>
         </div>
 
-        <div class="text-center text-xs text-slate-600 mt-8 pt-6 border-t border-slate-800 mx-4 sm:mx-6 lg:mx-8">
+        <div class="text-center mt-8">
+            <span class="inline-flex items-center gap-1.5 bg-slate-800 text-slate-300 text-[11px] font-bold px-3 py-1.5 rounded-full">
+                📱 هذا الموقع يعمل حتى بدون إنترنت بعد أول زيارة
+            </span>
+        </div>
+
+        <div class="text-center text-xs text-slate-600 mt-6 pt-6 border-t border-slate-800 mx-4 sm:mx-6 lg:mx-8">
             © 2026 عيادة غزة الإلكترونية — جميع الحقوق محفوظة
         </div>
     </footer>
@@ -1433,6 +1508,14 @@ const awarenessData = [
             renderAwareness();
             initMapMarkers('all');
         });
+    </script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js').catch(err => console.warn('SW registration failed', err));
+            });
+        }
     </script>
 </body>
 </html>[cite: 2]
