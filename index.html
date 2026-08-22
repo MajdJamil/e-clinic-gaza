@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عيادة غزة الإلكترونية | Dr. Majd - الطبيب الافتراضي الذكي</title>
-    <meta name="description" content="منصة طبية رقمية تقدم تشخيصًا فوريًا بالذكاء الاصطناعي، ودليل مستشفيات وأدوية وأطباء في قطاع غزة">
+    <title>عيادة غزة الإلكترونية | مساعدك الصحي الذكي للإرشاد الأولي</title>
+    <meta name="description" content="منصة صحية رقمية تقدم إرشادًا صحيًا أوليًا بالذكاء الاصطناعي، ودليل مستشفيات وأدوية وأطباء في قطاع غزة. لا تغني عن استشارة الطبيب.">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🩺</text></svg>">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0EA5E9">
@@ -54,24 +54,38 @@
         #voice-input-btn.listening {
             animation: voice-pulse 1.2s ease-in-out infinite;
         }
+        .fade-up {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .fade-up.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .fade-up { opacity: 1; transform: none; transition: none; }
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
     <!-- شريط الطوارئ السريع -->
-    <div class="bg-red-600 text-white text-xs py-2 px-4 text-center font-bold fixed top-0 w-full z-50 flex items-center justify-center gap-3 shadow-md overflow-x-auto whitespace-nowrap">
-        <span><i class="fa-solid fa-triangle-exclamation"></i> طوارئ غزة:</span>
-        <span>الإسعاف والطوارئ: 101</span>
+    <div class="bg-red-600 text-white text-xs py-2 px-4 text-center font-bold fixed top-0 w-full z-50 flex items-center justify-center gap-3 shadow-md overflow-x-auto whitespace-nowrap" role="region" aria-label="أرقام الطوارئ">
+        <span><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> طوارئ غزة:</span>
+        <a href="tel:101" class="hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-white rounded" aria-label="الاتصال بالإسعاف والطوارئ 101">الإسعاف والطوارئ: 101</a>
         <span>|</span>
-        <span>الهلال الأحمر: 101</span>
+        <a href="tel:101" class="hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-white rounded" aria-label="الاتصال بالهلال الأحمر 101">الهلال الأحمر: 101</a>
         <span>|</span>
-        <span>الدفاع المدني: 102</span>
+        <a href="tel:102" class="hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-white rounded" aria-label="الاتصال بالدفاع المدني 102">الدفاع المدني: 102</a>
         <span>|</span>
-        <span class="bg-black/30 px-2 py-0.5 rounded text-[11px]">🩺 الطبيب الافتراضي الذكي مفعل</span>
+        <a href="tel:101" class="inline-flex items-center gap-1 bg-white text-red-700 px-2 py-0.5 rounded-md text-[11px] font-black hover:bg-red-50 transition-colors" aria-label="اتصل بالطوارئ الآن">
+            <i class="fa-solid fa-phone" aria-hidden="true"></i> اتصل بالطوارئ
+        </a>
     </div>
 
     <!-- النافبار الرئيسي -->
-    <nav class="fixed w-full z-40 glass-nav transition-all duration-300 mt-8" id="navbar">
+    <nav class="fixed w-full z-40 glass-nav transition-all duration-300 mt-9" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
@@ -81,7 +95,7 @@
                     </div>
                     <div>
                         <span class="font-extrabold text-xl tracking-tight text-slate-900 block leading-tight">E-<span class="text-primary-700">Clinic Gaza</span></span>
-                        <span class="text-[10px] text-slate-500 font-semibold block">الإصدار 2.6 | نظام التشخيص ووصف العلاج</span>
+                        <span class="text-[10px] text-slate-500 font-semibold block">الإصدار 2.6 | مساعد صحي ذكي للإرشاد الأولي</span>
                     </div>
                 </div>
 
@@ -101,8 +115,8 @@
 
                 <!-- Mobile menu button -->
                 <div class="xl:hidden flex items-center gap-2">
-                    <button onclick="toggleMobileMenu()" class="text-slate-700 hover:text-primary-600 focus:outline-none p-2 text-2xl">
-                        <i class="fa-solid fa-bars"></i>
+                    <button onclick="toggleMobileMenu()" aria-label="فتح قائمة التنقل" class="text-slate-700 hover:text-primary-600 focus:outline-none p-2 text-2xl">
+                        <i class="fa-solid fa-bars" aria-hidden="true"></i>
                     </button>
                 </div>
             </div>
@@ -130,105 +144,148 @@
 
         <!-- 1. صفحة الرئيسية -->
         <div id="view-home" class="tab-content active">
-            <section class="py-12 lg:py-20 bg-gradient-to-b from-primary-50/50 to-slate-50">
+            <section class="py-[2.7rem] lg:py-[4.5rem] bg-gradient-to-b from-primary-50/50 to-slate-50">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="text-center max-w-3xl mx-auto space-y-6">
+                    <div class="text-center max-w-3xl mx-auto space-y-5">
                         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-100 text-primary-700 font-bold text-xs">
-                            <span class="w-2.5 h-2.5 rounded-full bg-secondary-500 animate-pulse"></span>
-                            الطبيب الافتراضي الذكي للتشخيص السريري ووصف الأدوية في غزة
+                            <span class="w-2.5 h-2.5 rounded-full bg-secondary-500 animate-pulse" aria-hidden="true"></span>
+                            مساعد صحي ذكي للإرشاد الأولي في غزة
                         </div>
-                        <h1 class="text-3xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 leading-[1.35] md:leading-[1.3]">
-                            استشر طبيبك الذكي الفوري
+                        <h1 class="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 leading-[1.35] md:leading-[1.3]">
+                            مساعدك الصحي الذكي لفهم الأعراض
                             <br class="hidden sm:block">
-                            <span class="gradient-text block sm:inline mt-2 sm:mt-0">للتشخيص ووصف العلاج</span>
+                            <span class="gradient-text block sm:inline mt-2 sm:mt-0">والوصول إلى الرعاية المناسبة</span>
                         </h1>
-                        <p class="text-lg text-slate-600 leading-relaxed">
-                            تحدث مع الطبيب الافتراضي كأنك في عيادة حقيقية؛ اكتب أعراضك ليقوم بتشخيص حالتك بدقة، وصف الأدوية المتوفرة، وتحديد المستشفيات المناسبة.
+                        <p class="text-base sm:text-lg text-slate-600 leading-relaxed">
+                            أدخل أعراضك للحصول على إرشادات صحية أولية تساعدك على فهم حالتك وتحديد مستوى الرعاية المناسب، مع الوصول إلى معلومات المستشفيات والأدوية والخدمات الصحية المتوفرة.
+                        </p>
+                        <p class="text-xs sm:text-sm text-slate-500 font-bold flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-circle-info text-primary-500" aria-hidden="true"></i>
+                            لا تغني الخدمة عن استشارة الطبيب أو الفحص الطبي المباشر.
                         </p>
 
                         <!-- Unified Search Bar -->
                         <div class="bg-white p-3 rounded-2xl shadow-xl border border-slate-200 max-w-2xl mx-auto flex items-center gap-2 relative transition-all duration-300 focus-within:ring-2 focus-within:ring-primary-500 focus-within:border-primary-500">
-                            <i class="fa-solid fa-magnifying-glass text-slate-400 mr-2 text-xl"></i>
-                            <input type="text" id="global-search-input" oninput="handleGlobalSearch(this.value)" placeholder="ابحث عن مرض، دواء، مستشفى، أو أعراض صحية..." class="w-full py-2 px-2 focus:outline-none text-slate-700 font-medium transition-colors">
-                            <button onclick="executeSearch()" class="bg-primary-700 hover:bg-primary-800 active:scale-95 text-white px-6 py-3 rounded-xl font-bold transition-all duration-200 shadow-md hover:shadow-lg">بحث</button>
+                            <i class="fa-solid fa-magnifying-glass text-slate-400 mr-2 text-xl" aria-hidden="true"></i>
+                            <input type="text" id="global-search-input" oninput="handleGlobalSearch(this.value)" placeholder="اكتب عرضًا صحيًا، اسم دواء، مستشفى أو خدمة صحية..." aria-label="ابحث أو اكتب عرضك الصحي" class="w-full py-2 px-2 focus:outline-none text-slate-700 font-medium transition-colors">
+                            <button onclick="executeSearch()" class="bg-primary-700 hover:bg-primary-800 active:scale-95 text-white px-4 sm:px-6 py-3 rounded-xl font-bold transition-all duration-200 shadow-md hover:shadow-lg text-sm sm:text-base whitespace-nowrap flex items-center gap-2">
+                                <i class="fa-solid fa-stethoscope" aria-hidden="true"></i>
+                                <span class="hidden sm:inline">ابدأ التقييم الأولي</span>
+                                <span class="sm:hidden">تقييم أولي</span>
+                            </button>
                         </div>
                         <div id="search-suggestions" class="bg-white rounded-xl shadow-lg border border-slate-100 max-w-2xl mx-auto text-right hidden p-3 space-y-2"></div>
 
+                        <div class="flex justify-center">
+                            <button onclick="switchTab('emergency')" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 active:scale-95 text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-md transition-all duration-200" aria-label="حالة طارئة؟ الانتقال لخدمات الطوارئ">
+                                <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+                                حالة طارئة؟
+                            </button>
+                        </div>
+
                         <!-- Quick Action Buttons -->
                         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 pt-6">
-                            <button onclick="switchTab('hospitals')" class="p-4 bg-white rounded-xl shadow-sm border border-slate-200 hover:border-primary-500 transition-all duration-300 hover:shadow-md hover:-translate-y-1 flex flex-col items-center text-center gap-2">
+                            <button onclick="switchTab('emergency')" aria-label="الانتقال إلى قسم الطوارئ" class="p-4 h-28 bg-white rounded-xl shadow-sm border border-slate-200 hover:border-red-400 transition-all duration-300 hover:shadow-md hover:-translate-y-1 flex flex-col items-center justify-center text-center gap-2">
+                                <div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center">
+                                    <i class="fa-solid fa-truck-medical text-xl text-red-600" aria-hidden="true"></i>
+                                </div>
+                                <span class="text-xs font-bold">الطوارئ</span>
+                            </button>
+                            <button onclick="switchTab('hospitals')" aria-label="الانتقال إلى دليل المستشفيات" class="p-4 h-28 bg-white rounded-xl shadow-sm border border-slate-200 hover:border-primary-500 transition-all duration-300 hover:shadow-md hover:-translate-y-1 flex flex-col items-center justify-center text-center gap-2">
                                 <div class="w-12 h-12 rounded-full bg-primary-50 flex items-center justify-center">
-                                    <i class="fa-solid fa-hospital text-xl text-primary-600"></i>
+                                    <i class="fa-solid fa-hospital text-xl text-primary-600" aria-hidden="true"></i>
                                 </div>
                                 <span class="text-xs font-bold">المستشفيات</span>
                             </button>
-                            <button onclick="switchTab('medicines')" class="p-4 bg-white rounded-xl shadow-sm border border-slate-200 hover:border-primary-500 transition-all duration-300 hover:shadow-md hover:-translate-y-1 flex flex-col items-center text-center gap-2">
+                            <button onclick="switchTab('medicines')" aria-label="الانتقال إلى دليل الأدوية" class="p-4 h-28 bg-white rounded-xl shadow-sm border border-slate-200 hover:border-primary-500 transition-all duration-300 hover:shadow-md hover:-translate-y-1 flex flex-col items-center justify-center text-center gap-2">
                                 <div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center">
-                                    <i class="fa-solid fa-pills text-xl text-emerald-600"></i>
+                                    <i class="fa-solid fa-pills text-xl text-emerald-600" aria-hidden="true"></i>
                                 </div>
                                 <span class="text-xs font-bold">الأدوية</span>
                             </button>
-                            <button onclick="switchTab('request')" class="p-4 bg-white rounded-xl shadow-sm border border-slate-200 hover:border-primary-500 transition-all duration-300 hover:shadow-md hover:-translate-y-1 flex flex-col items-center text-center gap-2">
-                                <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center">
-                                    <i class="fa-solid fa-house-medical text-xl text-blue-600"></i>
-                                </div>
-                                <span class="text-xs font-bold">رعاية منزلية</span>
-                            </button>
-                            <button onclick="switchTab('map')" class="p-4 bg-white rounded-xl shadow-sm border border-slate-200 hover:border-primary-500 transition-all duration-300 hover:shadow-md hover:-translate-y-1 flex flex-col items-center text-center gap-2">
+                            <button onclick="switchTab('map')" aria-label="الانتقال إلى الخريطة الطبية" class="p-4 h-28 bg-white rounded-xl shadow-sm border border-slate-200 hover:border-primary-500 transition-all duration-300 hover:shadow-md hover:-translate-y-1 flex flex-col items-center justify-center text-center gap-2">
                                 <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center">
-                                    <i class="fa-solid fa-map-location-dot text-xl text-amber-600"></i>
+                                    <i class="fa-solid fa-map-location-dot text-xl text-amber-600" aria-hidden="true"></i>
                                 </div>
                                 <span class="text-xs font-bold">الخريطة</span>
                             </button>
-                            <button onclick="switchTab('articles')" class="p-4 bg-white rounded-xl shadow-sm border border-slate-200 hover:border-primary-500 transition-all duration-300 hover:shadow-md hover:-translate-y-1 flex flex-col items-center text-center gap-2">
+                            <button onclick="switchTab('request')" aria-label="الانتقال إلى طلب رعاية منزلية" class="p-4 h-28 bg-white rounded-xl shadow-sm border border-slate-200 hover:border-primary-500 transition-all duration-300 hover:shadow-md hover:-translate-y-1 flex flex-col items-center justify-center text-center gap-2">
+                                <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center">
+                                    <i class="fa-solid fa-house-medical text-xl text-blue-600" aria-hidden="true"></i>
+                                </div>
+                                <span class="text-xs font-bold">رعاية منزلية</span>
+                            </button>
+                            <button onclick="switchTab('articles')" aria-label="الانتقال إلى المقالات الصحية" class="p-4 h-28 bg-white rounded-xl shadow-sm border border-slate-200 hover:border-primary-500 transition-all duration-300 hover:shadow-md hover:-translate-y-1 flex flex-col items-center justify-center text-center gap-2">
                                 <div class="w-12 h-12 rounded-full bg-purple-50 flex items-center justify-center">
-                                    <i class="fa-solid fa-book-medical text-xl text-purple-600"></i>
+                                    <i class="fa-solid fa-book-medical text-xl text-purple-600" aria-hidden="true"></i>
                                 </div>
                                 <span class="text-xs font-bold">المقالات</span>
-                            </button>
-                            <button onclick="switchTab('emergency')" class="p-4 bg-white rounded-xl shadow-sm border border-slate-200 hover:border-primary-500 transition-all duration-300 hover:shadow-md hover:-translate-y-1 flex flex-col items-center text-center gap-2">
-                                <div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center">
-                                    <i class="fa-solid fa-truck-medical text-xl text-red-600"></i>
-                                </div>
-                                <span class="text-xs font-bold">الطوارئ</span>
                             </button>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section class="py-12 bg-white border-t border-slate-100">
+            <!-- شريط الثقة -->
+            <section class="py-6 bg-primary-50/60 border-y border-primary-100 fade-up">
+                <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                        <div class="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-bold text-slate-700">
+                            <i class="fa-solid fa-shield-check text-primary-600" aria-hidden="true"></i>
+                            <span>مصادر صحية موثوقة</span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-bold text-slate-700">
+                            <i class="fa-solid fa-rotate text-primary-600" aria-hidden="true"></i>
+                            <span>تحديث دوري للبيانات</span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-bold text-slate-700">
+                            <i class="fa-solid fa-lock text-primary-600" aria-hidden="true"></i>
+                            <span>حماية خصوصية المستخدم</span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-bold text-slate-700">
+                            <i class="fa-solid fa-user-doctor text-primary-600" aria-hidden="true"></i>
+                            <span>إرشاد وليس بديلاً عن الطبيب</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-12 bg-white border-t border-slate-100 fade-up">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="text-center mb-8">
                         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-50 text-emerald-700 font-bold text-xs mb-3">
-                            <i class="fa-solid fa-circle-check"></i>
+                            <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
                             بيانات موثقة من منظمة الصحة العالمية (WHO HeRAMS)
                         </div>
                         <h2 class="text-2xl md:text-3xl font-black text-slate-900">واقع القطاع الصحي في غزة — بالأرقام الرسمية</h2>
-                        <p class="text-slate-500 text-sm mt-2">آخر تحديث: بيانات حتى 31 مايو 2026 (نُشرت 9 يونيو 2026)</p>
+                        <p class="text-slate-500 text-sm mt-2">آخر تحديث: بيانات حتى 31 مايو 2026 (نُشرت 9 يونيو 2026) | المصدر: منظمة الصحة العالمية (WHO) / HeRAMS</p>
                     </div>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
-                        <div class="bg-slate-50 rounded-xl p-5 text-center border border-slate-100">
-                            <div class="text-3xl font-black text-primary-700">35</div>
-                            <div class="text-xs font-bold text-slate-600 mt-1">مستشفى تم تقييمه بالكامل</div>
+                        <div class="bg-slate-50 rounded-xl p-5 text-center border border-slate-100 flex flex-col items-center justify-center min-h-[110px]">
+                            <div class="text-4xl font-black text-primary-700" data-countup="35">0</div>
+                            <div class="text-[11px] font-bold text-slate-600 mt-1">مستشفى تم تقييمه بالكامل</div>
                         </div>
-                        <div class="bg-slate-50 rounded-xl p-5 text-center border border-slate-100">
-                            <div class="text-3xl font-black text-emerald-600">٪46</div>
-                            <div class="text-xs font-bold text-slate-600 mt-1">فقط من المستشفيات تعمل بشكل كامل</div>
+                        <div class="bg-slate-50 rounded-xl p-5 text-center border border-slate-100 flex flex-col items-center justify-center min-h-[110px]" title="نسبة المستشفيات العاملة بكامل طاقتها التشغيلية من إجمالي المستشفيات المقيّمة">
+                            <div class="text-4xl font-black text-emerald-600"><span data-countup="46">0</span>٪</div>
+                            <div class="text-[11px] font-bold text-slate-600 mt-1">فقط من المستشفيات تعمل بشكل كامل</div>
                         </div>
-                        <div class="bg-slate-50 rounded-xl p-5 text-center border border-slate-100">
-                            <div class="text-3xl font-black text-amber-600">206</div>
-                            <div class="text-xs font-bold text-slate-600 mt-1">وحدة خدمة صحية تم تقييمها بالقطاع</div>
+                        <div class="bg-slate-50 rounded-xl p-5 text-center border border-slate-100 flex flex-col items-center justify-center min-h-[110px]">
+                            <div class="text-4xl font-black text-amber-600" data-countup="206">0</div>
+                            <div class="text-[11px] font-bold text-slate-600 mt-1">وحدة خدمة صحية تم تقييمها بالقطاع</div>
                         </div>
-                        <div class="bg-slate-50 rounded-xl p-5 text-center border border-slate-100">
-                            <div class="text-3xl font-black text-red-600">٪49</div>
-                            <div class="text-xs font-bold text-slate-600 mt-1">من الوحدات الصحية تعمل جزئيًا على الأقل</div>
+                        <div class="bg-slate-50 rounded-xl p-5 text-center border border-slate-100 flex flex-col items-center justify-center min-h-[110px]" title="نسبة الوحدات الصحية التي ما زالت تقدم جزءًا من خدماتها رغم الأضرار">
+                            <div class="text-4xl font-black text-red-600"><span data-countup="49">0</span>٪</div>
+                            <div class="text-[11px] font-bold text-slate-600 mt-1">من الوحدات الصحية تعمل جزئيًا على الأقل</div>
                         </div>
                     </div>
                     <p class="text-center text-xs text-slate-400 mt-6">
                         المصدر: منظمة الصحة العالمية — Health Resources Availability Monitoring System (HeRAMS), oPt Gaza Infographic, يونيو 2026.
-                        <a href="https://cdn.who.int/media/docs/default-source/documents/emergencies/herams/herams-opt-gaza-infographics-2026-05a4f1cf74a63741629eca8f716e189f5a.pdf" target="_blank" class="text-primary-600 underline">عرض التقرير الرسمي</a>
                     </p>
+                    <div class="text-center mt-3">
+                        <a href="https://cdn.who.int/media/docs/default-source/documents/emergencies/herams/herams-opt-gaza-infographics-2026-05a4f1cf74a63741629eca8f716e189f5a.pdf" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 bg-primary-50 hover:bg-primary-100 text-primary-700 font-bold text-xs px-4 py-2 rounded-full transition-colors">
+                            <i class="fa-solid fa-arrow-up-left-from-circle" aria-hidden="true"></i> عرض المصدر الرسمي
+                        </a>
+                    </div>
                 </div>
             </section>
         </div>
@@ -372,8 +429,10 @@
                         <textarea id="req-notes" rows="3" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary-500 focus:outline-none" placeholder="اكتب تفاصيل الأعراض أو الإصابة باختصار..."></textarea>
                     </div>
                     <div class="bg-slate-50 p-4 rounded-xl border text-xs text-slate-500 flex items-start gap-2">
-                        <i class="fa-solid fa-shield-halved text-primary-600 mt-0.5"></i>
-                        <span>تنبيه الخصوصية: لا ترفع معلومات حساسة غير ضرورية. سيتم التعامل مع بياناتك بسرية تامة لغرض تقديم الخدمة فقط.</span>
+                        <i class="fa-solid fa-shield-halved text-primary-600 mt-0.5" aria-hidden="true"></i>
+                        <span>تنبيه الخصوصية: لا تدخل معلومات شخصية غير ضرورية للحصول على الإرشاد. سيتم التعامل مع بياناتك بسرية تامة لغرض تقديم الخدمة فقط.
+                            <button type="button" onclick="openModal('privacy-modal')" class="text-primary-600 font-bold underline hover:text-primary-700">كيف نحمي بياناتك؟</button>
+                        </span>
                     </div>
                     <button type="submit" class="w-full py-4 bg-primary-700 hover:bg-primary-800 text-white font-bold rounded-xl shadow-lg transition-all text-lg">
                         إرسال الطلب للمتخصصين الميدانيين
@@ -583,12 +642,41 @@
         </div>
     </div>
 
+    <!-- تنبيه طبي قبل بدء تجربة الإرشاد الصحي الأولي -->
+    <div id="guidance-disclaimer-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="guidance-disclaimer-title">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative space-y-4 text-center">
+            <div class="w-14 h-14 rounded-full bg-primary-50 flex items-center justify-center mx-auto">
+                <i class="fa-solid fa-circle-info text-2xl text-primary-600" aria-hidden="true"></i>
+            </div>
+            <h3 id="guidance-disclaimer-title" class="text-lg font-black text-slate-900">ملاحظة مهمة قبل المتابعة</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+                هذه الخدمة تقدم معلومات وإرشادات صحية أولية فقط، ولا تقدم تشخيصًا طبيًا نهائيًا أو وصفة علاجية. في الحالات الطارئة تواصل فورًا مع خدمات الطوارئ.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                <button onclick="closeModal('guidance-disclaimer-modal')" class="flex-1 py-3 rounded-xl border border-slate-300 text-slate-600 font-bold text-sm hover:bg-slate-50 transition-colors">إلغاء</button>
+                <button onclick="confirmGuidanceDisclaimer()" class="flex-1 py-3 rounded-xl bg-primary-700 hover:bg-primary-800 text-white font-bold text-sm shadow-md transition-colors">فهمت، تابع</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة توضيح الخصوصية -->
+    <div id="privacy-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="privacy-modal-title">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 id="privacy-modal-title" class="text-lg font-black text-slate-900"><i class="fa-solid fa-shield-halved text-primary-600" aria-hidden="true"></i> كيف نحمي بياناتك؟</h3>
+                <button onclick="closeModal('privacy-modal')" class="text-slate-400 hover:text-slate-600 text-xl font-bold" aria-label="إغلاق نافذة الخصوصية">&times;</button>
+            </div>
+            <p class="text-sm text-slate-600 leading-relaxed">لا تدخل معلومات شخصية غير ضرورية للحصول على الإرشاد. المعلومات التي تكتبها تُستخدم فقط لغرض تقديم الخدمة، ولا تتم مشاركتها مع أي جهة خارجية.</p>
+            <button onclick="closeModal('privacy-modal')" class="w-full py-3 rounded-xl bg-primary-700 hover:bg-primary-800 text-white font-bold text-sm shadow-md transition-colors">حسنًا، فهمت</button>
+        </div>
+    </div>
+
     <!-- زر الطبيب الافتراضي العائم ونافذة المحادثة -->
     <div class="fixed bottom-6 left-6 z-50">
-        <button onclick="toggleMedicalChat()" class="w-14 h-14 rounded-full bg-gradient-to-r from-primary-600 to-secondary-500 text-white shadow-2xl flex items-center justify-center text-2xl hover:scale-105 transition-all focus:outline-none relative group">
-            <i class="fa-solid fa-user-doctor"></i>
-            <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-white animate-pulse"></span>
-            <span class="absolute right-16 bg-slate-900 text-white text-xs px-3 py-1 rounded-lg shadow-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">استشر الطبيب الذكي</span>
+        <button onclick="toggleMedicalChat()" aria-label="فتح مساعد الإرشاد الصحي الذكي" class="w-14 h-14 rounded-full bg-gradient-to-r from-primary-600 to-secondary-500 text-white shadow-2xl flex items-center justify-center text-2xl hover:scale-105 transition-all focus:outline-none relative group">
+            <i class="fa-solid fa-user-doctor" aria-hidden="true"></i>
+            <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-white animate-pulse" aria-hidden="true"></span>
+            <span class="absolute right-16 bg-slate-900 text-white text-xs px-3 py-1 rounded-lg shadow-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">مساعد الإرشاد الصحي الذكي</span>
         </button>
     </div>
 
@@ -597,38 +685,42 @@
         <div class="bg-gradient-to-r from-primary-700 to-secondary-600 text-white p-4 flex justify-between items-center">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white text-lg">
-                    <i class="fa-solid fa-user-doctor"></i>
+                    <i class="fa-solid fa-user-doctor" aria-hidden="true"></i>
                 </div>
                 <div>
-                    <h3 class="font-bold text-sm">دكتور مجد (الطبيب الافتراضي)</h3>
+                    <h3 class="font-bold text-sm">دكتور مجد (المساعد الصحي الذكي)</h3>
                     <span class="text-[10px] text-emerald-200 flex items-center gap-1">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> جاهز للتشخيص ووصف العلاج
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true"></span> جاهز لتقديم إرشاد صحي أولي
                     </span>
                 </div>
             </div>
-            <button onclick="toggleMedicalChat()" class="text-white/80 hover:text-white text-xl font-bold p-1">&times;</button>
+            <button onclick="toggleMedicalChat()" class="text-white/80 hover:text-white text-xl font-bold p-1" aria-label="إغلاق نافذة المحادثة">&times;</button>
         </div>
-        
+
+        <div class="px-4 pt-2 bg-slate-50 text-center">
+            <button type="button" onclick="openModal('privacy-modal')" class="text-[10px] text-slate-400 underline hover:text-primary-600">كيف نحمي بياناتك؟</button>
+        </div>
+
         <!-- رسائل المحادثة -->
         <div id="chat-messages" class="p-4 h-80 overflow-y-auto space-y-3 bg-slate-50 text-xs sm:text-sm">
             <div class="flex gap-2 items-start">
                 <div class="w-7 h-7 rounded-full bg-primary-600 text-white flex items-center justify-center shrink-0 text-xs">
-                    <i class="fa-solid fa-user-doctor"></i>
+                    <i class="fa-solid fa-user-doctor" aria-hidden="true"></i>
                 </div>
                 <div class="bg-white p-3 rounded-2xl rounded-tr-none shadow-sm border border-slate-100 text-slate-700 max-w-[80%] leading-relaxed">
-                    أهلاً بك يا أخي العزيز. معك دكتور مجد، طبيبك الافتراضي في منصة E-Clinic Gaza. تفضل, صف لي ما تشعر به من أعراض أو آلام، وسأقوم بفحص حالتك، تشخيصها بدقة، ووصف الأدوية المناسبة المتوفرة لدينا مع تحديد أقرب مستشفى أو صيدلية لك.
+                    أهلاً بك. معك دكتور مجد، مساعدك الصحي الذكي في منصة E-Clinic Gaza. صف لي ما تشعر به من أعراض، وسأقدّم لك إرشادًا صحيًا أوليًا يساعدك على فهم حالتك، مع معلومات عامة عن الأدوية الشائعة وأقرب مستشفى أو صيدلية. هذا لا يغني عن استشارة الطبيب.
                 </div>
             </div>
         </div>
 
         <!-- حقل إدخال الرسالة -->
         <div class="p-3 bg-white border-t border-slate-200 flex items-center gap-2">
-            <input type="text" id="chat-input" onkeypress="handleChatKeyPress(event)" placeholder="اكتب الأعراض أو المرض هنا..." class="flex-grow px-3 py-2 border rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
-            <button id="voice-input-btn" onclick="toggleVoiceInput()" class="hidden w-9 h-9 rounded-full bg-emerald-50 text-emerald-600 hover:bg-emerald-100 transition-all duration-300 flex items-center justify-center shrink-0" title="إدخال صوتي">
-                <i class="fa-solid fa-microphone"></i>
+            <input type="text" id="chat-input" onkeypress="handleChatKeyPress(event)" placeholder="اكتب الأعراض أو المرض هنا..." aria-label="اكتب الأعراض أو المرض هنا" class="flex-grow px-3 py-2 border rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+            <button id="voice-input-btn" onclick="toggleVoiceInput()" class="hidden w-9 h-9 rounded-full bg-emerald-50 text-emerald-600 hover:bg-emerald-100 transition-all duration-300 flex items-center justify-center shrink-0" title="إدخال صوتي" aria-label="إدخال صوتي">
+                <i class="fa-solid fa-microphone" aria-hidden="true"></i>
             </button>
-            <button onclick="sendChatMessage()" class="bg-primary-700 hover:bg-primary-800 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center">
-                <i class="fa-solid fa-paper-plane"></i>
+            <button onclick="sendChatMessage()" aria-label="إرسال الرسالة" class="bg-primary-700 hover:bg-primary-800 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center">
+                <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
             </button>
         </div>
     </div>
@@ -1083,6 +1175,7 @@ const awarenessData = [
                             </div>
                             <h3 class="text-xl font-black text-slate-900 mt-3">${h.name}</h3>
                             <p class="text-xs text-slate-600 mt-2 leading-relaxed">${h.desc}</p>
+                            ${h.lastUpdated ? `<p class="text-[10px] text-slate-400 mt-2"><i class="fa-regular fa-clock" aria-hidden="true"></i> آخر تحديث: ${h.lastUpdated}</p>` : ''}
                         </div>
                         <div class="pt-4 border-t flex items-center justify-between">
                             <span class="text-xs font-bold text-slate-500"><i class="fa-solid fa-phone"></i> ${h.phone}</span>
@@ -1129,8 +1222,9 @@ const awarenessData = [
                             <p class="text-xs text-slate-600 mt-2 leading-relaxed"><strong>الاستخدام الطبي:</strong> ${m.use}</p>
                         </div>
                         <div class="pt-3 border-t text-xs font-bold text-emerald-700 bg-emerald-50/50 p-3 rounded-2xl">
-                            <i class="fa-solid fa-circle-check"></i> حالة التوفر: ${m.status}
+                            <i class="fa-solid fa-circle-check" aria-hidden="true"></i> حالة التوفر: ${m.status}
                         </div>
+                        ${m.lastUpdated ? `<p class="text-[10px] text-slate-400"><i class="fa-regular fa-clock" aria-hidden="true"></i> آخر تحديث: ${m.lastUpdated}</p>` : ''}
                     </div>
                 `;
             });
@@ -1228,7 +1322,7 @@ const awarenessData = [
             const imgContainer = document.getElementById('modal-article-images');
             imgContainer.innerHTML = '';
             article.images.forEach(img => {
-                imgContainer.innerHTML += `<img src="${img}" class="rounded-2xl h-32 w-full object-cover border shadow-sm">`;
+                imgContainer.innerHTML += `<img src="${img}" loading="lazy" alt="صورة توضيحية للمقال: ${article.title}" class="rounded-2xl h-32 w-full object-cover border shadow-sm">`;
             });
 
             const resContainer = document.getElementById('modal-article-researchers');
@@ -1386,6 +1480,16 @@ const awarenessData = [
             if (e.key === 'Enter') sendChatMessage();
         }
 
+        // مؤشرات خطر تستدعي تحويل المستخدم فورًا لخدمات الطوارئ بدل الاستمرار بالإرشاد العادي
+        const triageRedFlags = [
+            { name: 'ألم صدر شديد مصحوب بضيق تنفس', match: t => (t.includes('الم صدر') || t.includes('ألم صدر') || t.includes('الم بالصدر') || t.includes('ألم بالصدر') || t.includes('وجع صدر')) && (t.includes('تنفس') || t.includes('نفس')) },
+            { name: 'فقدان وعي أو إغماء', match: t => t.includes('فقدان وعي') || t.includes('اغماء') || t.includes('إغماء') || t.includes('غاب عن الوعي') || t.includes('غابت عن الوعي') },
+            { name: 'نزيف حاد لا يتوقف', match: t => t.includes('نزيف') && (t.includes('حاد') || t.includes('لا يتوقف') || t.includes('غزير') || t.includes('شديد')) },
+            { name: 'تنميل أو شلل مفاجئ بجانب واحد من الجسم', match: t => (t.includes('تنميل') || t.includes('شلل')) && (t.includes('مفاجئ') || t.includes('مفاجىء') || t.includes('نص الجسم') || t.includes('جانب واحد')) },
+            { name: 'صعوبة تنفس شديدة', match: t => t.includes('صعوبة تنفس') || t.includes('ضيق تنفس شديد') || t.includes('اختناق') },
+            { name: 'تشنجات أو نوبات صرع', match: t => t.includes('تشنج') || t.includes('نوبة صرع') || t.includes('نوبات صرع') }
+        ];
+
         function sendChatMessage() {
             const input = document.getElementById('chat-input');
             const text = input.value.trim();
@@ -1400,42 +1504,65 @@ const awarenessData = [
                         ${text}
                     </div>
                     <div class="w-7 h-7 rounded-full bg-slate-700 text-white flex items-center justify-center shrink-0 text-xs">
-                        <i class="fa-solid fa-user"></i>
+                        <i class="fa-solid fa-user" aria-hidden="true"></i>
                     </div>
                 </div>
             `;
+            const userText = text.toLowerCase();
             input.value = '';
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-            // محاكاة استجابة الطبيب الافتراضي الذكي بالتشخيص ووصف العلاج
+            // طبقة فرز أولي (Triage): تحويل فوري لحالات الخطر الواضحة بدل الاستمرار بالإرشاد العادي
+            const triageMatch = triageRedFlags.find(f => f.match(userText));
+            if (triageMatch) {
+                setTimeout(() => {
+                    messagesContainer.innerHTML += `
+                        <div class="flex gap-2 items-start">
+                            <div class="w-7 h-7 rounded-full bg-red-600 text-white flex items-center justify-center shrink-0 text-xs">
+                                <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+                            </div>
+                            <div class="bg-red-50 p-3 rounded-2xl rounded-tr-none shadow-sm border border-red-200 text-red-800 max-w-[85%] leading-relaxed space-y-2">
+                                <strong>قد تتطلب الأعراض التي أدخلتها تقييمًا طبيًا عاجلًا.</strong><br>
+                                لا يمكن لهذه الخدمة تقديم تقييم كافٍ لحالتك، يُرجى التواصل الفوري مع خدمات الطوارئ أو التوجه لأقرب مستشفى.
+                                <div class="flex flex-col sm:flex-row gap-2 pt-1">
+                                    <button onclick="switchTab('emergency')" class="flex-1 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs transition-colors">عرض خدمات الطوارئ</button>
+                                    <button onclick="switchTab('hospitals')" class="flex-1 py-2 rounded-xl bg-white border border-red-300 text-red-700 hover:bg-red-50 font-bold text-xs transition-colors">البحث عن أقرب مستشفى</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }, 500);
+                return;
+            }
+
+            // إرشاد صحي أولي عام (وليس تشخيصًا أو وصفة علاجية)
             setTimeout(() => {
-                let matchedDisease = diseasesKnowledgeBase.find(d => d.keywords.some(kw => text.toLowerCase().includes(kw)));
+                let matchedDisease = diseasesKnowledgeBase.find(d => d.keywords.some(kw => userText.includes(kw)));
                 let reply = '';
 
                 if (matchedDisease) {
-                    let medsList = matchedDisease.prescribedMedicines.map(m => `• <strong>${m.name}</strong>: ${m.dosage}`).join('<br>');
+                    let medsList = matchedDisease.prescribedMedicines.map(m => `• ${m.name}`).join('<br>');
                     reply = `
-                        <strong>تشخيص دكتور مجد المبدئي: ${matchedDisease.name}</strong><br><br>
-                        <strong>التقييم السريري:</strong> ${matchedDisease.diagnosis}<br><br>
-                        <strong>الخطة العلاجية والتوجيهات:</strong> ${matchedDisease.treatmentPlan}<br><br>
-                        <strong>الأدوية المقترحة والموصوفة:</strong><br>${medsList}<br><br>
-                        <strong>المستشفى / المركز الموصى بمراجعته:</strong> ${matchedDisease.hospitalRef}<br><br>
-                        <em>تنبيه: هذه استشارة افتراضية ذكية مساعدة وليست بديلاً عن زيارة الطبيب الميداني المختص في الحالات الطارئة.</em>
+                        <strong>ملخص إرشادي أولي: ${matchedDisease.name}</strong><br><br>
+                        <strong>ملاحظات عامة عن الحالة:</strong> ${matchedDisease.diagnosis}<br><br>
+                        <strong>إرشادات رعاية ذاتية أولية:</strong> ${matchedDisease.treatmentPlan}<br><br>
+                        <strong>أدوية شائعة الاستخدام لحالات مشابهة (معلومات عامة فقط):</strong><br>${medsList}<br><br>
+                        <strong>مرجع صحي قريب لمتابعة الحالة:</strong> ${matchedDisease.hospitalRef}<br><br>
+                        <em>تذكير: هذه معلومات إرشادية أولية فقط وليست تشخيصًا أو وصفة علاجية. تحدث مع طبيب أو صيدلي قبل استخدام أي دواء، وفي الحالات الطارئة تواصل فورًا مع خدمات الطوارئ.</em>
                     `;
                 } else {
                     reply = `
-                        لقد استقبلت أعراضك بعناية يا أخي. بناءً على ما ذكرته، أنصحك بالراحة التامة، الإكثار من السوائل الدافئة، ومراقبة حرارة جسمك وضغطك.<br><br>
-                        <strong>الأدوية المساعدة المقترحة:</strong><br>
-                        • <strong>باراسيتامول (500mg):</strong> حبة عند الحاجة لتسكين الألم أو خفض الحرارة.<br>
-                        • <strong>فيتامينات ومقويات مناعية:</strong> لدعم الجسم.<br><br>
-                        إذا استمرت الأعراض أو تفاقمت، أنصحك بمراجعة أقرب نقطة طبية أو مستشفى (مثل مستشفى شهداء الأقصى أو ناصر الطبي) أو طلب رعاية منزلية عبر المنصة.
+                        شكرًا لمشاركة تفاصيل حالتك. بناءً على ما ذكرته، إليك إرشادات عامة أولية: احرص على الراحة، وشرب سوائل كافية، ومراقبة الأعراض (كالحرارة أو الألم) عن قرب.<br><br>
+                        إذا استمرت الأعراض أو تفاقمت، يُنصح بمراجعة أقرب مستشفى أو مركز صحي، أو طلب رعاية منزلية عبر المنصة.<br><br>
+                        <em>تذكير: هذه معلومات إرشادية عامة وليست تشخيصًا أو وصفة علاجية. تحدث مع طبيب أو صيدلي قبل استخدام أي دواء.</em>
                     `;
                 }
 
                 messagesContainer.innerHTML += `
                     <div class="flex gap-2 items-start">
                         <div class="w-7 h-7 rounded-full bg-primary-600 text-white flex items-center justify-center shrink-0 text-xs">
-                            <i class="fa-solid fa-user-doctor"></i>
+                            <i class="fa-solid fa-user-doctor" aria-hidden="true"></i>
                         </div>
                         <div class="bg-white p-3 rounded-2xl rounded-tr-none shadow-sm border border-slate-100 text-slate-700 max-w-[80%] leading-relaxed space-y-2">
                             ${reply}
@@ -1458,6 +1585,7 @@ const awarenessData = [
 
             hospitalsData.forEach(h => { if (h.name.toLowerCase().includes(q)) matches.push(`مستشفى: ${h.name}`); });
             medicinesData.forEach(m => { if (m.name.toLowerCase().includes(q)) matches.push(`دواء: ${m.name}`); });
+            articlesData.forEach(a => { if (a.title.toLowerCase().includes(q)) matches.push(`مقال: ${a.title}`); });
             diseasesKnowledgeBase.forEach(d => { if (d.name.toLowerCase().includes(q)) matches.push(`مرض / أعراض: ${d.name}`); });
 
             if (matches.length > 0) {
@@ -1469,27 +1597,92 @@ const awarenessData = [
             }
         }
 
+        // نص البحث الحالي المُعلّق بانتظار موافقة المستخدم على تنبيه الإرشاد الصحي
+        let pendingGuidanceQuery = '';
+
         function executeSearch() {
-            const q = document.getElementById('global-search-input').value.toLowerCase();
+            const rawQ = document.getElementById('global-search-input').value.trim();
+            const q = rawQ.toLowerCase();
             document.getElementById('search-suggestions').classList.add('hidden');
             if (!q) return;
 
-            if (medicinesData.some(m => m.name.toLowerCase().includes(q))) {
+            const matchedMedicine = medicinesData.some(m => m.name.toLowerCase().includes(q));
+            const matchedHospital = hospitalsData.some(h => h.name.toLowerCase().includes(q));
+            const matchedArticle = articlesData.find(a => a.title.toLowerCase().includes(q));
+
+            if (matchedMedicine) {
+                // تطابق مباشر مع دواء موجود بالقوائم: نتائج بحث عادية
                 switchTab('medicines');
-                document.getElementById('medicine-search').value = q;
+                document.getElementById('medicine-search').value = rawQ;
                 filterMedicines();
-            } else if (hospitalsData.some(h => h.name.toLowerCase().includes(q))) {
+            } else if (matchedHospital) {
+                // تطابق مباشر مع مستشفى موجود بالقوائم: نتائج بحث عادية
                 switchTab('hospitals');
-                document.getElementById('hospital-search').value = q;
+                document.getElementById('hospital-search').value = rawQ;
                 filterHospitals();
+            } else if (matchedArticle) {
+                // تطابق مباشر مع مقال موجود: نتائج بحث عادية
+                switchTab('articles');
+                openArticleModal(matchedArticle.id);
             } else {
-                switchTab('home');
-                // فتح نافذة المحادثة وسؤال الطبيب الذكي تلقائياً
-                const chatWin = document.getElementById('medical-chat-window');
-                if (chatWin.classList.contains('hidden')) toggleMedicalChat();
-                document.getElementById('chat-input').value = q;
-                sendChatMessage();
+                // لا يوجد أي تطابق بالأدوية أو المستشفيات أو المقالات: نعتبر النص وصفًا لأعراض صحية
+                // ونعرض التنبيه الطبي قبل بدء تجربة الإرشاد الأولي
+                pendingGuidanceQuery = rawQ;
+                openModal('guidance-disclaimer-modal');
             }
+        }
+
+        // يُستدعى بعد موافقة المستخدم على تنبيه "ملاحظة مهمة قبل المتابعة"
+        function confirmGuidanceDisclaimer() {
+            closeModal('guidance-disclaimer-modal');
+            if (!pendingGuidanceQuery) return;
+            switchTab('home');
+            const chatWin = document.getElementById('medical-chat-window');
+            if (chatWin.classList.contains('hidden')) toggleMedicalChat();
+            document.getElementById('chat-input').value = pendingGuidanceQuery;
+            sendChatMessage();
+            pendingGuidanceQuery = '';
+        }
+
+        // ظهور تدريجي خفيف (Fade-up) للأقسام + عدّاد بسيط للأرقام الإحصائية عند ظهورها فقط
+        function initFadeUpAndCountUp() {
+            const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const fadeEls = document.querySelectorAll('.fade-up');
+            const countEls = document.querySelectorAll('[data-countup]');
+
+            if (!('IntersectionObserver' in window) || reduceMotion) {
+                fadeEls.forEach(el => el.classList.add('in-view'));
+                countEls.forEach(el => { el.textContent = el.dataset.countup; });
+                return;
+            }
+
+            const fadeObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        fadeObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+            fadeEls.forEach(el => fadeObserver.observe(el));
+
+            const countObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    const el = entry.target;
+                    const target = parseInt(el.dataset.countup, 10) || 0;
+                    const duration = 800;
+                    const start = performance.now();
+                    function step(now) {
+                        const progress = Math.min((now - start) / duration, 1);
+                        el.textContent = Math.round(progress * target);
+                        if (progress < 1) requestAnimationFrame(step);
+                    }
+                    requestAnimationFrame(step);
+                    countObserver.unobserve(el);
+                });
+            }, { threshold: 0.4 });
+            countEls.forEach(el => countObserver.observe(el));
         }
 
         // التهيئة الأولية عند تحميل الصفحة
@@ -1500,6 +1693,7 @@ const awarenessData = [
             renderArticles();
             renderAwareness();
             initMapMarkers('all');
+            initFadeUpAndCountUp();
         });
     </script>
 
