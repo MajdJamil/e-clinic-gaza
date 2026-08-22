@@ -735,6 +735,51 @@
         </div>
     </div>
 
+    <!-- الصفحات القانونية (سياسة الخصوصية / شروط الاستخدام / إخلاء المسؤولية الطبية / سياسة المصادر) -->
+    <div id="privacy-policy-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="privacy-policy-title">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative space-y-4 max-h-[85vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 id="privacy-policy-title" class="text-lg font-black text-slate-900"><i class="fa-solid fa-shield-halved text-primary-600" aria-hidden="true"></i> سياسة الخصوصية</h3>
+                <button onclick="closeModal('privacy-policy-modal')" class="text-slate-400 hover:text-slate-600 text-xl font-bold" aria-label="إغلاق نافذة سياسة الخصوصية">&times;</button>
+            </div>
+            <p class="text-sm text-slate-600 leading-relaxed">هذه المنصة مصممة بحيث تعمل بالكامل من طرف المستخدم (Client-side). لا يتم إرسال أي بيانات تكتبها أو تبحث عنها إلى أي خادم خارجي أو قاعدة بيانات مركزية، ولا نستخدم أي أدوات تتبع أو تحليلات تجمع بياناتك الشخصية. أي معلومات تُدخلها بنماذج الموقع (مثل طلب الرعاية المنزلية) تبقى على جهازك ولا تُخزَّن أو تُرسَل لأي جهة.</p>
+            <button onclick="closeModal('privacy-policy-modal')" class="w-full py-3 rounded-xl bg-primary-700 hover:bg-primary-800 text-white font-bold text-sm shadow-md transition-colors">إغلاق</button>
+        </div>
+    </div>
+
+    <div id="terms-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="terms-title">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative space-y-4 max-h-[85vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 id="terms-title" class="text-lg font-black text-slate-900"><i class="fa-solid fa-file-contract text-primary-600" aria-hidden="true"></i> شروط الاستخدام</h3>
+                <button onclick="closeModal('terms-modal')" class="text-slate-400 hover:text-slate-600 text-xl font-bold" aria-label="إغلاق نافذة شروط الاستخدام">&times;</button>
+            </div>
+            <p class="text-sm text-slate-600 leading-relaxed">هذا الموقع أداة معلوماتية وإرشادية أولية، لا تزال بمرحلة التطوير كنموذج أولي. المحتوى مقدَّم دون أي ضمان لدقته أو اكتماله بشكل نهائي، ويخضع للتحديث والمراجعة المستمرة. استخدامك للموقع يعني موافقتك على أنه لا يُغني بأي شكل عن استشارة طبية مباشرة من مختص مرخّص.</p>
+            <button onclick="closeModal('terms-modal')" class="w-full py-3 rounded-xl bg-primary-700 hover:bg-primary-800 text-white font-bold text-sm shadow-md transition-colors">إغلاق</button>
+        </div>
+    </div>
+
+    <div id="medical-disclaimer-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="medical-disclaimer-title">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative space-y-4 max-h-[85vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 id="medical-disclaimer-title" class="text-lg font-black text-slate-900"><i class="fa-solid fa-triangle-exclamation text-red-600" aria-hidden="true"></i> إخلاء المسؤولية الطبية</h3>
+                <button onclick="closeModal('medical-disclaimer-modal')" class="text-slate-400 hover:text-slate-600 text-xl font-bold" aria-label="إغلاق نافذة إخلاء المسؤولية الطبية">&times;</button>
+            </div>
+            <p class="text-sm text-slate-600 leading-relaxed">جميع المعلومات الطبية بهذا الموقع (تصنيف الأدوية، إرشادات الإسعافات الأولية، محرك الإرشاد الصحي) هي أدوات دعم قرار أولية للتوجيه العام فقط، وليست تشخيصًا طبيًا ولا وصفة علاجية. في أي حالة طارئة أو خطيرة، تواصل فورًا مع خدمات الطوارئ (101 / 102) أو أقرب مرفق صحي.</p>
+            <button onclick="closeModal('medical-disclaimer-modal')" class="w-full py-3 rounded-xl bg-primary-700 hover:bg-primary-800 text-white font-bold text-sm shadow-md transition-colors">إغلاق</button>
+        </div>
+    </div>
+
+    <div id="sources-policy-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="sources-policy-title">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative space-y-4 max-h-[85vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h3 id="sources-policy-title" class="text-lg font-black text-slate-900"><i class="fa-solid fa-book-medical text-primary-600" aria-hidden="true"></i> سياسة المصادر والبيانات</h3>
+                <button onclick="closeModal('sources-policy-modal')" class="text-slate-400 hover:text-slate-600 text-xl font-bold" aria-label="إغلاق نافذة سياسة المصادر والبيانات">&times;</button>
+            </div>
+            <p class="text-sm text-slate-600 leading-relaxed">نلتزم بعدم نشر أي إحصائية أو بيانة طبية دون مصدر موثوق. الإحصائيات الرسمية مصدرها منظمة الصحة العالمية (WHO HeRAMS)، وتصنيف الأدوية يسترشد بالقائمة النموذجية لمنظمة الصحة العالمية للأدوية الأساسية، وتصنيف الحالات المرضية يسترشد بالتصنيف الدولي للأمراض ICD-11. لمزيد من التفاصيل، راجع صفحة المصادر والمنهجية الكاملة.</p>
+            <button onclick="closeModal('sources-policy-modal'); switchTab('sources')" class="w-full py-3 rounded-xl bg-primary-700 hover:bg-primary-800 text-white font-bold text-sm shadow-md transition-colors">عرض صفحة المصادر والمنهجية الكاملة</button>
+        </div>
+    </div>
+
     <!-- زر الطبيب الافتراضي العائم ونافذة المحادثة -->
     <div class="fixed bottom-6 left-6 z-50">
         <button onclick="toggleMedicalChat()" aria-label="فتح مساعد الإرشاد الصحي الذكي" class="w-14 h-14 rounded-full bg-gradient-to-r from-primary-600 to-secondary-500 text-white shadow-2xl flex items-center justify-center text-2xl hover:scale-105 transition-all focus:outline-none relative group">
@@ -790,57 +835,88 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-300 py-10 mt-12">
+    <footer class="bg-slate-900 text-slate-300 pt-10 pb-24 md:pb-10 mt-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-right">
             <div>
                 <div class="flex items-center justify-center md:justify-start gap-2 mb-2">
                     <div class="w-8 h-8 rounded-lg bg-primary-600 flex items-center justify-center text-white font-bold">
-                        <i class="fa-solid fa-user-doctor"></i>
+                        <i class="fa-solid fa-user-doctor" aria-hidden="true"></i>
                     </div>
                     <span class="text-white font-black text-lg">عيادة غزة الإلكترونية</span>
                 </div>
-                <p class="text-sm text-slate-400">طبيبك الافتراضي الذكي — تشخيص فوري، أدوية متوفرة، وأقرب مستشفى في متناول يدك.</p>
+                <p class="text-[15px] text-slate-400 leading-relaxed">منصة صحية رقمية تساعدك في الوصول إلى المعلومات والخدمات الصحية والطوارئ والمستشفيات والأدوية المتوفرة في قطاع غزة.</p>
             </div>
             <div>
-                <div class="text-white font-bold mb-2 text-sm">روابط سريعة</div>
-                <div class="flex flex-col items-center md:items-start gap-1 text-sm text-slate-400">
-                    <button onclick="switchTab('hospitals')" class="text-right hover:text-white transition-colors focus-visible:outline-none">المستشفيات</button>
-                    <button onclick="switchTab('medicines')" class="text-right hover:text-white transition-colors focus-visible:outline-none">الأدوية</button>
-                    <button onclick="switchTab('emergency')" class="text-right hover:text-white transition-colors focus-visible:outline-none">الطوارئ</button>
-                    <button onclick="switchTab('sources')" class="text-right hover:text-white transition-colors focus-visible:outline-none">المصادر والمنهجية</button>
+                <div class="text-white font-bold mb-2.5 text-sm">روابط سريعة</div>
+                <div class="flex flex-col items-center md:items-start gap-2 text-[15px] text-slate-400">
+                    <button onclick="switchTab('home')" aria-label="الانتقال إلى الصفحة الرئيسية" class="text-right hover:text-white transition-colors focus-visible:outline-none">الرئيسية</button>
+                    <button onclick="switchTab('hospitals')" aria-label="الانتقال إلى المستشفيات" class="text-right hover:text-white transition-colors focus-visible:outline-none">المستشفيات</button>
+                    <button onclick="switchTab('medicines')" aria-label="الانتقال إلى الأدوية" class="text-right hover:text-white transition-colors focus-visible:outline-none">الأدوية</button>
+                    <button onclick="switchTab('emergency')" aria-label="الانتقال إلى الطوارئ" class="text-right hover:text-white transition-colors focus-visible:outline-none">الطوارئ</button>
+                    <button onclick="switchTab('map')" aria-label="الانتقال إلى الخريطة" class="text-right hover:text-white transition-colors focus-visible:outline-none">الخريطة</button>
+                    <button onclick="switchTab('awareness')" aria-label="الانتقال إلى التوعية والإسعافات الأولية" class="text-right hover:text-white transition-colors focus-visible:outline-none">التوعية والإسعافات الأولية</button>
+                    <button onclick="switchTab('articles')" aria-label="الانتقال إلى المقالات" class="text-right hover:text-white transition-colors focus-visible:outline-none">المقالات</button>
+                    <button onclick="switchTab('sources')" aria-label="الانتقال إلى المصادر والمنهجية" class="text-right hover:text-white transition-colors focus-visible:outline-none">المصادر والمنهجية</button>
                 </div>
             </div>
             <div>
-                <div class="text-white font-bold mb-2 text-sm">تنويه</div>
-                <p class="text-xs text-slate-500">هذه المنصة أداة دعم أولية ولا تغني عن استشارة طبيب مختص عند توفر الإمكانية.</p>
+                <div class="text-white font-bold mb-2.5 text-sm">تنويه</div>
+                <p class="text-sm text-slate-400 leading-relaxed">
+                    هذا الموقع أداة للمعلومات والإرشاد الصحي الأولي، ولا يُعد بديلًا عن الطبيب أو التقييم الطبي المباشر. في
+                    <button onclick="switchTab('emergency')" aria-label="الانتقال إلى قسم الطوارئ" class="text-primary-400 hover:text-primary-300 underline font-bold focus-visible:outline-none">الحالات الطارئة</button>،
+                    تواصل فورًا مع الجهات المختصة.
+                </p>
             </div>
         </div>
 
-        <!-- بطاقة المطور الرسمية -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-slate-950/80 border border-slate-800/80 p-5 rounded-2xl max-w-lg mx-auto text-xs text-slate-300 space-y-2 shadow-xl mt-8 text-center">
-                <p class="font-bold text-white text-sm mb-1"><i class="fa-solid fa-code text-blue-400"></i> المطور الرسمي ومهندس الموقع:</p>
-                <p class="text-blue-300 font-extrabold text-base">المهندس . مجد جميل صبحي عبدالهادي</p>
-                <p class="text-slate-400">مهندس برمجيات وذكاء اصطناعي | مؤسس منصة المجد التعليمية</p>
-                <div class="pt-3 border-t border-slate-800/60 flex flex-wrap justify-center gap-6 text-slate-300 text-xs">
-                    <a href="tel:+972595630187" class="inline-flex items-center gap-1.5 hover:text-white transition-colors" dir="ltr">
-                        <i class="fa-solid fa-phone text-blue-400"></i> +972595630187
+        <!-- بطاقة المطور، Badge العمل بدون إنترنت، والروابط القانونية
+             ترتيب الموبايل: الروابط القانونية ثم بطاقة المطور — ترتيب الديسكتوب: بطاقة المطور ثم الروابط القانونية (عبر order المتجاوب) -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center gap-5 mt-8">
+            <!-- بطاقة المطور الرسمية -->
+            <div class="order-2 md:order-1 bg-slate-950/80 border border-slate-800/80 p-4 rounded-2xl max-w-md mx-auto text-[13px] text-slate-300 space-y-1.5 shadow-lg text-center">
+                <p class="font-bold text-white text-xs mb-1"><i class="fa-solid fa-code text-blue-400" aria-hidden="true"></i> المطور الرسمي ومهندس الموقع:</p>
+                <p class="text-blue-300 font-extrabold text-sm">المهندس . مجد جميل صبحي عبدالهادي</p>
+                <p class="text-slate-400">مهندس برمجيات وذكاء اصطناعي، ومطور المشروع والمسؤول عن تطوير المنصة التقنية.</p>
+                <div class="pt-2.5 border-t border-slate-800/60 flex flex-wrap justify-center gap-5 text-slate-300 text-[12px]">
+                    <a href="tel:+972595630187" aria-label="الاتصال بالمطور على الرقم +972595630187" class="inline-flex items-center gap-1.5 hover:text-white transition-colors" dir="ltr">
+                        <i class="fa-solid fa-phone text-blue-400" aria-hidden="true"></i> +972595630187
                     </a>
-                    <a href="mailto:majd424425726@gmail.com" class="inline-flex items-center gap-1.5 hover:text-white transition-colors">
-                        <i class="fa-solid fa-envelope text-blue-400"></i> majd424425726@gmail.com
+                    <a href="mailto:majd424425726@gmail.com" aria-label="مراسلة المطور عبر البريد الإلكتروني" class="inline-flex items-center gap-1.5 hover:text-white transition-colors">
+                        <i class="fa-solid fa-envelope text-blue-400" aria-hidden="true"></i> majd424425726@gmail.com
                     </a>
+                </div>
+            </div>
+
+            <!-- Badge العمل بدون إنترنت -->
+            <div class="order-3 text-center">
+                <span class="inline-flex items-center gap-1.5 bg-slate-800 text-slate-300 text-[11px] font-bold px-3 py-1.5 rounded-full">
+                    <i class="fa-solid fa-cloud-arrow-down" aria-hidden="true"></i> يمكن استخدام أجزاء من الموقع بدون اتصال بالإنترنت بعد أول زيارة
+                </span>
+            </div>
+
+            <!-- معلومات قانونية -->
+            <div class="order-1 md:order-3 text-center px-4">
+                <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-slate-500">
+                    <span class="font-bold text-slate-400">معلومات قانونية:</span>
+                    <button onclick="openModal('privacy-policy-modal')" class="hover:text-white hover:underline transition-colors focus-visible:outline-none">سياسة الخصوصية</button>
+                    <span aria-hidden="true">·</span>
+                    <button onclick="openModal('terms-modal')" class="hover:text-white hover:underline transition-colors focus-visible:outline-none">شروط الاستخدام</button>
+                    <span aria-hidden="true">·</span>
+                    <button onclick="openModal('medical-disclaimer-modal')" class="hover:text-white hover:underline transition-colors focus-visible:outline-none">إخلاء المسؤولية الطبية</button>
+                    <span aria-hidden="true">·</span>
+                    <button onclick="openModal('sources-policy-modal')" class="hover:text-white hover:underline transition-colors focus-visible:outline-none">سياسة المصادر والبيانات</button>
                 </div>
             </div>
         </div>
 
-        <div class="text-center mt-8">
-            <span class="inline-flex items-center gap-1.5 bg-slate-800 text-slate-300 text-[11px] font-bold px-3 py-1.5 rounded-full">
-                📱 هذا الموقع يعمل حتى بدون إنترنت بعد أول زيارة
-            </span>
+        <div class="text-center mt-5">
+            <button onclick="switchTab('sources')" aria-label="عرض صفحة المصادر والمنهجية لمعرفة تفاصيل آخر تحديث" class="text-[11px] text-slate-500 hover:text-slate-300 underline-offset-2 hover:underline transition-colors focus-visible:outline-none">
+                آخر تحديث للبيانات الصحية: 31 مايو 2026
+            </button>
         </div>
 
-        <div class="text-center text-xs text-slate-600 mt-6 pt-6 border-t border-slate-800 mx-4 sm:mx-6 lg:mx-8">
-            © 2026 عيادة غزة الإلكترونية — جميع الحقوق محفوظة
+        <div class="text-center text-xs text-slate-600 mt-4 pt-5 border-t border-slate-800 mx-4 sm:mx-6 lg:mx-8">
+            © 2026 عيادة غزة الإلكترونية — جميع الحقوق محفوظة.
         </div>
     </footer>
 
