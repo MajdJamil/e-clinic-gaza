@@ -66,6 +66,16 @@
         @media (prefers-reduced-motion: reduce) {
             .fade-up { opacity: 1; transform: none; transition: none; }
         }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in-up {
+            animation: fadeInUp 0.5s ease both;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .fade-in-up { animation: none; }
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
@@ -495,11 +505,65 @@
 
         <!-- 9. التوعية والإسعافات الأولية -->
         <div id="view-awareness" class="tab-content py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-            <div class="mb-8">
+            <div class="mb-6">
                 <h2 class="text-3xl font-black text-slate-900">التوعية والإسعافات الأولية</h2>
                 <p class="text-slate-600 text-sm mt-1">دليل مصور وسريع للتعامل مع الإصابات الطارئة في الظروف الصعبة.</p>
             </div>
+
+            <!-- تنبيه طبي أعلى القسم -->
+            <div class="bg-primary-50/60 border border-primary-100 rounded-xl p-4 mb-6 flex items-start gap-3">
+                <div class="w-9 h-9 rounded-full bg-primary-100 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-circle-info text-primary-600" aria-hidden="true"></i>
+                </div>
+                <p class="text-sm text-slate-700 leading-relaxed">
+                    هذه الإرشادات مخصصة للإسعاف الأولي والمساعدة المؤقتة فقط، ولا تغني عن التواصل مع خدمات الطوارئ أو التقييم الطبي المباشر عند الحالات الخطرة.
+                </p>
+            </div>
+
+            <!-- البحث والتصنيفات -->
+            <div class="mb-6 space-y-3">
+                <div class="relative max-w-md">
+                    <i class="fa-solid fa-magnifying-glass text-slate-400 absolute right-4 top-1/2 -translate-y-1/2" aria-hidden="true"></i>
+                    <input type="text" id="awareness-search" oninput="filterAwareness()" placeholder="ابحث عن حالة إسعافية..." aria-label="ابحث عن حالة إسعافية" class="w-full py-2.5 pr-11 pl-4 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                </div>
+                <div class="flex flex-wrap gap-2" role="group" aria-label="تصنيف حالات الإسعاف الأولي">
+                    <button onclick="filterAwareness('all')" data-cat="all" class="awareness-filter-btn px-4 py-2 bg-primary-700 text-white rounded-xl text-xs font-bold transition-colors">الكل</button>
+                    <button onclick="filterAwareness('emergency')" data-cat="emergency" class="awareness-filter-btn px-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold hover:bg-slate-50 transition-colors">الحالات الطارئة</button>
+                    <button onclick="filterAwareness('injuries')" data-cat="injuries" class="awareness-filter-btn px-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold hover:bg-slate-50 transition-colors">الإصابات</button>
+                    <button onclick="filterAwareness('burns')" data-cat="burns" class="awareness-filter-btn px-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold hover:bg-slate-50 transition-colors">الحروق</button>
+                    <button onclick="filterAwareness('poisoning')" data-cat="poisoning" class="awareness-filter-btn px-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold hover:bg-slate-50 transition-colors">التسمم</button>
+                    <button onclick="filterAwareness('heat')" data-cat="heat" class="awareness-filter-btn px-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold hover:bg-slate-50 transition-colors">الحرارة</button>
+                </div>
+            </div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="awareness-list"></div>
+            <p id="awareness-empty" class="hidden text-slate-500 text-center py-10 text-sm">لا توجد حالات مطابقة لبحثك.</p>
+
+            <!-- المصادر والمراجعة الطبية -->
+            <div class="mt-10 bg-slate-50 border border-slate-200 rounded-xl p-5">
+                <h3 class="text-sm font-black text-slate-900 mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-book-medical text-primary-600" aria-hidden="true"></i> المصادر والمراجعة الطبية
+                </h3>
+                <p class="text-xs text-slate-500 leading-relaxed">
+                    سيتم عرض مصدر كل إرشاد، تاريخ آخر تحديث، واسم الجهة الطبية المراجِعة هنا فور توفر هذه البيانات وتوثيقها من جهة طبية موثوقة. لا تعرض هذه المساحة حاليًا أي مصدر لعدم توفر مراجعة رسمية بعد.
+                </p>
+            </div>
+
+            <!-- CTA ختامي للطوارئ -->
+            <div class="mt-6 bg-red-50 border border-red-200 rounded-xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="text-center sm:text-right">
+                    <h3 class="text-sm font-black text-red-800">هل تواجه حالة طارئة الآن؟</h3>
+                    <p class="text-xs text-red-700 mt-1">لا تعتمد فقط على الإسعاف الأولي في الحالات الخطرة — تواصل مع الطوارئ فورًا.</p>
+                </div>
+                <div class="flex gap-2 shrink-0">
+                    <a href="tel:101" aria-label="اتصل بالطوارئ الآن على الرقم 101" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 active:scale-95 text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-md transition-all">
+                        <i class="fa-solid fa-phone" aria-hidden="true"></i> اتصل بالطوارئ
+                    </a>
+                    <button onclick="switchTab('emergency')" class="inline-flex items-center gap-2 bg-white border border-red-300 text-red-700 hover:bg-red-100 px-5 py-2.5 rounded-xl font-bold text-sm transition-all">
+                        عرض قسم الطوارئ
+                    </button>
+                </div>
+            </div>
         </div>
 
         <!-- 10. المصادر والمنهجية -->
@@ -1077,26 +1141,26 @@
         ];
 
 const awarenessData = [
-  { title: 'إيقاف النزيف الحاد', steps: ['الضغط المباشر على مكان النزيف بقطعة قماش نظيفة ومعقمة.', 'رفع العضو المصاب أعلى من مستوى القلب إن أمكن.', 'عدم إزالة الضمادة المشبعة بل إضافة ضمادات فوقها والاتصال بـ 101.'] },
-  { title: 'التعامل مع الحروق البسيطة', steps: ['تبريد مكان الحرق بماء فاتر جارٍ لمدة 10-15 دقيقة.', 'عدم وضع زيوت أو معجون أسنان أو ثلج نهائياً على الحرق.', 'تغطية الحرق بقطعة قماش أو ضمادة معقمة ومراجعة الطبيب.'] },
-  { title: 'التعامل مع الكسور والتواء المفاصل', steps: ['تثبيت العضو المصاب ومنعه من الحركة نهائياً.', 'وضع كمادات ثلج ملفوفة بقماش لتقليل التورم والألم.', 'عدم محاولة تعديل العظم المكسور أو إرجاعه لمكانه.'] },
-  { title: 'الإسعاف الأولي لحالات الاختناق', steps: ['الوقوف خلف المصاب وإحاطته باليدين أعلى البطن.', 'الضغط بقوة للداخل وللأعلى (مناورة هيمليش).', 'تكرار الضغط حتى خروج الجسم الغريب أو وصول الإسعاف.'] },
-  { title: 'التعامل مع حالات الإغماء', steps: ['استلقاء المصاب على ظهره ورفع قدميه أعلى من مستوى القلب.', 'فك الملابس الضيقة حول الرقبة والصدر لضمان التهوية.', 'عدم سكب الماء على الوجه أو إعطائه أي شيء عبر الفم.'] },
-  { title: 'ضربات الشمس والإجهاد الحراري', steps: ['نقل المصاب إلى مكان بارد ومظلل فوراً.', 'تبريد الجسم بماء فاتر ووضع قماش رطب على الرقبة والمفاصل.', 'إعطاء المصاب رشفات صغيرة من الماء إن كان واعياً.'] },
-  { title: 'اشتباه السكتة الدماغية', steps: ['ملاحظة اعوجاج الوجه، ضعف الذراع، أو صعوبة الكلام.', 'تدوين وقت بداية ظهور الأعراض بدقة.', 'الاتصال بالإسعاف فوراً وعدم إعطاء أدوية أو طعام.'] },
-  { title: 'التعامل مع حالات التسمم', steps: ['معرفة وتحديد المادة المسببة للتسمم وحفظ غلافها إن أمكن.', 'عدم إجبار المصاب على التقيؤ إلا بتعليمات طبية صريحة.', 'الاتصال بمركز السموم أو الإسعاف بشكل عاجل.'] },
-  { title: 'التعامل مع نوبات التشنج والصرع', steps: ['إبعاد الأجسام الحادة أو الصلبة عن محيط المصاب.', 'وضع وسادة ناعمة تحت رأسه وإمالته على جانبه بحذر.', 'عدم تقييد حركة المصاب أو وضع أي شيء داخل فمه.'] },
-  { title: 'لدغات الأفاعي والحشرات السامة', steps: ['تهدئة المصاب وتثبيت الطرف المصاب أسفل مستوى القلب.', 'غسل مكان اللدغة بالماء والصابون دون فركها.', 'عدم شق الجرح أو شفط السم أو ربط العضو بقوة.'] },
-  { title: 'التعامل مع حالات الغرق', steps: ['إخراج المصاب من الماء بأمان والتأكد من مجرى التنفس.', 'البدء بالإنعاش القلبي الرئوي (CPR) في حال توقف التنفس.', 'تدفئة المصاب وإزالة الملابس المبللة فوراً.'] },
-  { title: 'حروق المواد الكيميائية', steps: ['شطف المنطقة بماء جارٍ وغزير لمدة لا تقل عن 20 دقيقة.', 'إزالة الملابس الملوثة بالمادة الكيميائية بحذر.', 'تغطية الحرق بضمادة معقمة دون استخدام أي مراهم.'] },
-  { title: 'نوبات الربو وضيق التنفس', steps: ['مساعدة المصاب على الجلوس بوضع مريح ومستقيم.', 'استخدام البخاخ الخاص بالمريض حسب التعليمات.', 'طمأنة المريض والاتصال بالإسعاف في حال عدم التحسن.'] },
-  { title: 'التعامل مع الرعاف (نزيف الأنف)', steps: ['إمالة الرأس للأسفل قليلاً وليس للأعلى.', 'الضغط على الجزء المرن من الأنف لمدة 10 دقائق متواصلة.', 'وضع كمادات باردة على جسر الأنف والرقبة.'] },
-  { title: 'التعامل مع إصابات العين', steps: ['عدم فرك العين أو الضغط عليها نهائياً.', 'غسل العين بماء نظيف أو محلول ملحي في حال دخول مادة غريبة.', 'تغطية العين بضمادة معقمة ومراجعة الطبيب فوراً.'] },
-  { title: 'هبوط السكر الحاد', steps: ['إذا كان المريض واعياً، إعطاؤه عصير فواكه أو ملعقة سكر.', 'الانتظار 15 دقيقة وإعادة قياس مستوى السكر.', 'في حال فقدان الوعي، عدم إعطائه أي شيء بالفم والاتصال بالإسعاف.'] },
-  { title: 'الصدمة الكهربائية', steps: ['فصل التيار الكهربائي فوراً قبل لمس المصاب.', 'سحب المصاب بأداة غير موصلة (كالخشب) إن تعذر فصل الكهرباء.', 'فحص التنفس والنبض والبدء بالإنعاش القلبي إن لزم.'] },
-  { title: 'إصابات الرأس والعمود الفقري', steps: ['عدم تحريك الرأس أو الرقبة نهائياً لمنع المضاعفات.', 'تثبيت الرأس بين اليدين بحذر حتى وصول فرق الإسعاف.', 'مراقبة التنفس وعلامات الوعي باستمرار.'] },
-  { title: 'إسعاف النوبة القلبية', steps: ['إجلاس المريض في وضع شبه مستلقٍ وتهدئته.', 'إعطاؤه حبة أسبرين للمضغ إذا لم يكن لديه حساسية أو مانع.', 'الاتصال بالإسعاف فوراً ودون تأخير.'] },
-  { title: 'جروح القطع العميق', steps: ['الضغط المباشر بقطعة قماش معقمة لإيقاف النزيف.', 'عدم إزالة أي جسم غريب غارس داخل الجرح.', 'رفع الجزء المصاب وأخذه لأقرب مركز صحي للتقطيب.'] }
+  { title: 'إيقاف النزيف الحاد', severity: 'red', category: 'injuries', icon: 'fa-droplet', steps: ['الضغط المباشر على مكان النزيف بقطعة قماش نظيفة ومعقمة.', 'رفع العضو المصاب أعلى من مستوى القلب إن أمكن.', 'عدم إزالة الضمادة المشبعة بل إضافة ضمادات فوقها والاتصال بـ 101.'] },
+  { title: 'الإسعاف الأولي لحالات الاختناق', severity: 'red', category: 'injuries', icon: 'fa-lungs', steps: ['الوقوف خلف المصاب وإحاطته باليدين أعلى البطن.', 'الضغط بقوة للداخل وللأعلى (مناورة هيمليش).', 'تكرار الضغط حتى خروج الجسم الغريب أو وصول الإسعاف.'] },
+  { title: 'اشتباه السكتة الدماغية', severity: 'red', category: 'injuries', icon: 'fa-brain', steps: ['ملاحظة اعوجاج الوجه، ضعف الذراع، أو صعوبة الكلام.', 'تدوين وقت بداية ظهور الأعراض بدقة.', 'الاتصال بالإسعاف فوراً وعدم إعطاء أدوية أو طعام.'] },
+  { title: 'التعامل مع حالات الإغماء', severity: 'orange', category: 'injuries', icon: 'fa-heart-pulse', steps: ['استلقاء المصاب على ظهره ورفع قدميه أعلى من مستوى القلب.', 'فك الملابس الضيقة حول الرقبة والصدر لضمان التهوية.', 'عدم سكب الماء على الوجه أو إعطائه أي شيء عبر الفم.'] },
+  { title: 'التعامل مع الحروق البسيطة', severity: 'green', category: 'burns', icon: 'fa-fire', steps: ['تبريد مكان الحرق بماء فاتر جارٍ لمدة 10-15 دقيقة.', 'عدم وضع زيوت أو معجون أسنان أو ثلج نهائياً على الحرق.', 'تغطية الحرق بقطعة قماش أو ضمادة معقمة ومراجعة الطبيب.'] },
+  { title: 'التعامل مع الكسور والتواء المفاصل', severity: 'orange', category: 'injuries', icon: 'fa-bone', steps: ['تثبيت العضو المصاب ومنعه من الحركة نهائياً.', 'وضع كمادات ثلج ملفوفة بقماش لتقليل التورم والألم.', 'عدم محاولة تعديل العظم المكسور أو إرجاعه لمكانه.'] },
+  { title: 'التعامل مع حالات التسمم', severity: 'red', category: 'poisoning', icon: 'fa-skull-crossbones', steps: ['معرفة وتحديد المادة المسببة للتسمم وحفظ غلافها إن أمكن.', 'عدم إجبار المصاب على التقيؤ إلا بتعليمات طبية صريحة.', 'الاتصال بمركز السموم أو الإسعاف بشكل عاجل.'] },
+  { title: 'ضربات الشمس والإجهاد الحراري', severity: 'orange', category: 'heat', icon: 'fa-sun', steps: ['نقل المصاب إلى مكان بارد ومظلل فوراً.', 'تبريد الجسم بماء فاتر ووضع قماش رطب على الرقبة والمفاصل.', 'إعطاء المصاب رشفات صغيرة من الماء إن كان واعياً.'] },
+  { title: 'التعامل مع نوبات التشنج والصرع', severity: 'orange', category: 'injuries', icon: 'fa-bolt', steps: ['إبعاد الأجسام الحادة أو الصلبة عن محيط المصاب.', 'وضع وسادة ناعمة تحت رأسه وإمالته على جانبه بحذر.', 'عدم تقييد حركة المصاب أو وضع أي شيء داخل فمه.'] },
+  { title: 'لدغات الأفاعي والحشرات السامة', severity: 'orange', category: 'poisoning', icon: 'fa-bug', steps: ['تهدئة المصاب وتثبيت الطرف المصاب أسفل مستوى القلب.', 'غسل مكان اللدغة بالماء والصابون دون فركها.', 'عدم شق الجرح أو شفط السم أو ربط العضو بقوة.'] },
+  { title: 'التعامل مع حالات الغرق', severity: 'red', category: 'injuries', icon: 'fa-water', steps: ['إخراج المصاب من الماء بأمان والتأكد من مجرى التنفس.', 'البدء بالإنعاش القلبي الرئوي (CPR) في حال توقف التنفس.', 'تدفئة المصاب وإزالة الملابس المبللة فوراً.'] },
+  { title: 'حروق المواد الكيميائية', severity: 'orange', category: 'burns', icon: 'fa-flask', steps: ['شطف المنطقة بماء جارٍ وغزير لمدة لا تقل عن 20 دقيقة.', 'إزالة الملابس الملوثة بالمادة الكيميائية بحذر.', 'تغطية الحرق بضمادة معقمة دون استخدام أي مراهم.'] },
+  { title: 'نوبات الربو وضيق التنفس', severity: 'orange', category: 'injuries', icon: 'fa-wind', steps: ['مساعدة المصاب على الجلوس بوضع مريح ومستقيم.', 'استخدام البخاخ الخاص بالمريض حسب التعليمات.', 'طمأنة المريض والاتصال بالإسعاف في حال عدم التحسن.'] },
+  { title: 'التعامل مع الرعاف (نزيف الأنف)', severity: 'green', category: 'injuries', icon: 'fa-droplet', steps: ['إمالة الرأس للأسفل قليلاً وليس للأعلى.', 'الضغط على الجزء المرن من الأنف لمدة 10 دقائق متواصلة.', 'وضع كمادات باردة على جسر الأنف والرقبة.'] },
+  { title: 'التعامل مع إصابات العين', severity: 'orange', category: 'injuries', icon: 'fa-eye', steps: ['عدم فرك العين أو الضغط عليها نهائياً.', 'غسل العين بماء نظيف أو محلول ملحي في حال دخول مادة غريبة.', 'تغطية العين بضمادة معقمة ومراجعة الطبيب فوراً.'] },
+  { title: 'هبوط السكر الحاد', severity: 'orange', category: 'injuries', icon: 'fa-battery-quarter', steps: ['إذا كان المريض واعياً، إعطاؤه عصير فواكه أو ملعقة سكر.', 'الانتظار 15 دقيقة وإعادة قياس مستوى السكر.', 'في حال فقدان الوعي، عدم إعطائه أي شيء بالفم والاتصال بالإسعاف.'] },
+  { title: 'الصدمة الكهربائية', severity: 'red', category: 'injuries', icon: 'fa-plug', steps: ['فصل التيار الكهربائي فوراً قبل لمس المصاب.', 'سحب المصاب بأداة غير موصلة (كالخشب) إن تعذر فصل الكهرباء.', 'فحص التنفس والنبض والبدء بالإنعاش القلبي إن لزم.'] },
+  { title: 'إصابات الرأس والعمود الفقري', severity: 'red', category: 'injuries', icon: 'fa-user-injured', steps: ['عدم تحريك الرأس أو الرقبة نهائياً لمنع المضاعفات.', 'تثبيت الرأس بين اليدين بحذر حتى وصول فرق الإسعاف.', 'مراقبة التنفس وعلامات الوعي باستمرار.'] },
+  { title: 'إسعاف النوبة القلبية', severity: 'red', category: 'injuries', icon: 'fa-heart-crack', steps: ['إجلاس المريض في وضع شبه مستلقٍ وتهدئته.', 'إعطاؤه حبة أسبرين للمضغ إذا لم يكن لديه حساسية أو مانع.', 'الاتصال بالإسعاف فوراً ودون تأخير.'] },
+  { title: 'جروح القطع العميق', severity: 'orange', category: 'injuries', icon: 'fa-band-aid', steps: ['الضغط المباشر بقطعة قماش معقمة لإيقاف النزيف.', 'عدم إزالة أي جسم غريب غارس داخل الجرح.', 'رفع الجزء المصاب وأخذه لأقرب مركز صحي للتقطيب.'] }
 ];
 
         // تهيئة الخريطة بـ Leaflet
@@ -1335,23 +1399,123 @@ const awarenessData = [
         }
 
         // عرض التوعية
-        function renderAwareness() {
+        // تصنيف مستوى الخطورة: تنسيق العرض فقط، الشارة النصية دائمًا مرافقة للون (لا اعتماد على اللون وحده)
+        const awarenessSeverityStyles = {
+            red: { badge: 'bg-red-100 text-red-700', dot: '🔴', label: 'طارئ — تواصل فورًا', icon: 'bg-red-50 text-red-600' },
+            orange: { badge: 'bg-amber-100 text-amber-700', dot: '🟠', label: 'يحتاج تقييمًا سريعًا', icon: 'bg-amber-50 text-amber-600' },
+            green: { badge: 'bg-emerald-100 text-emerald-700', dot: '🟢', label: 'إسعاف أولي', icon: 'bg-emerald-50 text-emerald-600' }
+        };
+
+        // تبويب كل نقطة إرشادية موجودة أصلًا ضمن: "ماذا نفعل" / "ماذا نتجنب" / "متى نتواصل مع الطوارئ"
+        // بالاعتماد فقط على كلمات مفتاحية بالنص الأصلي نفسه، دون إضافة أي محتوى جديد
+        function classifyAwarenessSteps(steps) {
+            const callKeywords = ['اتصال', 'الإسعاف', 'الطوارئ', '101', '102', 'مركز السموم', 'فرق الإسعاف'];
+            const dontKeywords = ['عدم ', 'عدم إ', 'تجنب'];
+            const doItems = [], dontItems = [], callItems = [];
+            steps.forEach(s => {
+                if (callKeywords.some(k => s.includes(k))) callItems.push(s);
+                else if (dontKeywords.some(k => s.includes(k)) || s.trim().startsWith('عدم')) dontItems.push(s);
+                else doItems.push(s);
+            });
+            return { doItems, dontItems, callItems };
+        }
+
+        function renderAwareness(data) {
             const container = document.getElementById('awareness-list');
+            const emptyMsg = document.getElementById('awareness-empty');
             container.innerHTML = '';
-            awarenessData.forEach(item => {
-                let stepsHtml = item.steps.map(s => `<li class="flex items-start gap-2 text-xs text-slate-700 leading-relaxed"><i class="fa-solid fa-check text-secondary-600 mt-1"></i><span>${s}</span></li>`).join('');
+
+            if (data.length === 0) {
+                emptyMsg.classList.remove('hidden');
+                return;
+            }
+            emptyMsg.classList.add('hidden');
+
+            data.forEach((item, idx) => {
+                const sev = awarenessSeverityStyles[item.severity] || awarenessSeverityStyles.orange;
+                const { doItems, dontItems, callItems } = classifyAwarenessSteps(item.steps);
+                const previewSteps = item.steps.slice(0, 2);
+                const detailId = `awareness-detail-${idx}`;
+
+                const listBlock = (title, items, colorClass, iconClass) => !items.length ? '' : `
+                    <div class="${colorClass === 'amber' ? 'bg-amber-50 border border-amber-100 rounded-lg p-3' : ''}">
+                        <h4 class="text-xs font-black mb-2 flex items-center gap-1.5 ${colorClass === 'emerald' ? 'text-emerald-700' : colorClass === 'amber' ? 'text-amber-700' : 'text-red-700'}">
+                            <i class="fa-solid ${iconClass}" aria-hidden="true"></i> ${title}
+                        </h4>
+                        <ul class="space-y-1.5">
+                            ${items.map(s => `<li class="flex items-start gap-2 text-sm text-slate-700 leading-relaxed"><i class="fa-solid fa-circle text-[5px] mt-2 ${colorClass === 'emerald' ? 'text-emerald-500' : colorClass === 'amber' ? 'text-amber-500' : 'text-red-500'}" aria-hidden="true"></i><span>${s}</span></li>`).join('')}
+                        </ul>
+                    </div>`;
+
                 container.innerHTML += `
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 space-y-3">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-secondary-50 text-secondary-700 flex items-center justify-center font-bold text-lg">
-                                <i class="fa-solid fa-shield-heart"></i>
+                    <div class="awareness-card bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden fade-in-up" style="animation-delay:${Math.min(idx, 8) * 60}ms" data-category="${item.category}" data-severity="${item.severity}" data-title="${item.title}">
+                        <div class="p-5">
+                            <div class="flex items-start gap-3 mb-3">
+                                <div class="w-12 h-12 rounded-full ${sev.icon} flex items-center justify-center shrink-0">
+                                    <i class="fa-solid ${item.icon} text-xl" aria-hidden="true"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h3 class="text-base font-black text-slate-900 leading-snug">${item.title}</h3>
+                                    <span class="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full ${sev.badge} mt-1.5">
+                                        <span aria-hidden="true">${sev.dot}</span> ${sev.label}
+                                    </span>
+                                </div>
                             </div>
-                            <h3 class="text-lg font-black text-slate-900">${item.title}</h3>
+                            <ul class="space-y-1.5 mb-4">
+                                ${previewSteps.map(s => `<li class="flex items-start gap-2 text-sm text-slate-700 leading-relaxed"><i class="fa-solid fa-check text-secondary-600 mt-1 text-xs" aria-hidden="true"></i><span>${s}</span></li>`).join('')}
+                            </ul>
+                            <div class="flex items-center gap-2">
+                                <button onclick="toggleAwarenessDetails(${idx})" id="awareness-toggle-${idx}" aria-expanded="false" aria-controls="${detailId}" class="flex-1 text-xs font-bold text-primary-700 hover:text-primary-800 py-2.5 rounded-lg border border-primary-100 hover:bg-primary-50 transition-colors flex items-center justify-center gap-1.5">
+                                    <span>عرض التعليمات الكاملة</span>
+                                    <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-300" aria-hidden="true"></i>
+                                </button>
+                                ${item.severity === 'red' ? `
+                                <a href="tel:101" aria-label="اتصل بالطوارئ الآن بخصوص ${item.title}" class="shrink-0 inline-flex items-center justify-center gap-1.5 bg-red-600 hover:bg-red-700 active:scale-95 text-white text-xs font-bold py-3.5 px-3 min-h-[44px] rounded-lg transition-all">
+                                    <i class="fa-solid fa-phone" aria-hidden="true"></i> اتصل بالطوارئ
+                                </a>` : ''}
+                            </div>
                         </div>
-                        <ul class="space-y-2 pt-2">${stepsHtml}</ul>
+                        <div id="${detailId}" class="hidden border-t border-slate-100 bg-slate-50 px-5 py-4 space-y-4">
+                            ${listBlock('ما الذي يجب فعله؟', doItems, 'emerald', 'fa-circle-check')}
+                            ${listBlock('ما الذي يجب تجنبه؟', dontItems, 'amber', 'fa-ban')}
+                            ${listBlock('متى يجب التواصل مع الطوارئ؟', callItems, 'red', 'fa-phone-volume')}
+                        </div>
                     </div>
                 `;
             });
+        }
+
+        function toggleAwarenessDetails(idx) {
+            const detail = document.getElementById(`awareness-detail-${idx}`);
+            const btn = document.getElementById(`awareness-toggle-${idx}`);
+            const icon = btn.querySelector('i.fa-chevron-down');
+            const isHidden = detail.classList.contains('hidden');
+            detail.classList.toggle('hidden');
+            btn.setAttribute('aria-expanded', String(isHidden));
+            btn.querySelector('span').textContent = isHidden ? 'إخفاء التعليمات' : 'عرض التعليمات الكاملة';
+            if (icon) icon.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+
+        let currentAwarenessCategory = 'all';
+        function filterAwareness(cat) {
+            if (cat) {
+                currentAwarenessCategory = cat;
+                document.querySelectorAll('.awareness-filter-btn').forEach(btn => {
+                    const active = btn.dataset.cat === cat;
+                    btn.classList.toggle('bg-primary-700', active);
+                    btn.classList.toggle('text-white', active);
+                    btn.classList.toggle('bg-white', !active);
+                    btn.classList.toggle('border', !active);
+                    btn.classList.toggle('border-slate-200', !active);
+                });
+            }
+            const query = document.getElementById('awareness-search').value.trim().toLowerCase();
+            const filtered = awarenessData.filter(item => {
+                const matchQuery = !query || item.title.toLowerCase().includes(query) || item.steps.some(s => s.toLowerCase().includes(query));
+                const matchCat = currentAwarenessCategory === 'all' || (currentAwarenessCategory === 'emergency' ? item.severity === 'red' : item.category === currentAwarenessCategory);
+                return matchQuery && matchCat;
+            });
+            renderAwareness(filtered);
         }
 
         // الخريطة والتفاعل
@@ -1691,7 +1855,7 @@ const awarenessData = [
             renderMedicines(medicinesData);
             renderDoctors(doctorsData);
             renderArticles();
-            renderAwareness();
+            renderAwareness(awarenessData);
             initMapMarkers('all');
             initFadeUpAndCountUp();
         });
