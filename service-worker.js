@@ -1,11 +1,15 @@
-const CACHE_NAME = 'eclinic-gaza-v1';
+const CACHE_NAME = 'eclinic-gaza-v2';
 
 const PRECACHE_URLS = [
     './',
     './index.html',
     './manifest.json',
-    './icon-192.png',
-    './icon-512.png',
+    './assets/icons/icon-16.png',
+    './assets/icons/icon-32.png',
+    './assets/icons/icon-180.png',
+    './assets/icons/icon-192.png',
+    './assets/icons/icon-512.png',
+    './assets/icons/favicon.ico',
     'https://cdn.tailwindcss.com',
     'https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap',
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
