@@ -22,13 +22,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <!-- تهيئة المظهر (فاتح/داكن) قبل أول رسم لتفادي وميض تغيّر الثيم -->
+    <!-- تهيئة المظهر (فاتح/داكن) ووضع توفير البيانات قبل أول رسم لتفادي أي وميض -->
     <script>
         (function () {
             try {
                 const saved = localStorage.getItem('eclinic-theme');
                 const theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
                 if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+            } catch (e) {}
+            try {
+                const savedSaver = localStorage.getItem('eclinic-data-saver');
+                const isSlowConn = navigator.connection && (navigator.connection.saveData || ['slow-2g', '2g'].includes(navigator.connection.effectiveType));
+                if (savedSaver === 'on' || (savedSaver !== 'off' && isSlowConn)) {
+                    document.documentElement.setAttribute('data-saver', 'true');
+                }
             } catch (e) {}
         })();
     </script>
@@ -171,6 +178,28 @@
         @media (prefers-reduced-motion: reduce) {
             .hero-3d-shape { animation: none; }
         }
+        .sc-option.selected {
+            border-color: var(--color-primary-600);
+            background-color: var(--color-primary-50);
+            color: var(--color-primary-700);
+        }
+        /* وضع توفير البيانات: يوقف المشهد الثلاثي الأبعاد وحركاته لتخفيف الحمل على الاتصالات البطيئة */
+        html[data-saver="true"] .hero-3d-scene { display: none !important; }
+        html[data-saver="true"] .hero-3d-shape { animation: none !important; }
+        /* بطاقات هيكلية (Skeleton) تُعرض فورًا قبل اكتمال تحميل/تنفيذ JS، وتُستبدل تلقائيًا بالمحتوى الحقيقي */
+        .skeleton-shimmer {
+            background: linear-gradient(90deg, #e2e8f0 25%, #eef2f7 37%, #e2e8f0 63%);
+            background-size: 400% 100%;
+            animation: skeleton-shimmer 1.4s ease infinite;
+            border-radius: 0.5rem;
+        }
+        @keyframes skeleton-shimmer {
+            0% { background-position: 100% 50%; }
+            100% { background-position: 0 50%; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .skeleton-shimmer { animation: none; background: #e2e8f0; }
+        }
 
         /* ===== طبقة مكوّنات بسيطة قابلة لإعادة الاستخدام (فوق أدوات Tailwind، دون تغيير البنية الحالية) ===== */
         .theme-toggle-btn { color: var(--color-text-muted); }
@@ -283,6 +312,9 @@
                     <button id="theme-toggle-btn" onclick="toggleTheme()" aria-label="تبديل المظهر الليلي" class="theme-toggle-btn p-2 text-xl rounded-lg hover:bg-slate-100 transition-colors">
                         <i class="fa-solid fa-moon" id="theme-toggle-icon" aria-hidden="true"></i>
                     </button>
+                    <button id="data-saver-btn" onclick="toggleDataSaver()" aria-label="تفعيل وضع توفير البيانات" aria-pressed="false" class="theme-toggle-btn p-2 text-xl rounded-lg hover:bg-slate-100 transition-colors">
+                        <i class="fa-solid fa-gauge-simple" aria-hidden="true"></i>
+                    </button>
                     <!-- Mobile menu button -->
                     <div class="xl:hidden flex items-center gap-2">
                         <button onclick="toggleMobileMenu()" aria-label="فتح قائمة التنقل" class="text-slate-700 hover:text-primary-600 focus:outline-none p-2 text-2xl">
@@ -348,6 +380,10 @@
                             </button>
                         </div>
                         <div id="search-suggestions" class="bg-white rounded-xl shadow-lg border border-slate-100 max-w-2xl mx-auto lg:mx-0 text-right hidden p-3 space-y-2"></div>
+
+                        <button type="button" onclick="openSymptomChecker()" class="inline-flex items-center gap-1.5 text-sm font-bold text-primary-700 hover:text-primary-800 underline underline-offset-2">
+                            <i class="fa-solid fa-clipboard-list" aria-hidden="true"></i> أو جرّب التقييم الصحي الموجّه خطوة بخطوة
+                        </button>
 
                         <div class="flex justify-center lg:justify-start">
                             <button onclick="switchTab('emergency')" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 active:scale-95 text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-md transition-all duration-200" aria-label="حالة طارئة؟ الانتقال لخدمات الطوارئ">
@@ -505,7 +541,11 @@
                     </select>
                 </div>
             </div>
-            <div id="hospitals-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            <div id="hospitals-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white p-5 rounded-xl border border-slate-200 space-y-3" aria-hidden="true"><div class="skeleton-shimmer h-9 w-9 rounded-full"></div><div class="skeleton-shimmer h-4 w-3/4"></div><div class="skeleton-shimmer h-3 w-full"></div><div class="skeleton-shimmer h-3 w-5/6"></div></div>
+                <div class="bg-white p-5 rounded-xl border border-slate-200 space-y-3" aria-hidden="true"><div class="skeleton-shimmer h-9 w-9 rounded-full"></div><div class="skeleton-shimmer h-4 w-3/4"></div><div class="skeleton-shimmer h-3 w-full"></div><div class="skeleton-shimmer h-3 w-5/6"></div></div>
+                <div class="bg-white p-5 rounded-xl border border-slate-200 space-y-3" aria-hidden="true"><div class="skeleton-shimmer h-9 w-9 rounded-full"></div><div class="skeleton-shimmer h-4 w-3/4"></div><div class="skeleton-shimmer h-3 w-full"></div><div class="skeleton-shimmer h-3 w-5/6"></div></div>
+            </div>
         </div>
 
         <!-- 3. الخريطة الطبية التفاعلية -->
@@ -563,7 +603,11 @@
                     هذه المعلومات للتثقيف الصحي فقط ولا تغني عن الطبيب أو الصيدلي. الجرعات تختلف حسب العمر والحالة والوزن ووصفة الطبيب الشخصية.
                 </div>
             </div>
-            <div id="medicines-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            <div id="medicines-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white p-5 rounded-xl border border-slate-200 space-y-3" aria-hidden="true"><div class="skeleton-shimmer h-10 w-10 rounded-full"></div><div class="skeleton-shimmer h-4 w-3/4"></div><div class="skeleton-shimmer h-3 w-full"></div><div class="skeleton-shimmer h-3 w-5/6"></div></div>
+                <div class="bg-white p-5 rounded-xl border border-slate-200 space-y-3" aria-hidden="true"><div class="skeleton-shimmer h-10 w-10 rounded-full"></div><div class="skeleton-shimmer h-4 w-3/4"></div><div class="skeleton-shimmer h-3 w-full"></div><div class="skeleton-shimmer h-3 w-5/6"></div></div>
+                <div class="bg-white p-5 rounded-xl border border-slate-200 space-y-3" aria-hidden="true"><div class="skeleton-shimmer h-10 w-10 rounded-full"></div><div class="skeleton-shimmer h-4 w-3/4"></div><div class="skeleton-shimmer h-3 w-full"></div><div class="skeleton-shimmer h-3 w-5/6"></div></div>
+            </div>
         </div>
 
         <!-- 5. صفحة الأطباء والكوادر الطبية -->
@@ -581,7 +625,11 @@
                 <i class="fa-solid fa-circle-info text-slate-500 mt-0.5" aria-hidden="true"></i>
                 <span>بيانات تجريبية لأغراض العرض فقط حاليًا، ولا يوجد بعد نظام تحقق طبي فعلي من هوية أو اختصاص الكوادر المدرجة.</span>
             </div>
-            <div id="doctors-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            <div id="doctors-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white p-5 rounded-xl border border-slate-200 space-y-3" aria-hidden="true"><div class="skeleton-shimmer h-10 w-10 rounded-full"></div><div class="skeleton-shimmer h-4 w-3/4"></div><div class="skeleton-shimmer h-3 w-full"></div><div class="skeleton-shimmer h-3 w-5/6"></div></div>
+                <div class="bg-white p-5 rounded-xl border border-slate-200 space-y-3" aria-hidden="true"><div class="skeleton-shimmer h-10 w-10 rounded-full"></div><div class="skeleton-shimmer h-4 w-3/4"></div><div class="skeleton-shimmer h-3 w-full"></div><div class="skeleton-shimmer h-3 w-5/6"></div></div>
+                <div class="bg-white p-5 rounded-xl border border-slate-200 space-y-3" aria-hidden="true"><div class="skeleton-shimmer h-10 w-10 rounded-full"></div><div class="skeleton-shimmer h-4 w-3/4"></div><div class="skeleton-shimmer h-3 w-full"></div><div class="skeleton-shimmer h-3 w-5/6"></div></div>
+            </div>
         </div>
 
         <!-- 6. طلب رعاية منزلية -->
@@ -598,8 +646,21 @@
                         هذا النموذج لا يرسل بياناتك تلقائيًا إلى أي جهة طبية أو فريق ميداني حاليًا — لا يوجد نظام استقبال فعلي خلف هذه المنصة بعد. استخدمه لتنظيم التفاصيل ثم تواصل مباشرة مع أقرب <button type="button" onclick="switchTab('hospitals')" class="underline font-bold hover:text-amber-900">مستشفى أو مركز صحي</button>، أو اتصل بـ<a href="tel:101" class="underline font-bold hover:text-amber-900">الطوارئ (101)</a> في الحالات العاجلة.
                     </div>
                 </div>
+                <!-- شريط تقدّم نموذج الرعاية المنزلية -->
+                <div class="mb-2 flex justify-between text-[11px] font-bold text-slate-400" id="hc-step-labels">
+                    <span data-hc-label="1">بيانات التواصل</span>
+                    <span data-hc-label="2">الموقع</span>
+                    <span data-hc-label="3">نوع الخدمة</span>
+                    <span data-hc-label="4">حالة المريض</span>
+                    <span data-hc-label="5">المراجعة والإرسال</span>
+                </div>
+                <div class="w-full bg-slate-100 rounded-full h-2 mb-6">
+                    <div id="hc-progress-bar" class="bg-primary-600 h-2 rounded-full transition-all duration-300" style="width:20%"></div>
+                </div>
+
                 <form id="home-care-form" onsubmit="submitHomeCareRequest(event)" class="space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- 1. بيانات التواصل -->
+                    <div id="hc-step-1" class="hc-step grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-bold text-slate-700 mb-2">اسم المريض / المسؤول *</label>
                             <input type="text" id="req-name" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary-500 focus:outline-none" placeholder="الاسم الثلاثي">
@@ -609,17 +670,21 @@
                             <input type="tel" id="req-phone" required class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary-500 focus:outline-none" placeholder="+970 ...">
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-2">المنطقة في قطاع غزة *</label>
-                            <select id="req-region" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary-500 focus:outline-none">
-                                <option>شمال غزة</option>
-                                <option>مدينة غزة</option>
-                                <option>دير البلح والوسطى</option>
-                                <option>خانيونس</option>
-                                <option>رفح</option>
-                            </select>
-                        </div>
+
+                    <!-- 2. الموقع -->
+                    <div id="hc-step-2" class="hc-step hidden">
+                        <label class="block text-sm font-bold text-slate-700 mb-2">المنطقة في قطاع غزة *</label>
+                        <select id="req-region" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary-500 focus:outline-none">
+                            <option>شمال غزة</option>
+                            <option>مدينة غزة</option>
+                            <option>دير البلح والوسطى</option>
+                            <option>خانيونس</option>
+                            <option>رفح</option>
+                        </select>
+                    </div>
+
+                    <!-- 3. نوع الخدمة -->
+                    <div id="hc-step-3" class="hc-step hidden grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-bold text-slate-700 mb-2">نوع الخدمة الطبية المطلوبة *</label>
                             <select id="req-service" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary-500 focus:outline-none">
@@ -630,8 +695,6 @@
                                 <option>استشارة طبية عامة</option>
                             </select>
                         </div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-bold text-slate-700 mb-2">درجة الاستعجال</label>
                             <select id="req-urgency" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary-500 focus:outline-none">
@@ -640,6 +703,10 @@
                                 <option value="حرج طارئ">حرج طارئ (يُنصح بالاتصال بـ 101 فوراً)</option>
                             </select>
                         </div>
+                    </div>
+
+                    <!-- 4. حالة المريض -->
+                    <div id="hc-step-4" class="hc-step hidden space-y-6">
                         <div>
                             <label class="block text-sm font-bold text-slate-700 mb-2">هل المريض قادر على الحركة؟</label>
                             <select id="req-mobility" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary-500 focus:outline-none">
@@ -648,20 +715,31 @@
                                 <option>طريح الفراش تماماً</option>
                             </select>
                         </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">وصف مختصر للحالة الصحية</label>
+                            <textarea id="req-notes" rows="3" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary-500 focus:outline-none" placeholder="اكتب تفاصيل الأعراض أو الإصابة باختصار..."></textarea>
+                        </div>
                     </div>
-                    <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-2">وصف مختصر للحالة الصحية</label>
-                        <textarea id="req-notes" rows="3" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary-500 focus:outline-none" placeholder="اكتب تفاصيل الأعراض أو الإصابة باختصار..."></textarea>
+
+                    <!-- 5. المراجعة والإرسال -->
+                    <div id="hc-step-5" class="hc-step hidden space-y-4">
+                        <h3 class="font-bold text-sm text-slate-800">راجع بياناتك قبل المتابعة:</h3>
+                        <div id="hc-review-summary" class="bg-slate-50 border rounded-xl p-4 text-sm text-slate-700 space-y-1.5"></div>
+                        <div class="bg-slate-50 p-4 rounded-xl border text-xs text-slate-500 flex items-start gap-2">
+                            <i class="fa-solid fa-shield-halved text-primary-600 mt-0.5" aria-hidden="true"></i>
+                            <span>تنبيه الخصوصية: لا تدخل معلومات شخصية غير ضرورية للحصول على الإرشاد. سيتم التعامل مع بياناتك بسرية تامة لغرض تقديم الخدمة فقط.
+                                <button type="button" onclick="openModal('privacy-modal')" class="text-primary-600 font-bold underline hover:text-primary-700">كيف نحمي بياناتك؟</button>
+                            </span>
+                        </div>
                     </div>
-                    <div class="bg-slate-50 p-4 rounded-xl border text-xs text-slate-500 flex items-start gap-2">
-                        <i class="fa-solid fa-shield-halved text-primary-600 mt-0.5" aria-hidden="true"></i>
-                        <span>تنبيه الخصوصية: لا تدخل معلومات شخصية غير ضرورية للحصول على الإرشاد. سيتم التعامل مع بياناتك بسرية تامة لغرض تقديم الخدمة فقط.
-                            <button type="button" onclick="openModal('privacy-modal')" class="text-primary-600 font-bold underline hover:text-primary-700">كيف نحمي بياناتك؟</button>
-                        </span>
+
+                    <div class="flex gap-3">
+                        <button type="button" id="hc-back-btn" onclick="hcBack()" class="hidden flex-1 py-4 rounded-xl border border-slate-300 text-slate-600 font-bold hover:bg-slate-50 transition-colors">السابق</button>
+                        <button type="button" id="hc-next-btn" onclick="hcNext()" class="flex-1 py-4 bg-primary-700 hover:bg-primary-800 text-white font-bold rounded-xl shadow-lg transition-all text-lg">التالي</button>
+                        <button type="submit" id="hc-submit-btn" class="hidden flex-1 py-4 bg-primary-700 hover:bg-primary-800 text-white font-bold rounded-xl shadow-lg transition-all text-lg">
+                            عرض ملخص الطلب
+                        </button>
                     </div>
-                    <button type="submit" class="w-full py-4 bg-primary-700 hover:bg-primary-800 text-white font-bold rounded-xl shadow-lg transition-all text-lg">
-                        عرض ملخص الطلب
-                    </button>
                 </form>
                 <!-- Request Summary Box -->
                 <div id="tracking-result" class="mt-8 hidden p-6 bg-emerald-50 border border-emerald-200 rounded-2xl text-center space-y-3">
@@ -715,6 +793,23 @@
                     </a>
                 </div>
             </div>
+
+            <!-- إسعافات أولية للحالات الأشد خطورة (مرتبطة بقسم التوعية والإسعافات الأولية) -->
+            <div>
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-black text-slate-900">إسعافات أولية سريعة للحالات الأشد خطورة</h3>
+                    <button onclick="switchTab('awareness')" class="text-xs font-bold text-primary-600 hover:text-primary-700">عرض كل الإسعافات الأولية ↗</button>
+                </div>
+                <div id="emergency-quick-awareness" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+            </div>
+
+            <!-- بدء تقييم صحي موجّه من داخل قسم الطوارئ -->
+            <div class="bg-primary-50/60 border border-primary-100 rounded-2xl p-5 text-center">
+                <p class="text-sm text-slate-700 mb-3">غير متأكد من شدة حالتك؟ يمكنك استخدام التقييم الصحي الموجّه لمعرفة مستوى الرعاية المناسب.</p>
+                <button onclick="openSymptomChecker()" class="inline-flex items-center gap-1.5 bg-primary-700 hover:bg-primary-800 text-white font-bold text-sm px-5 py-2.5 rounded-xl transition-colors">
+                    <i class="fa-solid fa-clipboard-list" aria-hidden="true"></i> بدء التقييم الصحي الموجّه
+                </button>
+            </div>
         </div>
 
         <!-- 8. المقالات والأبحاث العلمية -->
@@ -723,7 +818,11 @@
                 <h2 class="text-3xl font-black text-slate-900">المقالات والأبحاث الصحية العلمية</h2>
                 <p class="text-slate-600 text-sm mt-1">مقالات طبية متقدمة في علم الأعصاب، الأمراض المزمنة والنادرة، وأبحاث غزة الميدانية. انقر على أي مقال لعرض التفاصيل والأدلة البحثية والباحثين.</p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="articles-list"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="articles-list">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 space-y-3" aria-hidden="true"><div class="skeleton-shimmer h-12 w-12 rounded-full"></div><div class="skeleton-shimmer h-4 w-3/4"></div><div class="skeleton-shimmer h-3 w-full"></div><div class="skeleton-shimmer h-3 w-5/6"></div></div>
+                <div class="bg-white p-6 rounded-xl border border-slate-200 space-y-3" aria-hidden="true"><div class="skeleton-shimmer h-12 w-12 rounded-full"></div><div class="skeleton-shimmer h-4 w-3/4"></div><div class="skeleton-shimmer h-3 w-full"></div><div class="skeleton-shimmer h-3 w-5/6"></div></div>
+                <div class="bg-white p-6 rounded-xl border border-slate-200 space-y-3" aria-hidden="true"><div class="skeleton-shimmer h-12 w-12 rounded-full"></div><div class="skeleton-shimmer h-4 w-3/4"></div><div class="skeleton-shimmer h-3 w-full"></div><div class="skeleton-shimmer h-3 w-5/6"></div></div>
+            </div>
         </div>
 
         <!-- 9. التوعية والإسعافات الأولية -->
@@ -759,7 +858,10 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="awareness-list"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="awareness-list">
+                <div class="bg-white p-6 rounded-xl border border-slate-200 space-y-3" aria-hidden="true"><div class="skeleton-shimmer h-12 w-12 rounded-full"></div><div class="skeleton-shimmer h-4 w-3/4"></div><div class="skeleton-shimmer h-3 w-full"></div></div>
+                <div class="bg-white p-6 rounded-xl border border-slate-200 space-y-3" aria-hidden="true"><div class="skeleton-shimmer h-12 w-12 rounded-full"></div><div class="skeleton-shimmer h-4 w-3/4"></div><div class="skeleton-shimmer h-3 w-full"></div></div>
+            </div>
             <p id="awareness-empty" class="hidden text-slate-500 text-center py-10 text-sm">لا توجد حالات مطابقة لبحثك.</p>
 
             <!-- المصادر والمراجعة الطبية -->
@@ -1120,6 +1222,82 @@
     </div>
 
     <!-- تنبيه طبي قبل بدء تجربة الإرشاد الصحي الأولي -->
+    <!-- معالج التقييم الصحي الموجّه خطوة بخطوة (Symptom Checker) — يقترح مستوى رعاية فقط، لا يقدّم تشخيصًا -->
+    <div id="symptom-checker-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="sc-title">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative space-y-5 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center">
+                <h3 id="sc-title" class="text-lg font-black text-slate-900"><i class="fa-solid fa-clipboard-list text-primary-600" aria-hidden="true"></i> التقييم الصحي الموجّه</h3>
+                <button onclick="closeSymptomChecker()" class="text-slate-400 hover:text-slate-600 text-2xl font-bold" aria-label="إغلاق">&times;</button>
+            </div>
+
+            <!-- شريط التقدم -->
+            <div class="w-full bg-slate-100 rounded-full h-2" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="sc-progress-track">
+                <div id="sc-progress-bar" class="bg-primary-600 h-2 rounded-full transition-all duration-300" style="width:20%"></div>
+            </div>
+            <p class="text-[11px] text-slate-400 -mt-3">هذه الأداة تقترح مستوى الرعاية المناسب فقط، ولا تقدّم تشخيصًا نهائيًا.</p>
+
+            <!-- الخطوة 1: العرض الرئيسي -->
+            <div id="sc-step-1" class="sc-step space-y-3">
+                <h4 class="font-bold text-sm text-slate-800">ما العرض الرئيسي الذي تشعر به؟</h4>
+                <textarea id="sc-symptom-input" rows="2" placeholder="مثال: صداع، حرارة، ألم بطن..." class="w-full px-3 py-2 border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"></textarea>
+            </div>
+
+            <!-- الخطوة 2: العمر التقريبي -->
+            <div id="sc-step-2" class="sc-step space-y-3 hidden">
+                <h4 class="font-bold text-sm text-slate-800">العمر التقريبي؟</h4>
+                <div class="grid grid-cols-2 gap-2" id="sc-age-options">
+                    <button type="button" onclick="scSelect('age','طفل (أقل من 12 سنة)', this)" class="sc-option px-3 py-2.5 rounded-xl border text-sm font-bold hover:border-primary-400">طفل (أقل من 12)</button>
+                    <button type="button" onclick="scSelect('age','مراهق (13-17 سنة)', this)" class="sc-option px-3 py-2.5 rounded-xl border text-sm font-bold hover:border-primary-400">مراهق (13-17)</button>
+                    <button type="button" onclick="scSelect('age','بالغ (18-59 سنة)', this)" class="sc-option px-3 py-2.5 rounded-xl border text-sm font-bold hover:border-primary-400">بالغ (18-59)</button>
+                    <button type="button" onclick="scSelect('age','كبير سن (60 سنة فأكثر)', this)" class="sc-option px-3 py-2.5 rounded-xl border text-sm font-bold hover:border-primary-400">كبير سن (60+)</button>
+                </div>
+            </div>
+
+            <!-- الخطوة 3: مدة الأعراض -->
+            <div id="sc-step-3" class="sc-step space-y-3 hidden">
+                <h4 class="font-bold text-sm text-slate-800">منذ متى وأنت تشعر بهذا العرض؟</h4>
+                <div class="grid grid-cols-2 gap-2" id="sc-duration-options">
+                    <button type="button" onclick="scSelect('duration','أقل من يوم', this)" class="sc-option px-3 py-2.5 rounded-xl border text-sm font-bold hover:border-primary-400">أقل من يوم</button>
+                    <button type="button" onclick="scSelect('duration','1-3 أيام', this)" class="sc-option px-3 py-2.5 rounded-xl border text-sm font-bold hover:border-primary-400">1-3 أيام</button>
+                    <button type="button" onclick="scSelect('duration','أكثر من 3 أيام', this)" class="sc-option px-3 py-2.5 rounded-xl border text-sm font-bold hover:border-primary-400">أكثر من 3 أيام</button>
+                    <button type="button" onclick="scSelect('duration','أكثر من أسبوع', this)" class="sc-option px-3 py-2.5 rounded-xl border text-sm font-bold hover:border-primary-400">أكثر من أسبوع</button>
+                </div>
+            </div>
+
+            <!-- الخطوة 4: شدة العرض -->
+            <div id="sc-step-4" class="sc-step space-y-3 hidden">
+                <h4 class="font-bold text-sm text-slate-800">ما درجة شدة العرض؟</h4>
+                <div class="grid grid-cols-3 gap-2" id="sc-severity-options">
+                    <button type="button" onclick="scSelect('severity','خفيف', this)" class="sc-option px-3 py-2.5 rounded-xl border text-sm font-bold hover:border-primary-400">خفيف</button>
+                    <button type="button" onclick="scSelect('severity','متوسط', this)" class="sc-option px-3 py-2.5 rounded-xl border text-sm font-bold hover:border-primary-400">متوسط</button>
+                    <button type="button" onclick="scSelect('severity','شديد', this)" class="sc-option px-3 py-2.5 rounded-xl border text-sm font-bold hover:border-primary-400">شديد</button>
+                </div>
+            </div>
+
+            <!-- الخطوة 5: أعراض مصاحبة -->
+            <div id="sc-step-5" class="sc-step space-y-3 hidden">
+                <h4 class="font-bold text-sm text-slate-800">هل توجد أي من هذه الأعراض المصاحبة؟ (يمكن اختيار أكثر من واحد)</h4>
+                <div class="grid grid-cols-2 gap-2" id="sc-associated-options">
+                    <button type="button" onclick="scToggleAssociated('حمى مرتفعة', this)" class="sc-option px-3 py-2.5 rounded-xl border text-sm font-bold hover:border-primary-400">حمى مرتفعة</button>
+                    <button type="button" onclick="scToggleAssociated('صعوبة تنفس', this)" class="sc-option px-3 py-2.5 rounded-xl border text-sm font-bold hover:border-primary-400">صعوبة تنفس</button>
+                    <button type="button" onclick="scToggleAssociated('نزيف', this)" class="sc-option px-3 py-2.5 rounded-xl border text-sm font-bold hover:border-primary-400">نزيف</button>
+                    <button type="button" onclick="scToggleAssociated('فقدان وعي', this)" class="sc-option px-3 py-2.5 rounded-xl border text-sm font-bold hover:border-primary-400">فقدان وعي</button>
+                    <button type="button" onclick="scToggleAssociated('ألم شديد لا يُحتمل', this)" class="sc-option px-3 py-2.5 rounded-xl border text-sm font-bold hover:border-primary-400">ألم شديد لا يُحتمل</button>
+                    <button type="button" onclick="scToggleAssociated('لا يوجد', this)" class="sc-option px-3 py-2.5 rounded-xl border text-sm font-bold hover:border-primary-400">لا يوجد</button>
+                </div>
+            </div>
+
+            <!-- نتيجة التقييم -->
+            <div id="sc-result" class="hidden"></div>
+
+            <!-- أزرار التنقل -->
+            <div id="sc-nav" class="flex gap-3 pt-2">
+                <button type="button" id="sc-back-btn" onclick="scBack()" class="hidden flex-1 py-3 rounded-xl border border-slate-300 text-slate-600 font-bold text-sm hover:bg-slate-50 transition-colors">السابق</button>
+                <button type="button" id="sc-next-btn" onclick="scNext()" class="flex-1 py-3 rounded-xl bg-primary-700 hover:bg-primary-800 text-white font-bold text-sm shadow-md transition-colors">التالي</button>
+            </div>
+        </div>
+    </div>
+
     <div id="guidance-disclaimer-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="guidance-disclaimer-title">
         <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative space-y-4 text-center">
             <div class="w-14 h-14 rounded-full bg-primary-50 flex items-center justify-center mx-auto">
@@ -1388,7 +1566,8 @@
             if (!scene) return;
             const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             const isCoarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
-            if (reduceMotion || isCoarsePointer) return;
+            const isDataSaver = document.documentElement.getAttribute('data-saver') === 'true';
+            if (reduceMotion || isCoarsePointer || isDataSaver) return;
 
             const heroSection = scene.closest('section');
             if (!heroSection) return;
@@ -1433,6 +1612,46 @@
                 try { localStorage.setItem('eclinic-theme', 'dark'); } catch (e) {}
             }
             updateThemeIcon();
+        }
+
+        // ===== وعي الاتصال ووضع توفير البيانات =====
+        // يوقف المشهد الثلاثي الأبعاد والحركات الثقيلة تلقائيًا على الاتصالات البطيئة، مع إتاحة تفعيل/إلغاء يدوي دائمًا
+        function updateDataSaverIcon() {
+            const isSaver = document.documentElement.getAttribute('data-saver') === 'true';
+            const btn = document.getElementById('data-saver-btn');
+            if (!btn) return;
+            btn.setAttribute('aria-pressed', String(isSaver));
+            btn.setAttribute('aria-label', isSaver ? 'إلغاء وضع توفير البيانات' : 'تفعيل وضع توفير البيانات');
+            btn.classList.toggle('text-primary-600', isSaver);
+        }
+
+        function toggleDataSaver() {
+            const isSaver = document.documentElement.getAttribute('data-saver') === 'true';
+            if (isSaver) {
+                document.documentElement.removeAttribute('data-saver');
+                try { localStorage.setItem('eclinic-data-saver', 'off'); } catch (e) {}
+            } else {
+                document.documentElement.setAttribute('data-saver', 'true');
+                try { localStorage.setItem('eclinic-data-saver', 'on'); } catch (e) {}
+            }
+            updateDataSaverIcon();
+        }
+
+        function initDataSaver() {
+            let manualPref = null;
+            try { manualPref = localStorage.getItem('eclinic-data-saver'); } catch (e) {}
+
+            if (manualPref === 'on') {
+                document.documentElement.setAttribute('data-saver', 'true');
+            } else if (manualPref === 'off') {
+                document.documentElement.removeAttribute('data-saver');
+            } else if (navigator.connection) {
+                // لا تفضيل يدوي محفوظ: استرشد تلقائيًا بحالة الاتصال الفعلية فقط
+                const conn = navigator.connection;
+                const isSlow = conn.saveData || ['slow-2g', '2g'].includes(conn.effectiveType);
+                if (isSlow) document.documentElement.setAttribute('data-saver', 'true');
+            }
+            updateDataSaverIcon();
         }
 
         const hospitalsData = [
@@ -2161,6 +2380,36 @@ const awarenessData = [
         }
 
         let currentAwarenessCategory = 'all';
+        // بطاقات سريعة بقسم الطوارئ لأخطر حالات الإسعاف الأولي (severity: red)، مرتبطة بقسم التوعية والإسعافات الكامل
+        function renderEmergencyQuickAwareness() {
+            const container = document.getElementById('emergency-quick-awareness');
+            if (!container) return;
+            const redItems = awarenessData.filter(item => item.severity === 'red');
+            container.innerHTML = redItems.map(item => `
+                <button onclick="goToAwarenessItem('${item.title.replace(/'/g, "\\'")}')" class="text-right bg-white p-4 rounded-xl border border-red-100 hover:border-red-300 hover:shadow-md transition-all duration-300 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center shrink-0">
+                        <i class="fa-solid ${item.icon} text-red-600" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sm text-slate-900">${item.title}</h4>
+                        <p class="text-[11px] text-slate-500 mt-0.5">${item.steps[0]}</p>
+                    </div>
+                </button>
+            `).join('');
+        }
+
+        // الانتقال لقسم التوعية مع تصفية مباشرة على حالة إسعاف أولي محددة
+        function goToAwarenessItem(title) {
+            switchTab('awareness');
+            setTimeout(() => {
+                const searchInput = document.getElementById('awareness-search');
+                if (searchInput) {
+                    searchInput.value = title;
+                    filterAwareness('all');
+                }
+            }, 400);
+        }
+
         function filterAwareness(cat) {
             if (cat) {
                 currentAwarenessCategory = cat;
@@ -2253,18 +2502,62 @@ const awarenessData = [
         }
 
         // إعداد ملخص طلب رعاية منزلية (نموذج تجريبي محلي بالكامل — لا يرسل أي بيانات لأي خادم أو جهة)
+        // ===== معالج نموذج تحضير الرعاية المنزلية خطوة بخطوة =====
+        const HC_TOTAL_STEPS = 5;
+        let hcCurrentStep = 1;
+
+        function hcShowStep(n) {
+            hcCurrentStep = n;
+            document.querySelectorAll('.hc-step').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`hc-step-${n}`).classList.remove('hidden');
+            document.getElementById('hc-progress-bar').style.width = `${(n / HC_TOTAL_STEPS) * 100}%`;
+            document.querySelectorAll('#hc-step-labels [data-hc-label]').forEach(el => {
+                el.classList.toggle('text-primary-600', parseInt(el.dataset.hcLabel, 10) <= n);
+            });
+            document.getElementById('hc-back-btn').classList.toggle('hidden', n === 1);
+            document.getElementById('hc-next-btn').classList.toggle('hidden', n === HC_TOTAL_STEPS);
+            document.getElementById('hc-submit-btn').classList.toggle('hidden', n !== HC_TOTAL_STEPS);
+            if (n === HC_TOTAL_STEPS) hcBuildReviewSummary();
+        }
+
+        function hcNext() {
+            if (hcCurrentStep === 1) {
+                const name = document.getElementById('req-name').value.trim();
+                const phone = document.getElementById('req-phone').value.trim();
+                if (!name || !phone) {
+                    document.getElementById(!name ? 'req-name' : 'req-phone').focus();
+                    return;
+                }
+            }
+            if (hcCurrentStep < HC_TOTAL_STEPS) hcShowStep(hcCurrentStep + 1);
+        }
+
+        function hcBack() {
+            if (hcCurrentStep > 1) hcShowStep(hcCurrentStep - 1);
+        }
+
+        function hcBuildReviewSummary() {
+            const rows = [
+                ['اسم المريض / المسؤول', document.getElementById('req-name').value],
+                ['رقم التواصل', document.getElementById('req-phone').value],
+                ['المنطقة', document.getElementById('req-region').value],
+                ['نوع الخدمة', document.getElementById('req-service').value],
+                ['درجة الاستعجال', document.getElementById('req-urgency').value],
+                ['قدرة الحركة', document.getElementById('req-mobility').value],
+                ['وصف الحالة', document.getElementById('req-notes').value || '—']
+            ];
+            document.getElementById('hc-review-summary').innerHTML = rows.map(([label, value]) =>
+                `<div class="flex justify-between gap-3"><span class="font-bold text-slate-500">${label}:</span><span class="text-slate-800">${value}</span></div>`
+            ).join('');
+        }
+
         function submitHomeCareRequest(e) {
             e.preventDefault();
-            const name = document.getElementById('req-name').value;
-            const phone = document.getElementById('req-phone').value;
-            const region = document.getElementById('req-region').value;
-            const service = document.getElementById('req-service').value;
-            const urgency = document.getElementById('req-urgency').value;
-
             const reqCode = 'REQ-' + Math.floor(100000 + Math.random() * 900000);
             document.getElementById('tracking-code-display').innerText = reqCode;
             document.getElementById('home-care-form').reset();
             document.getElementById('tracking-result').classList.remove('hidden');
+            hcShowStep(1);
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         }
 
@@ -2350,6 +2643,158 @@ const awarenessData = [
             { name: 'صعوبة تنفس شديدة', match: t => t.includes('صعوبة تنفس') || t.includes('ضيق تنفس شديد') || t.includes('اختناق') },
             { name: 'تشنجات أو نوبات صرع', match: t => t.includes('تشنج') || t.includes('نوبة صرع') || t.includes('نوبات صرع') }
         ];
+
+        // ===== معالج التقييم الصحي الموجّه (Symptom Checker Wizard) =====
+        // يقترح مستوى رعاية فقط (رعاية ذاتية / استشارة / مراجعة عاجلة / طوارئ فورية) — لا يقدّم تشخيصًا أبدًا
+        let scState = { step: 1, symptom: '', age: '', duration: '', severity: '', associated: [] };
+        const SC_TOTAL_STEPS = 5;
+
+        function openSymptomChecker() {
+            scState = { step: 1, symptom: '', age: '', duration: '', severity: '', associated: [] };
+            document.getElementById('sc-symptom-input').value = '';
+            document.querySelectorAll('.sc-option').forEach(b => b.classList.remove('selected'));
+            document.getElementById('sc-result').classList.add('hidden');
+            document.getElementById('sc-result').innerHTML = '';
+            document.getElementById('sc-nav').classList.remove('hidden');
+            scShowStep(1);
+            openModal('symptom-checker-modal');
+        }
+
+        function closeSymptomChecker() {
+            closeModal('symptom-checker-modal');
+        }
+
+        function scShowStep(n) {
+            scState.step = n;
+            document.querySelectorAll('.sc-step').forEach(el => el.classList.add('hidden'));
+            const stepEl = document.getElementById(`sc-step-${n}`);
+            if (stepEl) stepEl.classList.remove('hidden');
+            document.getElementById('sc-progress-bar').style.width = `${(n / SC_TOTAL_STEPS) * 100}%`;
+            document.getElementById('sc-back-btn').classList.toggle('hidden', n === 1);
+            document.getElementById('sc-next-btn').textContent = n === SC_TOTAL_STEPS ? 'عرض النتيجة' : 'التالي';
+        }
+
+        function scSelect(field, value, btnEl) {
+            scState[field] = value;
+            btnEl.parentElement.querySelectorAll('.sc-option').forEach(b => b.classList.remove('selected'));
+            btnEl.classList.add('selected');
+        }
+
+        function scToggleAssociated(value, btnEl) {
+            const group = btnEl.parentElement;
+            if (value === 'لا يوجد') {
+                scState.associated = ['لا يوجد'];
+                group.querySelectorAll('.sc-option').forEach(b => b.classList.remove('selected'));
+                btnEl.classList.add('selected');
+                return;
+            }
+            scState.associated = scState.associated.filter(v => v !== 'لا يوجد');
+            const noneBtn = [...group.querySelectorAll('.sc-option')].find(b => b.textContent.trim() === 'لا يوجد');
+            if (noneBtn) noneBtn.classList.remove('selected');
+
+            if (scState.associated.includes(value)) {
+                scState.associated = scState.associated.filter(v => v !== value);
+                btnEl.classList.remove('selected');
+            } else {
+                scState.associated.push(value);
+                btnEl.classList.add('selected');
+            }
+        }
+
+        function scBack() {
+            if (scState.step > 1) scShowStep(scState.step - 1);
+        }
+
+        function scNext() {
+            if (scState.step === 1) scState.symptom = document.getElementById('sc-symptom-input').value.trim();
+
+            // تحقق بسيط: لا نجبر المستخدم على تعبئة كل خطوة، لكن نطلب على الأقل نصًا بالخطوة الأولى
+            if (scState.step === 1 && !scState.symptom) {
+                document.getElementById('sc-symptom-input').focus();
+                return;
+            }
+
+            if (scState.step < SC_TOTAL_STEPS) {
+                scShowStep(scState.step + 1);
+            } else {
+                scShowResult();
+            }
+        }
+
+        function scShowResult() {
+            const text = scState.symptom.toLowerCase();
+            const redFlagMatch = triageRedFlags.find(f => f.match(text));
+            const associatedRedFlags = ['صعوبة تنفس', 'نزيف', 'فقدان وعي'];
+            const hasAssociatedRedFlag = scState.associated.some(a => associatedRedFlags.includes(a));
+
+            let level, config;
+            if (redFlagMatch || hasAssociatedRedFlag) {
+                level = 'emergency';
+                config = {
+                    label: 'طوارئ فورية', color: 'red', icon: 'fa-truck-medical',
+                    message: 'تشير إجاباتك إلى احتمال وجود حالة قد تستدعي تدخلاً طبيًا عاجلًا. لا تنتظر — تواصل مع خدمات الطوارئ الآن أو توجّه لأقرب مستشفى فورًا.'
+                };
+            } else if (scState.severity === 'شديد' || scState.associated.includes('ألم شديد لا يُحتمل') || scState.associated.includes('حمى مرتفعة')) {
+                level = 'urgent';
+                config = {
+                    label: 'مراجعة طبية عاجلة', color: 'amber', icon: 'fa-hospital',
+                    message: 'الأعراض التي وصفتها تستدعي مراجعة عاجلة لأقرب مستشفى أو مركز صحي، ولا يُنصح بالانتظار طويلاً.'
+                };
+            } else if (scState.severity === 'متوسط' || scState.duration === 'أكثر من أسبوع') {
+                level = 'consult';
+                config = {
+                    label: 'استشارة طبية', color: 'primary', icon: 'fa-user-doctor',
+                    message: 'يُنصح بالتحدث مع طبيب أو مساعدنا الصحي الذكي لفهم حالتك بشكل أفضل، خصوصًا أن الأعراض مستمرة.'
+                };
+            } else {
+                level = 'self-care';
+                config = {
+                    label: 'رعاية ذاتية ومراقبة', color: 'emerald', icon: 'fa-house-medical-circle-check',
+                    message: 'بناءً على إجاباتك، قد تكون الرعاية الذاتية والمراقبة كافية حاليًا. راقب الأعراض، واطلب المساعدة الطبية فورًا إذا ساءت الحالة أو ظهرت أعراض جديدة.'
+                };
+            }
+
+            document.querySelectorAll('.sc-step').forEach(el => el.classList.add('hidden'));
+            document.getElementById('sc-nav').classList.add('hidden');
+            document.getElementById('sc-progress-bar').style.width = '100%';
+
+            const colorClasses = {
+                red: 'bg-red-50 border-red-200 text-red-800',
+                amber: 'bg-amber-50 border-amber-200 text-amber-800',
+                primary: 'bg-primary-50 border-primary-200 text-primary-800',
+                emerald: 'bg-emerald-50 border-emerald-200 text-emerald-800'
+            };
+            const iconColorClasses = {
+                red: 'bg-red-100 text-red-600', amber: 'bg-amber-100 text-amber-600',
+                primary: 'bg-primary-100 text-primary-600', emerald: 'bg-emerald-100 text-emerald-600'
+            };
+
+            const actionsHtml = level === 'emergency'
+                ? `<div class="flex flex-col sm:flex-row gap-2">
+                     <a href="tel:101" class="flex-1 text-center py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm">اتصال بالطوارئ 101</a>
+                     <button onclick="closeSymptomChecker(); switchTab('emergency')" class="flex-1 py-2.5 rounded-xl border border-red-300 text-red-700 hover:bg-red-100 font-bold text-sm">عرض خدمات الطوارئ</button>
+                   </div>`
+                : level === 'urgent'
+                ? `<button onclick="closeSymptomChecker(); switchTab('hospitals')" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm">عرض أقرب مستشفى</button>`
+                : level === 'consult'
+                ? `<button onclick="closeSymptomChecker(); toggleMedicalChat()" class="w-full py-2.5 rounded-xl bg-primary-700 hover:bg-primary-800 text-white font-bold text-sm">التحدث مع المساعد الصحي الذكي</button>`
+                : `<button onclick="closeSymptomChecker(); switchTab('awareness')" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm">نصائح إسعاف أولي عامة</button>`;
+
+            const resultEl = document.getElementById('sc-result');
+            resultEl.innerHTML = `
+                <div class="text-center space-y-3">
+                    <div class="w-14 h-14 rounded-full ${iconColorClasses[config.color]} flex items-center justify-center mx-auto">
+                        <i class="fa-solid ${config.icon} text-2xl" aria-hidden="true"></i>
+                    </div>
+                    <h4 class="text-lg font-black text-slate-900">مستوى الرعاية المقترح: ${config.label}</h4>
+                    <div class="${colorClasses[config.color]} border rounded-2xl p-4 text-sm leading-relaxed text-right">${config.message}</div>
+                    ${actionsHtml}
+                    <p class="text-[11px] text-slate-400 pt-2">هذا اقتراح عام وليس تشخيصًا طبيًا. عند الشك، استشر طبيبًا دائمًا.</p>
+                    <button onclick="openSymptomChecker()" class="text-xs font-bold text-slate-500 hover:text-primary-600 underline">بدء تقييم جديد</button>
+                </div>
+            `;
+            resultEl.classList.remove('hidden');
+        }
 
         function sendChatMessage() {
             const input = document.getElementById('chat-input');
@@ -2629,7 +3074,10 @@ const awarenessData = [
         }
         window.addEventListener('DOMContentLoaded', () => {
             safeInit(() => updateThemeIcon(), 'المظهر');
+            safeInit(() => updateDataSaverIcon(), 'وضع توفير البيانات');
             safeInit(() => initHeroParallax(), 'المشهد ثلاثي الأبعاد بالصفحة الرئيسية');
+            safeInit(() => hcShowStep(1), 'معالج طلب الرعاية المنزلية');
+            safeInit(() => renderEmergencyQuickAwareness(), 'بطاقات الطوارئ السريعة');
             safeInit(() => renderHospitals(hospitalsData), 'المستشفيات');
             safeInit(() => populateMedicineFilterOptions(), 'فلاتر الأدوية');
             safeInit(() => renderMedicines(medicinesData), 'الأدوية');
