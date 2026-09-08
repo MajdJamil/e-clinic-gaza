@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://majdjamil.github.io/e-clinic-gaza/sitemap.xml
